@@ -100,4 +100,9 @@ bool validMove(const Board & board, const Board & boardAfterPlayerMove, BoardVal
 	return moveMatchesPlayer;
 }
 
+unsigned getRandomNumber(unsigned mod)
+{
+	return rand() % mod;
+}
+
 #endif

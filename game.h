@@ -6,14 +6,13 @@
 #ifndef __GAME
 #define __GAME
 
+struct GameSettings
+{
+	bool printEachStep;
+};
+
 class Game
 {
-	private:
-	
-	Player * playerOne;
-	Player * playerTwo;
-	IBoard board;
-	
 	public:
 	
 	Game(Player & playerOne, Player & playerTwo)
@@ -21,81 +20,79 @@ class Game
 		playerOne.setPlayerBoardValue(BoardValue::O);
 		playerTwo.setPlayerBoardValue(BoardValue::X);
 		
-		this->playerOne = &playerOne;
-		this->playerTwo = &playerTwo;
+		this->playerOne = & playerOne;
+		this->playerTwo = & playerTwo;
 		this->board = createNewBoard();
 	}
 	
 	void play(unsigned numberOfGames)
 	{
-		if(numberOfGames == 1) playWithGraphics();
-		else if (numberOfGames > 1) playWithoutGraphics(numberOfGames);
+		if(numberOfGames == 1)
+		{
+			settings.printEachStep = true;
+			playWithGraphics();
+		}
+		else if (numberOfGames > 1)
+		{
+			settings.printEachStep = false;
+			playWithoutGraphics(numberOfGames);
+		}
 		else std::cout << "Enter a valid number of games to be played.\n";
 	}
+	
+	private:
+	
+	Player * playerOne;
+	Player * playerTwo;
+	Board board;
+	GameSettings settings;
 	
 	void playWithGraphics()
 	{
 		printBoard(board);
 		
-		while(!boardIsInWinningState(board) && numAvailableMoves(board) > 0)
-		{	
-			IBoard boardAfterPlayerOneMove = playerOne->getMove(board);
-			
-			if (validMove(board, boardAfterPlayerOneMove, playerOne->getPlayerBoardValue()))
-			{
-				board = copyBoard(boardAfterPlayerOneMove);
-				sleep(1);
-				printBoard(board);
-			}
-			else
-			{
-				std::cout << "Player one did not submit a valid move.";
-				exit(0);
-			}
-			
-			if (!boardIsInWinningState(board) && numAvailableMoves(board) > 0)
-			{
-				IBoard boardAfterPlayerTwoMove = playerTwo->getMove(board);
-				
-				if (validMove(board, boardAfterPlayerTwoMove, playerTwo->getPlayerBoardValue()))
-				{
-					board = copyBoard(boardAfterPlayerTwoMove);
-					sleep(1);
-					printBoard(board);
-				}
-				else
-				{
-					std::cout << "Player two did not submit a valid move.\n";
-					exit(0);
-				}
-			}
-		}
+		GameResult gameResult = getGameResult();
 		
-		if(playerHasWon(board, playerOne->getPlayerBoardValue())) std::cout << "Result Of game: Player One Wins!\n";
-		else if (playerHasWon(board, playerTwo->getPlayerBoardValue())) std::cout << "Result Of game: Player Two Wins!\n";
-		else std::cout << "Result Of Game: Tie!\n";
+		switch(gameResult)
+		{
+			case GameResult::PlayerOneWin:
+				std::cout << "Result Of game: Player One Wins!\n";
+				break;
+			
+			case GameResult::PlayerTwoWin:
+				std::cout << "Result Of game: Player Two Wins!\n";
+				break;
+			
+			case GameResult::Tie:
+				std::cout << "Result Of Game: Tie!\n";
+				break;
+			
+			default:
+				std::cout << "An error occured.\n";
+				break;
+		}
 	}
 	
 	GameResult playWithoutGraphics(unsigned numberOfGames)
 	{
-			GameResult result;
+			GameResult gameResult;
 			unsigned playerOneWins = 0, playerTwoWins = 0, tiedGames = 0;
 			
 			for(int i = 0; i < numberOfGames; i++)
 			{
-				result = getGameResult();
+				gameResult = getGameResult();
 				
-				switch(result)
+				switch(gameResult)
 				{
-					case PlayerOneWin:
+					case GameResult::PlayerOneWin:
 						playerOneWins++;
 						break;
 					
-					case PlayerTwoWin:
+					case GameResult::PlayerTwoWin:
 						playerTwoWins++;
 						break;
 					
-					case Tie:
+					case GameResult::Tie:
 						tiedGames++;
 						break;
 					
@@ -115,11 +112,16 @@ class Game
 	{
 		while(!boardIsInWinningState(board) && numAvailableMoves(board) > 0)
 		{
-			IBoard boardAfterPlayerOneMove = playerOne->getMove(board);
+			Board boardAfterPlayerOneMove = playerOne->getMove(board);
 			
 			if (validMove(board, boardAfterPlayerOneMove, playerOne->getPlayerBoardValue()))
 			{
 				board = copyBoard(boardAfterPlayerOneMove);
+				if (settings.printEachStep)
+				{
+					sleep(1);
+					printBoard(board);
+				}
 			}
 			else
 			{
@@ -129,11 +131,16 @@ class Game
 			
 			if (!boardIsInWinningState(board) && numAvailableMoves(board) > 0)
 			{
-				IBoard boardAfterPlayerTwoMove = playerTwo->getMove(board);
+				Board boardAfterPlayerTwoMove = playerTwo->getMove(board);
 				
 				if (validMove(board, boardAfterPlayerTwoMove, playerTwo->getPlayerBoardValue()))
 				{
 					board = copyBoard(boardAfterPlayerTwoMove);
+					if (settings.printEachStep)
+					{
+						sleep(1);
+						printBoard(board);
+					}
 				}
 				else
 				{
@@ -143,9 +150,9 @@ class Game
 			}
 		}
 		
-		if(playerHasWon(board, playerOne->getPlayerBoardValue())) return PlayerOneWin;
-		else if (playerHasWon(board, playerTwo->getPlayerBoardValue())) return PlayerTwoWin;
-		else return Tie;
+		if(playerHasWon(board, playerOne->getPlayerBoardValue())) return GameResult::PlayerOneWin;
+		else if (playerHasWon(board, playerTwo->getPlayerBoardValue())) return GameResult::PlayerTwoWin;
+		else return GameResult::Tie;
 	}
 };
 
