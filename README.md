@@ -1,10 +1,10 @@
 ## A C++ Game Engine for Tic Tac Toe
 
-This simple C++ command line interface program written by David Pfeiffer for the 2016 Southeast Missouri State Hackathon allows any two algorithms to face off in a game of Tic Tac Toe. The program was written to better understand how game engines work. In the future I plan to make game engines based that work for Connect Four or chess.
+This simple C++ command line interface program written by David Pfeiffer for the 2016 Southeast Missouri State Hackathon allows any two algorithms to face off in a game of Tic Tac Toe. The program was written to better understand how game engines work. In the future I plan to make game engines based that work for more complex games like Connect Four or chess.
 
 ### Getting Started
 
-To create and play games you must include the game engine and a collection of algorithms (called players) into a program. The <code>Game</code> constructor accepts two arguments of type <code>Player</code>. Once a game is created, you can execute the game using the <code>play()</code> method on an object of the Game class, which takes the number of games to be played as an argument. An example game is shown in <i>main.cpp</i>.
+To create and play games you must include the game engine and a collection of algorithms (called players) into a program. The <code>Game</code> constructor accepts two arguments of type <code>Player</code>. Once a game is created, you can execute the game by calling the <code>play()</code> method on the game object, which takes the number of games to be played as an argument. An example game is shown in <i>main.cpp</i>.
 
 ```c++
 int main()
@@ -43,6 +43,8 @@ The result of the game will be output to the console. If the number of games is 
 ### Create Your Own Algorithm
 
 Tic Tac Toe is an easy game, so the algorithms aren't hard to write. If you would like to create your own for fun, create a c++ class that inherits from the abstract base class <code>Player</code>. You must implement the <code>getMove()</code> method on your new class, which the game engine will use to get your move each turn. The current game board will be passed to you as a parameter, on which you must make your desired move and then return the new board. The game engine checks to make sure that all moves made are valid.
+
+You can determine which player you are using the <code>getOpponentBoardValue()</code> method implemented on the Player class. This returns a <code>BoardValue</code> enum which is defined in <i>utilities.cpp</i>. Your opponents board value is also available.
 
 ```c++
 class Player
