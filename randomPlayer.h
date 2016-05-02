@@ -9,10 +9,6 @@
 
 class RandomPlayer : public Player
 {
-	private:
-	
-	BoardValue playerBoardValue;
-	
 	unsigned getRandomNumber(unsigned mod)
 	{
 		return rand() % mod;
@@ -25,16 +21,6 @@ class RandomPlayer : public Player
 		srand(time(NULL));
 	}
 	
-	void setNumber(BoardValue playerBoardValue)
-	{
-		this->playerBoardValue = playerBoardValue;
-	}
-	
-	BoardValue getNumber()
-	{
-		return this->playerBoardValue;
-	}
-	
 	IBoard getMove(const IBoard & board)
 	{
 		IBoard newBoard;
@@ -42,8 +28,8 @@ class RandomPlayer : public Player
 		do
 		{
 			newBoard = copyBoard(board);
-			newBoard[getRandomNumber(3)][getRandomNumber(3)] = playerBoardValue;
-		} while(!validMove(board, newBoard, this->playerBoardValue));
+			newBoard[getRandomNumber(3)][getRandomNumber(3)] = this->getPlayerBoardValue();
+		} while(!validMove(board, newBoard, this->getPlayerBoardValue()));
 		
 		return newBoard;
 	}

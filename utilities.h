@@ -5,7 +5,7 @@
 #ifndef __UTILITIES
 #define __UTILITIES
 
-enum GameResult {PlayerOneWin, PlayerTwoWin, Tie, Error};
+enum GameResult {PlayerOneWin, PlayerTwoWin, Tie};
 enum BoardValue {Empty, X, O};
 
 const unsigned BOARD_SIZE = 3;
@@ -17,9 +17,7 @@ IBoard createNewBoard();
 bool playerHasWon(const IBoard & board, unsigned player);
 bool boardIsInWinningState(const IBoard & board);
 unsigned numAvailableMoves(const IBoard & board);
-bool boardIsInTieState(const IBoard & board);
-unsigned numberOfDifferencesBetweenBoards(const IBoard & boardOne, const IBoard & boardTwo);
-unsigned getRandomNumber(unsigned mod);
+bool validMove(const IBoard & board, const IBoard & boardAfterPlayerMove, BoardValue playerBoardValue);
 
 void printBoard(const IBoard & board)
 {
@@ -73,11 +71,6 @@ unsigned numAvailableMoves(const IBoard & board)
 	for(unsigned i = 0; i < BOARD_SIZE; i++) for(unsigned j = 0; j < BOARD_SIZE; j++) if(board[i][j] == 0) availableMoves++;
 	
 	return availableMoves;
-}
-
-bool boardIsInTieState(const IBoard & board)
-{
-	return !boardIsInWinningState(board) && numAvailableMoves(board) == 0;
 }
 
 bool validMove(const IBoard & board, const IBoard & boardAfterPlayerMove, BoardValue playerBoardValue)

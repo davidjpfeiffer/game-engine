@@ -18,8 +18,8 @@ class Game
 	
 	Game(Player & playerOne, Player & playerTwo)
 	{
-		playerOne.setNumber(BoardValue::O);
-		playerTwo.setNumber(BoardValue::X);
+		playerOne.setPlayerBoardValue(BoardValue::O);
+		playerTwo.setPlayerBoardValue(BoardValue::X);
 		
 		this->playerOne = &playerOne;
 		this->playerTwo = &playerTwo;
@@ -41,7 +41,7 @@ class Game
 		{	
 			IBoard boardAfterPlayerOneMove = playerOne->getMove(board);
 			
-			if (validMove(board, boardAfterPlayerOneMove, playerOne->getNumber()))
+			if (validMove(board, boardAfterPlayerOneMove, playerOne->getPlayerBoardValue()))
 			{
 				board = copyBoard(boardAfterPlayerOneMove);
 				sleep(1);
@@ -57,7 +57,7 @@ class Game
 			{
 				IBoard boardAfterPlayerTwoMove = playerTwo->getMove(board);
 				
-				if (validMove(board, boardAfterPlayerTwoMove, playerTwo->getNumber()))
+				if (validMove(board, boardAfterPlayerTwoMove, playerTwo->getPlayerBoardValue()))
 				{
 					board = copyBoard(boardAfterPlayerTwoMove);
 					sleep(1);
@@ -71,8 +71,8 @@ class Game
 			}
 		}
 		
-		if(playerHasWon(board, playerOne->getNumber())) std::cout << "Result Of game: Player One Wins!\n";
-		else if (playerHasWon(board, playerTwo->getNumber())) std::cout << "Result Of game: Player Two Wins!\n";
+		if(playerHasWon(board, playerOne->getPlayerBoardValue())) std::cout << "Result Of game: Player One Wins!\n";
+		else if (playerHasWon(board, playerTwo->getPlayerBoardValue())) std::cout << "Result Of game: Player Two Wins!\n";
 		else std::cout << "Result Of Game: Tie!\n";
 	}
 	
@@ -117,7 +117,7 @@ class Game
 		{
 			IBoard boardAfterPlayerOneMove = playerOne->getMove(board);
 			
-			if (validMove(board, boardAfterPlayerOneMove, playerOne->getNumber()))
+			if (validMove(board, boardAfterPlayerOneMove, playerOne->getPlayerBoardValue()))
 			{
 				board = copyBoard(boardAfterPlayerOneMove);
 			}
@@ -131,7 +131,7 @@ class Game
 			{
 				IBoard boardAfterPlayerTwoMove = playerTwo->getMove(board);
 				
-				if (validMove(board, boardAfterPlayerTwoMove, playerTwo->getNumber()))
+				if (validMove(board, boardAfterPlayerTwoMove, playerTwo->getPlayerBoardValue()))
 				{
 					board = copyBoard(boardAfterPlayerTwoMove);
 				}
@@ -143,8 +143,8 @@ class Game
 			}
 		}
 		
-		if(playerHasWon(board, playerOne->getNumber())) return PlayerOneWin;
-		else if (playerHasWon(board, playerTwo->getNumber())) return PlayerTwoWin;
+		if(playerHasWon(board, playerOne->getPlayerBoardValue())) return PlayerOneWin;
+		else if (playerHasWon(board, playerTwo->getPlayerBoardValue())) return PlayerTwoWin;
 		else return Tie;
 	}
 };

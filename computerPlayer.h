@@ -11,9 +11,6 @@ class ComputerPlayer : public Player
 {
 	private:
 	
-	BoardValue playerBoardValue;
-	BoardValue opponentBoardValue;
-	
 	unsigned getRandomNumber(unsigned mod)
 	{
 		return rand() % mod;
@@ -24,17 +21,6 @@ class ComputerPlayer : public Player
 	ComputerPlayer()
 	{
 		srand(time(NULL));
-	}
-	
-	void setNumber(BoardValue playerBoardValue)
-	{
-		this->playerBoardValue = playerBoardValue;
-		this->opponentBoardValue = this->playerBoardValue == BoardValue::X ? BoardValue::O : BoardValue::X;
-	}
-	
-	BoardValue getNumber()
-	{
-		return this->playerBoardValue;
 	}
 	
 	IBoard getMove(const IBoard & board)
@@ -50,10 +36,10 @@ class ComputerPlayer : public Player
 				theoreticalBoard = copyBoard(board);
 				if(theoreticalBoard[i][j] == BoardValue::Empty)
 				{
-					theoreticalBoard[i][j] = this->playerBoardValue;
-					if (playerHasWon(theoreticalBoard, this->playerBoardValue))
+					theoreticalBoard[i][j] = this->getPlayerBoardValue();
+					if (playerHasWon(theoreticalBoard, this->getPlayerBoardValue()))
 					{
-						mainBoard[i][j] = this->playerBoardValue;
+						mainBoard[i][j] = this->getPlayerBoardValue();
 						return mainBoard;
 					}
 				}
@@ -69,10 +55,10 @@ class ComputerPlayer : public Player
 				theoreticalBoard = copyBoard(board);
 				if(theoreticalBoard[i][j] == BoardValue::Empty)
 				{
-					theoreticalBoard[i][j] = this->opponentBoardValue;
-					if (playerHasWon(theoreticalBoard, this->opponentBoardValue))
+					theoreticalBoard[i][j] = this->getOpponentBoardValue();
+					if (playerHasWon(theoreticalBoard, this->getOpponentBoardValue()))
 					{
-						mainBoard[i][j] = this->playerBoardValue;
+						mainBoard[i][j] = this->getPlayerBoardValue();
 						return mainBoard;
 					}
 				}
@@ -83,30 +69,30 @@ class ComputerPlayer : public Player
 		// If middle available, take middle
 		if (mainBoard[1][1] == BoardValue::Empty)
 		{
-			mainBoard[1][1] = this->playerBoardValue;
+			mainBoard[1][1] = this->getPlayerBoardValue();
 			return mainBoard;
 		}
 		
 		// Offensive
-		if (mainBoard[1][1] == this->playerBoardValue && numAvailableMoves(board) == 7)
+		if (mainBoard[1][1] == this->getPlayerBoardValue() && numAvailableMoves(board) == 7)
 		{
-			if (mainBoard[0][1] == this->opponentBoardValue)
+			if (mainBoard[0][1] == this->getOpponentBoardValue())
 			{
-				mainBoard[2][2] = this->playerBoardValue;
+				mainBoard[2][2] = this->getPlayerBoardValue();
 				return mainBoard;
-			} else if (mainBoard[1][2] == this->opponentBoardValue)
+			} else if (mainBoard[1][2] == this->getOpponentBoardValue())
 			{
-				mainBoard[2][0] = this->playerBoardValue;
-				return mainBoard;
-			}
-			else if (mainBoard[2][1] == this->opponentBoardValue)
-			{
-				mainBoard[0][0] = this->playerBoardValue;
+				mainBoard[2][0] = this->getPlayerBoardValue();
 				return mainBoard;
 			}
-			else if (mainBoard[1][0] == this->opponentBoardValue)
+			else if (mainBoard[2][1] == this->getOpponentBoardValue())
 			{
-				mainBoard[2][2] = this->playerBoardValue;
+				mainBoard[0][0] = this->getPlayerBoardValue();
+				return mainBoard;
+			}
+			else if (mainBoard[1][0] == this->getOpponentBoardValue())
+			{
+				mainBoard[2][2] = this->getPlayerBoardValue();
 				return mainBoard;
 			}
 		}
@@ -114,22 +100,22 @@ class ComputerPlayer : public Player
 		// If corner available, take corner
 		if (mainBoard[0][0] == BoardValue::Empty)
 		{
-			mainBoard[0][0] = this->playerBoardValue;
+			mainBoard[0][0] = this->getPlayerBoardValue();
 			return mainBoard;
 		}
 		else if (mainBoard[0][2] == BoardValue::Empty)
 		{
-			mainBoard[0][2] = this->playerBoardValue;
+			mainBoard[0][2] = this->getPlayerBoardValue();
 			return mainBoard;
 		}
 		else if (mainBoard[2][0] == BoardValue::Empty)
 		{
-			mainBoard[2][0] = this->playerBoardValue;
+			mainBoard[2][0] = this->getPlayerBoardValue();
 			return mainBoard;
 		}
 		else if (mainBoard[2][2] == BoardValue::Empty)
 		{
-			mainBoard[2][2] = this->playerBoardValue;
+			mainBoard[2][2] = this->getPlayerBoardValue();
 			return mainBoard;
 		}
 		
@@ -137,8 +123,8 @@ class ComputerPlayer : public Player
 		do
 		{
 			defaultBoard = copyBoard(board);
-			defaultBoard[getRandomNumber(3)][getRandomNumber(3)] = playerBoardValue;
-		} while(!validMove(board, defaultBoard, this->playerBoardValue));
+			defaultBoard[getRandomNumber(3)][getRandomNumber(3)] = this->getPlayerBoardValue();
+		} while(!validMove(board, defaultBoard, this->getPlayerBoardValue()));
 		
 		return defaultBoard;
 	}
