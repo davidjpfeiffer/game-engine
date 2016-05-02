@@ -55,31 +55,17 @@ Tic Tac Toe is an easy game, so the algorithms aren't hard to write. If you woul
 You can determine which player you are using the <code>getPlayerBoardValue()</code> method implemented on the Player class. This returns a <code>BoardValue</code> which is an enumeration defined in <i>utilities.cpp</i>. Your opponents board value is also available.
 
 ```c++
-class Player
+class MyPlayer : public Player
 {
-	private:
-	
-	BoardValue playerBoardValue;
-	BoardValue opponentBoardValue;
-	
 	public:
 	
-	virtual Board getMove(const Board &) = 0;
-	
-	void setPlayerBoardValue(BoardValue playerBoardValue)
+	Board getMove(const Board & board)
 	{
-		this->playerBoardValue = playerBoardValue;
-		this->opponentBoardValue = this->playerBoardValue == BoardValue::X ? BoardValue::O : BoardValue::X;
-	}
-	
-	BoardValue getPlayerBoardValue()
-	{
-		return this->playerBoardValue;
-	}
-	
-	BoardValue getOpponentBoardValue()
-	{
-		return this->playerBoardValue;
+		Board newBoard = copyBoard(board);
+		
+		// Make changes to newBoard
+		
+		return newBoard;
 	}
 };
 ```
