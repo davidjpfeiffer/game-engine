@@ -5,21 +5,22 @@
 #ifndef __UTILITIES
 #define __UTILITIES
 
+const unsigned BOARD_SIZE = 3;
+
 enum GameResult {PlayerOneWin, PlayerTwoWin, Tie};
 enum BoardValue {Empty, X, O};
 
-const unsigned BOARD_SIZE = 3;
-typedef std::vector<std::vector<BoardValue> > IBoard;
+typedef std::vector<std::vector<BoardValue> > Board;
 
-void printBoard(const IBoard & board);
-IBoard copyBoard(const IBoard & original);
-IBoard createNewBoard();
-bool playerHasWon(const IBoard & board, unsigned player);
-bool boardIsInWinningState(const IBoard & board);
-unsigned numAvailableMoves(const IBoard & board);
-bool validMove(const IBoard & board, const IBoard & boardAfterPlayerMove, BoardValue playerBoardValue);
+void printBoard(const Board & board);
+Board copyBoard(const Board & original);
+Board createNewBoard();
+bool playerHasWon(const Board & board, unsigned player);
+bool boardIsInWinningState(const Board & board);
+unsigned numAvailableMoves(const Board & board);
+bool validMove(const Board & board, const Board & boardAfterPlayerMove, BoardValue playerBoardValue);
 
-void printBoard(const IBoard & board)
+void printBoard(const Board & board)
 {
 	std::cout << '\n';
 	for(unsigned i = 0; i < BOARD_SIZE; i++)
@@ -33,21 +34,21 @@ void printBoard(const IBoard & board)
 	std::cout << '\n';
 }
 
-IBoard copyBoard(const IBoard & original)
+Board copyBoard(const Board & original)
 {
-	IBoard copyBoard = createNewBoard();
+	Board copyBoard = createNewBoard();
 	
 	std::copy(original.begin(), original.begin() + BOARD_SIZE, copyBoard.begin());
 	
 	return copyBoard;
 }
 
-IBoard createNewBoard()
+Board createNewBoard()
 {
-	return {{Empty, Empty, Empty}, {Empty, Empty, Empty}, {Empty, Empty, Empty}};
+	return {{BoardValue::Empty, BoardValue::Empty, BoardValue::Empty}, {BoardValue::Empty, BoardValue::Empty, BoardValue::Empty}, {BoardValue::Empty, BoardValue::Empty, BoardValue::Empty}};
 }
 
-bool playerHasWon(const IBoard & board, BoardValue playerBoardValue)
+bool playerHasWon(const Board & board, BoardValue playerBoardValue)
 {
 	bool won = false;
 	
@@ -59,12 +60,12 @@ bool playerHasWon(const IBoard & board, BoardValue playerBoardValue)
 	return won;
 }
 
-bool boardIsInWinningState(const IBoard & board)
+bool boardIsInWinningState(const Board & board)
 {
 	return playerHasWon(board, BoardValue::O) || playerHasWon(board, BoardValue::X);
 }
 
-unsigned numAvailableMoves(const IBoard & board)
+unsigned numAvailableMoves(const Board & board)
 {
 	unsigned availableMoves = 0;
 	
@@ -73,7 +74,7 @@ unsigned numAvailableMoves(const IBoard & board)
 	return availableMoves;
 }
 
-bool validMove(const IBoard & board, const IBoard & boardAfterPlayerMove, BoardValue playerBoardValue)
+bool validMove(const Board & board, const Board & boardAfterPlayerMove, BoardValue playerBoardValue)
 {
 	unsigned numDifferences = 0;
 	bool moveMatchesPlayer = false;

@@ -21,9 +21,9 @@ class RandomPlayer : public Player
 		srand(time(NULL));
 	}
 	
-	IBoard getMove(const IBoard & board)
+	Board getMove(const Board & board)
 	{
-		IBoard newBoard;
+		Board newBoard;
 		
 		do
 		{

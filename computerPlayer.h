@@ -23,10 +23,10 @@ class ComputerPlayer : public Player
 		srand(time(NULL));
 	}
 	
-	IBoard getMove(const IBoard & board)
+	Board getMove(const Board & board)
 	{
-		IBoard mainBoard = copyBoard(board);
-		IBoard theoreticalBoard, defaultBoard;
+		Board mainBoard = copyBoard(board);
+		Board theoreticalBoard, defaultBoard;
 		
 		// If we can win, take win
 		for(unsigned i = 0; i < BOARD_SIZE; i++)

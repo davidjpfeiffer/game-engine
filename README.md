@@ -54,7 +54,7 @@ class Player
 	
 	public:
 	
-	virtual IBoard getMove(const IBoard &) = 0;
+	virtual Board getMove(const Board &) = 0;
 	
 	void setPlayerBoardValue(BoardValue playerBoardValue)
 	{

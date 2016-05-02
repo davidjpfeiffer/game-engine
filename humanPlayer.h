@@ -9,9 +9,9 @@ class HumanPlayer : public Player
 {
 	public:
 	
-	IBoard getMove(const IBoard & board)
+	Board getMove(const Board & board)
 	{
-		IBoard newBoard;
+		Board newBoard;
 		bool validMoveMade = false;
 		unsigned row, column;
 		
