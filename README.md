@@ -19,6 +19,14 @@ int main()
 
 The result of the game will be output to the console. If the number of games is one, each move will be displayed individually with a one second delay. If the number of games is greater than one, the results will be summarized as a statistic.
 
+### How To Compile
+
+This project was written in C++ 11. You must indicate which version you are using when compiling. This can be done using the following command, which should be run inside the project directory.
+
+```
+g++ -o main -std=c++11 main.cpp
+```
+
 ### Pre-Built Algorithms
 
 <ul>
@@ -42,7 +50,7 @@ The result of the game will be output to the console. If the number of games is 
 
 ### Create Your Own Algorithm
 
-Tic Tac Toe is an easy game, so the algorithms aren't hard to write. If you would like to create your own for fun, create a c++ class that inherits from the abstract base class <code>Player</code>. You must implement the <code>getMove()</code> method on your new class, which the game engine will use to get your move each turn. The current game board will be passed to you as a parameter, on which you must make your desired move and then return the new board. The game engine checks to make sure that all moves made are valid.
+Tic Tac Toe is an easy game, so the algorithms aren't hard to write. If you would like to create your own for fun, create a C++ class that inherits from the abstract base class <code>Player</code>. You must implement the <code>getMove()</code> method on your new class, which the game engine will use to get your move each turn. The current game board will be passed to you as a parameter, on which you must make your desired move and then return the new board. The game engine checks to make sure that all moves made are valid.
 
 You can determine which player you are using the <code>getOpponentBoardValue()</code> method implemented on the Player class. This returns a <code>BoardValue</code> enum which is defined in <i>utilities.cpp</i>. Your opponents board value is also available.
 
