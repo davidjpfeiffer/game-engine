@@ -9,19 +9,7 @@
 
 class ComputerPlayer : public Player
 {
-	private:
-	
-	unsigned getRandomNumber(unsigned mod)
-	{
-		return rand() % mod;
-	}
-	
 	public:
-	
-	ComputerPlayer()
-	{
-		srand(time(NULL));
-	}
 	
 	Board getMove(const Board & board)
 	{
@@ -73,7 +61,7 @@ class ComputerPlayer : public Player
 			return mainBoard;
 		}
 		
-		// Offensive
+		// Offensive Strategy
 		if (mainBoard[1][1] == this->getPlayerBoardValue() && numAvailableMoves(board) == 7)
 		{
 			if (mainBoard[0][1] == this->getOpponentBoardValue())

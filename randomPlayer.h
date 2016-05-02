@@ -9,17 +9,7 @@
 
 class RandomPlayer : public Player
 {
-	unsigned getRandomNumber(unsigned mod)
-	{
-		return rand() % mod;
-	}
-	
 	public:
-	
-	RandomPlayer()
-	{
-		srand(time(NULL));
-	}
 	
 	Board getMove(const Board & board)
 	{
