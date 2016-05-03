@@ -1,7 +1,6 @@
 #ifndef __RANDOMPLAYER
 #define __RANDOMPLAYER
 
-#include <cstdlib>
 #include <time.h> 
 
 #include "player.h"

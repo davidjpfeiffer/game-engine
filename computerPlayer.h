@@ -1,9 +1,6 @@
 #ifndef __COMPUTERPLAYER
 #define __COMPUTERPLAYER
 
-#include <cstdlib>
-#include <time.h> 
-
 #include "player.h"
 #include "utilities.h"
 
@@ -27,6 +24,7 @@ class ComputerPlayer : public Player
 					theoreticalBoard[i][j] = this->getPlayerBoardValue();
 					if (playerHasWon(theoreticalBoard, this->getPlayerBoardValue()))
 					{
+						std::cout << "I should have won\n";
 						mainBoard[i][j] = this->getPlayerBoardValue();
 						return mainBoard;
 					}

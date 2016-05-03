@@ -2,13 +2,12 @@
 #define __UTILITIES
 
 #include <iostream>
-#include <algorithm>
 #include <vector>
 
 const unsigned BOARD_SIZE = 3;
 
 enum GameResult {PlayerOneWin, PlayerTwoWin, Tie};
-enum BoardValue {Empty, X, O};
+enum BoardValue {Empty, O, X};
 
 typedef std::vector<std::vector<BoardValue> > Board;
 
@@ -19,6 +18,7 @@ bool playerHasWon(const Board & board, unsigned player);
 bool boardIsInWinningState(const Board & board);
 unsigned numAvailableMoves(const Board & board);
 bool validMove(const Board & board, const Board & boardAfterPlayerMove, BoardValue playerBoardValue);
+unsigned getRandomNumber(unsigned mod);
 
 void printBoard(const Board & board)
 {

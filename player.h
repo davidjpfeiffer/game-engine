@@ -27,7 +27,7 @@ class Player
 	
 	BoardValue getOpponentBoardValue()
 	{
-		return this->playerBoardValue;
+		return this->opponentBoardValue;
 	}
 };
 
