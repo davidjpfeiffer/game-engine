@@ -1,9 +1,5 @@
-#include <iostream>
-#include <algorithm>
-#include <vector>
 #include <stdlib.h>
 
-#include "player.h"
 #include "game.h"
 
 #include "randomPlayer.h"

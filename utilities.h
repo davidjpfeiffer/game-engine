@@ -1,9 +1,9 @@
+#ifndef __UTILITIES
+#define __UTILITIES
+
 #include <iostream>
 #include <algorithm>
 #include <vector>
-
-#ifndef __UTILITIES
-#define __UTILITIES
 
 const unsigned BOARD_SIZE = 3;
 

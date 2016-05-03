@@ -1,11 +1,11 @@
+#ifndef __COMPUTERPLAYER
+#define __COMPUTERPLAYER
+
 #include <cstdlib>
 #include <time.h> 
 
 #include "player.h"
 #include "utilities.h"
-
-#ifndef __COMPUTERPLAYER
-#define __COMPUTERPLAYER
 
 class ComputerPlayer : public Player
 {

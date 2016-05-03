@@ -1,11 +1,11 @@
+#ifndef __RANDOMPLAYER
+#define __RANDOMPLAYER
+
 #include <cstdlib>
 #include <time.h> 
 
 #include "player.h"
 #include "utilities.h"
-
-#ifndef __RANDOMPLAYER
-#define __RANDOMPLAYER
 
 class RandomPlayer : public Player
 {

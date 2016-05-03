@@ -1,10 +1,12 @@
-#include "utilities.h"
+#ifndef __GAME
+#define __GAME
+
 #include <iostream>
 #include <cstdlib>
 #include <unistd.h>
 
-#ifndef __GAME
-#define __GAME
+#include "utilities.h"
+#include "player.h"
 
 struct GameSettings
 {

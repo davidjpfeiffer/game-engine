@@ -1,7 +1,7 @@
-#include "utilities.h"
-
 #ifndef __PLAYER
 #define __PLAYER
+
+#include "utilities.h"
 
 class Player
 {

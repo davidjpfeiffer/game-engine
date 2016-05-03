@@ -1,9 +1,10 @@
-#include "player.h"
-#include "utilities.h"
-#include <iostream>
-
 #ifndef __HUMANPLAYER
 #define __HUMANPLAYER
+
+#include <iostream>
+
+#include "player.h"
+#include "utilities.h"
 
 class HumanPlayer : public Player
 {
