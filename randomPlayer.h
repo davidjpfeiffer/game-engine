@@ -12,15 +12,7 @@ class RandomPlayer : public Player
 	
 	Board getMove(const Board & board)
 	{
-		Board newBoard;
-		
-		do
-		{
-			newBoard = copyBoard(board);
-			newBoard[getRandomNumber(3)][getRandomNumber(3)] = this->getPlayerBoardValue();
-		} while(!validMove(board, newBoard, this->getPlayerBoardValue()));
-		
-		return newBoard;
+		return makeRandomMove(board, this->getPlayerBoardValue());
 	}
 };
 

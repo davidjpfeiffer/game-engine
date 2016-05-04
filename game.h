@@ -51,7 +51,6 @@ class Game
 	Player * playerTwo;
 	Player * currentPlayer;
 	Board board;
-	GameSettings settings;
 	
 	GameResult getGameResult()
 	{

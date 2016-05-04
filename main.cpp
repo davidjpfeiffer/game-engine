@@ -1,4 +1,5 @@
 #include <cstdlib>
+#include <time.h>
 
 #include "game.h"
 
@@ -10,7 +11,9 @@ using namespace std;
 
 int main()
 {
-	HumanPlayer playerOne;
+	srand(time(NULL));
+	
+	RandomPlayer playerOne;
 	ComputerPlayer playerTwo;
 	
 	Game game(playerOne, playerTwo);

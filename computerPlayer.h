@@ -105,14 +105,7 @@ class ComputerPlayer : public Player
 			return mainBoard;
 		}
 		
-		// Default to random move
-		do
-		{
-			defaultBoard = copyBoard(board);
-			defaultBoard[getRandomNumber(3)][getRandomNumber(3)] = this->getPlayerBoardValue();
-		} while(!validMove(board, defaultBoard, this->getPlayerBoardValue()));
-		
-		return defaultBoard;
+		return makeRandomMove(board, this->getPlayerBoardValue());
 	}
 };
 

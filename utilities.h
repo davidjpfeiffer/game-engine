@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <utility>
 
 const unsigned BOARD_SIZE = 3;
 
@@ -18,6 +19,7 @@ bool playerHasWon(const Board & board, unsigned player);
 bool boardIsInWinningState(const Board & board);
 unsigned numAvailableMoves(const Board & board);
 bool validMove(const Board & board, const Board & boardAfterPlayerMove, BoardValue playerBoardValue);
+Board makeRandomMove(const Board & board);
 unsigned getRandomNumber(unsigned mod);
 
 void printBoard(const Board & board)
@@ -98,6 +100,26 @@ bool validMove(const Board & board, const Board & boardAfterPlayerMove, BoardVal
 	else return false;
 	
 	return moveMatchesPlayer;
+}
+
+Board makeRandomMove(const Board & board, BoardValue playerBoardValue)
+{
+	Board newBoard = copyBoard(board);
+	std::vector<std::pair<unsigned, unsigned> > availableMoves;
+	
+	for(unsigned i = 0; i < BOARD_SIZE; i++)
+	{
+		for(unsigned j = 0; j < BOARD_SIZE; j++)
+		{
+			if (board[i][j] == BoardValue::Empty) availableMoves.push_back(std::make_pair(i, j));
+		}
+	}
+	
+	unsigned randomMove = getRandomNumber(availableMoves.size());
+	
+	newBoard[availableMoves[randomMove].first][availableMoves[randomMove].second] = playerBoardValue;
+	
+	return newBoard;
 }
 
 unsigned getRandomNumber(unsigned mod)
