@@ -11,7 +11,7 @@ class ComputerPlayer : public Player
 	Board getMove(const Board & board)
 	{
 		Board mainBoard = copyBoard(board);
-		Board theoreticalBoard, defaultBoard;
+		Board theoreticalBoard;
 		
 		// If we can win, take win
 		for(unsigned i = 0; i < BOARD_SIZE; i++)
@@ -84,22 +84,22 @@ class ComputerPlayer : public Player
 		}
 		
 		// Defensive Strategy
-		if (mainBoard[1][0] == this->getOpponentBoardValue() && mainBoard[2][1] == this->getOpponentBoardValue() && mainBoard[2][0] == this->getPlayerBoardValue())
+		if (mainBoard[1][0] == this->getOpponentBoardValue() && mainBoard[2][1] == this->getOpponentBoardValue() && mainBoard[2][0] == BoardValue::Empty)
 		{
 			mainBoard[2][0] = this->getPlayerBoardValue();
 			return mainBoard;
 		}
-		else if (mainBoard[1][0] == this->getOpponentBoardValue() && mainBoard[0][1] == this->getOpponentBoardValue() && mainBoard[0][0] == this->getPlayerBoardValue())
+		else if (mainBoard[1][0] == this->getOpponentBoardValue() && mainBoard[0][1] == this->getOpponentBoardValue() && mainBoard[0][0] == BoardValue::Empty)
 		{
 			mainBoard[0][0] = this->getPlayerBoardValue();
 			return mainBoard;
 		}
-		else if (mainBoard[0][1] == this->getOpponentBoardValue() && mainBoard[1][2] == this->getOpponentBoardValue() && mainBoard[0][2] == this->getPlayerBoardValue())
+		else if (mainBoard[0][1] == this->getOpponentBoardValue() && mainBoard[1][2] == this->getOpponentBoardValue() && mainBoard[0][2] == BoardValue::Empty)
 		{
 			mainBoard[0][2] = this->getPlayerBoardValue();
 			return mainBoard;
 		}
-		else if (mainBoard[2][1] == this->getOpponentBoardValue() && mainBoard[1][2] == this->getOpponentBoardValue() && mainBoard[2][2] == this->getPlayerBoardValue())
+		else if (mainBoard[2][1] == this->getOpponentBoardValue() && mainBoard[1][2] == this->getOpponentBoardValue() && mainBoard[2][2] == BoardValue::Empty)
 		{
 			mainBoard[2][2] = this->getPlayerBoardValue();
 			return mainBoard;

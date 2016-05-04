@@ -115,7 +115,7 @@ Board makeRandomMove(const Board & board, BoardValue playerBoardValue)
 		}
 	}
 	
-	unsigned randomMove = getRandomNumber(availableMoves.size());
+	unsigned randomMove = getRandomNumber(availableMoves.size() - 1);
 	
 	newBoard[availableMoves[randomMove].first][availableMoves[randomMove].second] = playerBoardValue;
 	
@@ -124,7 +124,8 @@ Board makeRandomMove(const Board & board, BoardValue playerBoardValue)
 
 unsigned getRandomNumber(unsigned mod)
 {
-	return rand() % mod;
+	if (mod == 0) return 0;
+	else return rand() % mod;
 }
 
 #endif

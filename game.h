@@ -17,33 +17,44 @@ class Game
 		playerOne.setPlayerBoardValue(BoardValue::O);
 		playerTwo.setPlayerBoardValue(BoardValue::X);
 		
-		this->currentPlayer = & playerOne;
 		this->playerOne = & playerOne;
 		this->playerTwo = & playerTwo;
+		this->currentPlayer = this->playerOne;
+		
 		this->board = createNewBoard();
 	}
 	
 	void play()
 	{
-		switch(getGameResult())
+		for(unsigned gameNumber = 1; gameNumber <= this->gameSettings.numberOfGames; gameNumber++)
 		{
-			case GameResult::PlayerOneWin:
-				std::cout << "Result Of game: Player One Wins!\n";
-				break;
-			
-			case GameResult::PlayerTwoWin:
-				std::cout << "Result Of game: Player Two Wins!\n";
-				break;
-			
-			case GameResult::Tie:
-				std::cout << "Result Of Game: Tie!\n";
-				break;
-			
-			default:
-				std::cout << "An error occured.\n";
-				break;
+			switch(getGameResult())
+			{
+				case GameResult::PlayerOneWin:
+					std::cout << "Result Of game: " << gameNumber << ": Player One Wins!\n";
+					break;
+				
+				case GameResult::PlayerTwoWin:
+					std::cout << "Result Of game: " << gameNumber << ": Player Two Wins!\n";
+					break;
+				
+				case GameResult::Tie:
+					std::cout << "Result Of game: " << gameNumber << ": Tie!\n";
+					break;
+				
+				default:
+					std::cout << "An error occured.\n";
+					break;
+			}
 		}
 	}
+	
+	struct GameSettings
+	{
+		bool displayMoves = false;
+		unsigned delayBetweenMoves = 1;
+		unsigned numberOfGames = 10;
+	} gameSettings;
 	
 	private:
 	
@@ -54,7 +65,7 @@ class Game
 	
 	GameResult getGameResult()
 	{
-		printBoard(board);
+		if (this->gameSettings.displayMoves) printBoard(board);
 		
 		while(!boardIsInWinningState(board) && numAvailableMoves(board) > 0)
 		{
@@ -64,12 +75,15 @@ class Game
 			{
 				board = copyBoard(boardAfterPlayerMove);
 				toggleCurrentPlayer();
-				sleep(1);
-				printBoard(board);
+				if (this->gameSettings.displayMoves)
+				{
+					sleep(this->gameSettings.delayBetweenMoves);
+					printBoard(board);
+				}
 			}
 			else
 			{
-				std::cout << "Player did not submit a valid move.";
+				std::cout << "Player " << this->currentPlayer->getPlayerBoardValue() << " did not submit a valid move.";
 				exit(0);
 			}
 		}
