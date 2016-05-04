@@ -22,6 +22,7 @@ class Game
 		playerOne.setPlayerBoardValue(BoardValue::O);
 		playerTwo.setPlayerBoardValue(BoardValue::X);
 		
+		this->currentPlayer = & playerOne;
 		this->playerOne = & playerOne;
 		this->playerTwo = & playerTwo;
 		this->board = createNewBoard();
@@ -46,6 +47,7 @@ class Game
 	
 	Player * playerOne;
 	Player * playerTwo;
+	Player * currentPlayer;
 	Board board;
 	GameSettings settings;
 	
@@ -114,11 +116,12 @@ class Game
 	{
 		while(!boardIsInWinningState(board) && numAvailableMoves(board) > 0)
 		{
-			Board boardAfterPlayerOneMove = playerOne->getMove(board);
+			Board boardAfterPlayerMove = this->currentPlayer->getMove(board);
 			
-			if (validMove(board, boardAfterPlayerOneMove, playerOne->getPlayerBoardValue()))
+			if (validMove(board, boardAfterPlayerMove, this->currentPlayer->getPlayerBoardValue()))
 			{
-				board = copyBoard(boardAfterPlayerOneMove);
+				board = copyBoard(boardAfterPlayerMove);
+				toggleCurrentPlayer();
 				if (settings.printEachStep)
 				{
 					sleep(1);
@@ -127,34 +130,19 @@ class Game
 			}
 			else
 			{
-				std::cout << "Player one did not submit a valid move.";
+				std::cout << "Player did not submit a valid move.";
 				exit(0);
-			}
-			
-			if (!boardIsInWinningState(board) && numAvailableMoves(board) > 0)
-			{
-				Board boardAfterPlayerTwoMove = playerTwo->getMove(board);
-				
-				if (validMove(board, boardAfterPlayerTwoMove, playerTwo->getPlayerBoardValue()))
-				{
-					board = copyBoard(boardAfterPlayerTwoMove);
-					if (settings.printEachStep)
-					{
-						sleep(1);
-						printBoard(board);
-					}
-				}
-				else
-				{
-					std::cout << "Player two did not submit a valid move.\n";
-					exit(0);
-				}
 			}
 		}
 		
-		if(playerHasWon(board, playerOne->getPlayerBoardValue())) return GameResult::PlayerOneWin;
-		else if (playerHasWon(board, playerTwo->getPlayerBoardValue())) return GameResult::PlayerTwoWin;
+		if(playerHasWon(board, this->playerOne->getPlayerBoardValue())) return GameResult::PlayerOneWin;
+		else if (playerHasWon(board, this->playerTwo->getPlayerBoardValue())) return GameResult::PlayerTwoWin;
 		else return GameResult::Tie;
+	}
+	
+	toggleCurrentPlayer()
+	{
+		this->currentPlayer = this->currentPlayer == this->playerOne ? this->playerTwo : this->playerOne;
 	}
 };
 
