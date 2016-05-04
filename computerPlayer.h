@@ -24,7 +24,6 @@ class ComputerPlayer : public Player
 					theoreticalBoard[i][j] = this->getPlayerBoardValue();
 					if (playerHasWon(theoreticalBoard, this->getPlayerBoardValue()))
 					{
-						std::cout << "I should have won\n";
 						mainBoard[i][j] = this->getPlayerBoardValue();
 						return mainBoard;
 					}
@@ -66,7 +65,8 @@ class ComputerPlayer : public Player
 			{
 				mainBoard[2][2] = this->getPlayerBoardValue();
 				return mainBoard;
-			} else if (mainBoard[1][2] == this->getOpponentBoardValue())
+			}
+			else if (mainBoard[1][2] == this->getOpponentBoardValue())
 			{
 				mainBoard[2][0] = this->getPlayerBoardValue();
 				return mainBoard;
@@ -81,6 +81,28 @@ class ComputerPlayer : public Player
 				mainBoard[2][2] = this->getPlayerBoardValue();
 				return mainBoard;
 			}
+		}
+		
+		// Defensive Strategy
+		if (mainBoard[1][0] == this->getOpponentBoardValue() && mainBoard[2][1] == this->getOpponentBoardValue() && mainBoard[2][0] == this->getPlayerBoardValue())
+		{
+			mainBoard[2][0] = this->getPlayerBoardValue();
+			return mainBoard;
+		}
+		else if (mainBoard[1][0] == this->getOpponentBoardValue() && mainBoard[0][1] == this->getOpponentBoardValue() && mainBoard[0][0] == this->getPlayerBoardValue())
+		{
+			mainBoard[0][0] = this->getPlayerBoardValue();
+			return mainBoard;
+		}
+		else if (mainBoard[0][1] == this->getOpponentBoardValue() && mainBoard[1][2] == this->getOpponentBoardValue() && mainBoard[0][2] == this->getPlayerBoardValue())
+		{
+			mainBoard[0][2] = this->getPlayerBoardValue();
+			return mainBoard;
+		}
+		else if (mainBoard[2][1] == this->getOpponentBoardValue() && mainBoard[1][2] == this->getOpponentBoardValue() && mainBoard[2][2] == this->getPlayerBoardValue())
+		{
+			mainBoard[2][2] = this->getPlayerBoardValue();
+			return mainBoard;
 		}
 		
 		// If corner available, take corner
@@ -105,6 +127,7 @@ class ComputerPlayer : public Player
 			return mainBoard;
 		}
 		
+		// Default to random move
 		return makeRandomMove(board, this->getPlayerBoardValue());
 	}
 };
