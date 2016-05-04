@@ -4,7 +4,7 @@ This simple C++ command line interface program written by David Pfeiffer for the
 
 ### Getting Started
 
-To create and play games you must include the game engine and a collection of algorithms (called players) into a program. The <code>Game</code> constructor accepts two arguments of type <code>Player</code>. Once a game is created, you can execute the game by calling the <code>play()</code> method on the game object, which takes the number of games to be played as an argument. An example <i>main.cpp</i> that takes the number of games to be played as a command line argument is included in the project.
+To create and play games you must include the game engine and a collection of algorithms (called players) into a program. The <code>Game</code> constructor accepts two arguments of type <code>Player</code>. Once a game is created, you can execute the game by calling the <code>play()</code> method on the game object.
 
 ```c++
 int main()
@@ -13,11 +13,9 @@ int main()
 	ComputerPlayer playerTwo;
 	
 	Game game(playerOne, playerTwo);
-	game.play(1);
+	game.play();
 }
 ```
-
-The result of the game will be output to the console. If the number of games is one, each move will be displayed individually with a one second delay. If the number of games is greater than one, the results will be summarized as a statistic.
 
 ### How To Compile
 
