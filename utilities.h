@@ -81,7 +81,9 @@ bool validMove(const Board & board, const Board & boardAfterPlayerMove, BoardVal
 	unsigned numDifferences = 0;
 	bool moveMatchesPlayer = false;
 	
-	for(unsigned i = 0; i < BOARD_SIZE; i++) for(unsigned j = 0; j < BOARD_SIZE; j++) if(board[i][j] != boardAfterPlayerMove[i][j]) numDifferences++;
+	for(unsigned i = 0; i < BOARD_SIZE; i++)
+		for(unsigned j = 0; j < BOARD_SIZE; j++)
+			if(board[i][j] != boardAfterPlayerMove[i][j]) numDifferences++;
 	
 	if(numDifferences == 1)
 	{

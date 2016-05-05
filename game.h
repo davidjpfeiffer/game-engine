@@ -21,25 +21,32 @@ class Game
 		this->playerTwo = & playerTwo;
 		this->currentPlayer = this->playerOne;
 		
-		this->board = createNewBoard();
+		this->playerOneWins = 0;
+		this->playerTwoWins = 0;
+		this->gamesTied = 0;
 	}
 	
 	void play()
 	{
 		for(unsigned gameNumber = 1; gameNumber <= this->gameSettings.numberOfGames; gameNumber++)
 		{
+			this->board = createNewBoard();
+			
 			switch(getGameResult())
 			{
 				case GameResult::PlayerOneWin:
-					std::cout << "Result Of game: " << gameNumber << ": Player One Wins!\n";
+					if (this->gameSettings.displayEachGameResult) std::cout << "Result Of game: " << gameNumber << ": Player One Wins!\n";
+					this->playerOneWins++;
 					break;
 				
 				case GameResult::PlayerTwoWin:
-					std::cout << "Result Of game: " << gameNumber << ": Player Two Wins!\n";
+					if (this->gameSettings.displayEachGameResult) std::cout << "Result Of game: " << gameNumber << ": Player Two Wins!\n";
+					this->playerTwoWins++;
 					break;
 				
 				case GameResult::Tie:
-					std::cout << "Result Of game: " << gameNumber << ": Tie!\n";
+					if (this->gameSettings.displayEachGameResult) std::cout << "Result Of game: " << gameNumber << ": Tie!\n";
+					this->gamesTied++;
 					break;
 				
 				default:
@@ -47,11 +54,15 @@ class Game
 					break;
 			}
 		}
+		
+		if (this->gameSettings.displayStatistics) displayStatistics();
 	}
 	
 	struct GameSettings
 	{
 		bool displayMoves = true;
+		bool displayStatistics = false;
+		bool displayEachGameResult = true;
 		unsigned delayBetweenMoves = 1;
 		unsigned numberOfGames = 1;
 	} gameSettings;
@@ -62,6 +73,7 @@ class Game
 	Player * playerTwo;
 	Player * currentPlayer;
 	Board board;
+	unsigned playerOneWins, playerTwoWins, gamesTied;
 	
 	GameResult getGameResult()
 	{
@@ -96,6 +108,17 @@ class Game
 	toggleCurrentPlayer()
 	{
 		this->currentPlayer = this->currentPlayer == this->playerOne ? this->playerTwo : this->playerOne;
+	}
+	
+	displayStatistics()
+	{
+		std::cout << "------------------------------\n";
+		std::cout << "Game Statistics\n";
+		std::cout << "Player One Wins: " << this->playerOneWins << '\n';
+		std::cout << "Player Two Wins: " << this->playerTwoWins << '\n';
+		std::cout << "Games Tied: " << this->gamesTied << '\n';
+		std::cout << "Total Number Of Games: " << this->gameSettings.numberOfGames << '\n';
+		std::cout << "------------------------------\n";
 	}
 };
 

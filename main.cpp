@@ -13,7 +13,7 @@ int main()
 {
 	srand(time(NULL));
 	
-	RandomPlayer playerOne;
+	HumanPlayer playerOne;
 	ComputerPlayer playerTwo;
 	
 	Game game(playerOne, playerTwo);
