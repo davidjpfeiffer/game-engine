@@ -51,9 +51,9 @@ class Game
 	
 	struct GameSettings
 	{
-		bool displayMoves = false;
+		bool displayMoves = true;
 		unsigned delayBetweenMoves = 1;
-		unsigned numberOfGames = 10;
+		unsigned numberOfGames = 1;
 	} gameSettings;
 	
 	private:

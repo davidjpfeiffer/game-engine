@@ -14,7 +14,7 @@ int main()
 	srand(time(NULL));
 	
 	RandomPlayer playerOne;
-	RandomPlayer playerTwo;
+	ComputerPlayer playerTwo;
 	
 	Game game(playerOne, playerTwo);
 	game.play();
