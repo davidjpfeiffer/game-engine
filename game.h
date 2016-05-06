@@ -35,17 +35,17 @@ class Game
 			switch(getGameResult())
 			{
 				case GameResult::PlayerOneWin:
-					if (this->gameSettings.displayEachGameResult) std::cout << "Result Of game: " << gameNumber << ": Player One Wins!\n";
+					if (this->gameSettings.displayEachGameResult) std::cout << "Result Of game " << gameNumber << ": Player One Wins!\n";
 					this->playerOneWins++;
 					break;
 				
 				case GameResult::PlayerTwoWin:
-					if (this->gameSettings.displayEachGameResult) std::cout << "Result Of game: " << gameNumber << ": Player Two Wins!\n";
+					if (this->gameSettings.displayEachGameResult) std::cout << "Result Of game " << gameNumber << ": Player Two Wins!\n";
 					this->playerTwoWins++;
 					break;
 				
 				case GameResult::Tie:
-					if (this->gameSettings.displayEachGameResult) std::cout << "Result Of game: " << gameNumber << ": Tie!\n";
+					if (this->gameSettings.displayEachGameResult) std::cout << "Result Of game " << gameNumber << ": Tie!\n";
 					this->gamesTied++;
 					break;
 				

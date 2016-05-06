@@ -27,12 +27,27 @@ void printBoard(const Board & board)
 	std::cout << '\n';
 	for(unsigned i = 0; i < BOARD_SIZE; i++)
 	{
+		std::cout << "###########################\n";
+		std::cout << "###     ###     ###     ###\n";
+		std::cout << "###";
 		for(unsigned j = 0; j < BOARD_SIZE; j++)
 		{
-			std::cout << board[i][j] << ' ';
+			switch(board[i][j])
+			{
+				case BoardValue::Empty:
+					std::cout << "     ###";
+					break;
+				case BoardValue::X:
+					std::cout << "  X  ###";
+					break;
+				case BoardValue::O:
+					std::cout << "  O  ###";
+					break;
+			}
 		}
-		std::cout << '\n';
+		std::cout << "\n###     ###     ###     ###\n";
 	}
+	std::cout << "###########################\n";
 	std::cout << '\n';
 }
 
