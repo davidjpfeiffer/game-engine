@@ -74,14 +74,20 @@ bool playerHasWon(const Board & board, BoardValue playerBoardValue)
 	
 	for(unsigned row = 0; row < BOARD_SIZE; row++)
 	{
-		if(board[row][0] == playerBoardValue && board[row][1] == playerBoardValue && board[row][2] == playerBoardValue) won = true;
+		if(board[row][0] == playerBoardValue && board[row][1] == playerBoardValue && board[row][2] == playerBoardValue)
+		{
+			won = true;
+		}
 	}
-		
+	
 	for(unsigned column = 0; column < BOARD_SIZE; column++)
 	{
-		if(board[0][column] == playerBoardValue && board[1][column] == playerBoardValue && board[2][column] == playerBoardValue) won = true;
+		if(board[0][column] == playerBoardValue && board[1][column] == playerBoardValue && board[2][column] == playerBoardValue)
+		{
+			won = true;
+		}
 	}
-		
+	
 	if(board[0][0] == playerBoardValue && board[1][1] == playerBoardValue && board[2][2] == playerBoardValue)
 	{
 		won = true;
@@ -108,7 +114,10 @@ unsigned numAvailableMoves(const Board & board)
 	{
 		for(unsigned j = 0; j < BOARD_SIZE; j++)
 		{
-			if(board[i][j] == 0) availableMoves++;
+			if(board[i][j] == 0)
+			{
+				availableMoves++;
+			}
 		}
 	}
 	
@@ -123,7 +132,10 @@ unsigned numDifferencesBetweenBoards(const Board & boardOne, const Board & board
 	{
 		for(unsigned j = 0; j < BOARD_SIZE; j++)
 		{
-			if(boardOne[i][j] != boardTwo[i][j]) numDifferences++;
+			if(boardOne[i][j] != boardTwo[i][j])
+			{
+				numDifferences++;
+			}
 		}
 	}
 	
@@ -142,8 +154,14 @@ bool validMove(const Board & board, const Board & boardAfterPlayerMove, BoardVal
 			{
 				if(board[i][j] != boardAfterPlayerMove[i][j])
 				{
-					if (board[i][j] != BoardValue::Empty) return false;
-					if (boardAfterPlayerMove[i][j] == playerBoardValue) moveMatchesPlayer = true;
+					if (board[i][j] != BoardValue::Empty)
+					{
+						return false;
+					}
+					if (boardAfterPlayerMove[i][j] == playerBoardValue)
+					{
+						moveMatchesPlayer = true;
+					}
 				}
 			}
 		}
@@ -162,7 +180,10 @@ Board makeRandomMove(const Board & board, BoardValue playerBoardValue)
 	{
 		for(unsigned j = 0; j < BOARD_SIZE; j++)
 		{
-			if (board[i][j] == BoardValue::Empty) availableMoves.push_back(std::make_pair(i, j));
+			if (board[i][j] == BoardValue::Empty)
+			{
+				availableMoves.push_back(std::make_pair(i, j));
+			}
 		}
 	}
 	
@@ -175,8 +196,14 @@ Board makeRandomMove(const Board & board, BoardValue playerBoardValue)
 
 unsigned getRandomNumber(unsigned mod)
 {
-	if (mod == 0) return 0;
-	else return rand() % mod;
+	if (mod == 0)
+	{
+		return 0;
+	}
+	else
+	{
+		return rand() % mod;
+	}
 }
 
 #endif
