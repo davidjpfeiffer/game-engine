@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <cstdlib>
-#include <unistd.h>
+#include <windows.h>
 
 #include "utilities.h"
 #include "player.h"
@@ -82,7 +82,7 @@ class Game
 				toggleCurrentPlayer();
 				if (this->gameSettings.gameType == GameType::Single)
 				{
-					sleep(this->gameSettings.delayBetweenMoves);
+					Sleep(this->gameSettings.delayBetweenMoves);
 					printBoard(board);
 				}
 			}
