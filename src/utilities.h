@@ -9,6 +9,7 @@ const unsigned BOARD_SIZE = 3;
 
 enum GameResult {PlayerOneWin, PlayerTwoWin, Tie};
 enum BoardValue {Empty, O, X};
+enum GameType {Single, Multiple};
 
 typedef std::vector<std::vector<BoardValue> > Board;
 
@@ -18,6 +19,7 @@ Board createNewBoard();
 bool playerHasWon(const Board & board, unsigned player);
 bool boardIsInWinningState(const Board & board);
 unsigned numAvailableMoves(const Board & board);
+unsigned numDifferencesBetweenBoards(const Board & boardOne, const Board & boardTwo);
 bool validMove(const Board & board, const Board & boardAfterPlayerMove, BoardValue playerBoardValue);
 Board makeRandomMove(const Board & board);
 unsigned getRandomNumber(unsigned mod);
@@ -47,8 +49,7 @@ void printBoard(const Board & board)
 		}
 		std::cout << "\n###     ###     ###     ###\n";
 	}
-	std::cout << "###########################\n";
-	std::cout << '\n';
+	std::cout << "###########################\n\n";
 }
 
 Board copyBoard(const Board & original)
@@ -62,17 +63,34 @@ Board copyBoard(const Board & original)
 
 Board createNewBoard()
 {
-	return {{BoardValue::Empty, BoardValue::Empty, BoardValue::Empty}, {BoardValue::Empty, BoardValue::Empty, BoardValue::Empty}, {BoardValue::Empty, BoardValue::Empty, BoardValue::Empty}};
+	return {{ BoardValue::Empty, BoardValue::Empty, BoardValue::Empty },
+			{ BoardValue::Empty, BoardValue::Empty, BoardValue::Empty },
+			{ BoardValue::Empty, BoardValue::Empty, BoardValue::Empty }};
 }
 
 bool playerHasWon(const Board & board, BoardValue playerBoardValue)
 {
 	bool won = false;
 	
-	for(unsigned row = 0; row < BOARD_SIZE; row++) if(board[row][0] == playerBoardValue && board[row][1] == playerBoardValue && board[row][2] == playerBoardValue) won = true;
-	for(unsigned column = 0; column < BOARD_SIZE; column++) if(board[0][column] == playerBoardValue && board[1][column] == playerBoardValue && board[2][column] == playerBoardValue) won = true;
-	if(board[0][0] == playerBoardValue && board[1][1] == playerBoardValue && board[2][2] == playerBoardValue) won = true;
-	if(board[0][2] == playerBoardValue && board[1][1] == playerBoardValue && board[2][0] == playerBoardValue) won = true;
+	for(unsigned row = 0; row < BOARD_SIZE; row++)
+	{
+		if(board[row][0] == playerBoardValue && board[row][1] == playerBoardValue && board[row][2] == playerBoardValue) won = true;
+	}
+		
+	for(unsigned column = 0; column < BOARD_SIZE; column++)
+	{
+		if(board[0][column] == playerBoardValue && board[1][column] == playerBoardValue && board[2][column] == playerBoardValue) won = true;
+	}
+		
+	if(board[0][0] == playerBoardValue && board[1][1] == playerBoardValue && board[2][2] == playerBoardValue)
+	{
+		won = true;
+	}
+	
+	if(board[0][2] == playerBoardValue && board[1][1] == playerBoardValue && board[2][0] == playerBoardValue)
+	{
+		won = true;
+	}
 	
 	return won;
 }
@@ -86,21 +104,37 @@ unsigned numAvailableMoves(const Board & board)
 {
 	unsigned availableMoves = 0;
 	
-	for(unsigned i = 0; i < BOARD_SIZE; i++) for(unsigned j = 0; j < BOARD_SIZE; j++) if(board[i][j] == 0) availableMoves++;
+	for(unsigned i = 0; i < BOARD_SIZE; i++)
+	{
+		for(unsigned j = 0; j < BOARD_SIZE; j++)
+		{
+			if(board[i][j] == 0) availableMoves++;
+		}
+	}
 	
 	return availableMoves;
 }
 
-bool validMove(const Board & board, const Board & boardAfterPlayerMove, BoardValue playerBoardValue)
+unsigned numDifferencesBetweenBoards(const Board & boardOne, const Board & boardTwo)
 {
 	unsigned numDifferences = 0;
-	bool moveMatchesPlayer = false;
 	
 	for(unsigned i = 0; i < BOARD_SIZE; i++)
+	{
 		for(unsigned j = 0; j < BOARD_SIZE; j++)
-			if(board[i][j] != boardAfterPlayerMove[i][j]) numDifferences++;
+		{
+			if(boardOne[i][j] != boardTwo[i][j]) numDifferences++;
+		}
+	}
 	
-	if(numDifferences == 1)
+	return numDifferences;
+}
+
+bool validMove(const Board & board, const Board & boardAfterPlayerMove, BoardValue playerBoardValue)
+{
+	bool moveMatchesPlayer = false;
+	
+	if(numDifferencesBetweenBoards(board, boardAfterPlayerMove) == 1)
 	{
 		for(unsigned i = 0; i < BOARD_SIZE; i++)
 		{

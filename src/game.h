@@ -20,49 +20,42 @@ class Game
 		this->playerOne = & playerOne;
 		this->playerTwo = & playerTwo;
 		this->currentPlayer = this->playerOne;
-		
-		this->playerOneWins = 0;
-		this->playerTwoWins = 0;
-		this->gamesTied = 0;
 	}
 	
 	void play()
 	{
 		for(unsigned gameNumber = 1; gameNumber <= this->gameSettings.numberOfGames; gameNumber++)
 		{
-			this->board = createNewBoard();
+			resetBoard();
 			
 			switch(getGameResult())
 			{
 				case GameResult::PlayerOneWin:
-					if (this->gameSettings.displayEachGameResult) std::cout << "Result Of game " << gameNumber << ": Player One Wins!\n";
+					if (this->gameSettings.gameType == GameType::Single)
+						std::cout << "Result Of game " << gameNumber << ": Player One Wins!\n";
 					this->playerOneWins++;
 					break;
 				
 				case GameResult::PlayerTwoWin:
-					if (this->gameSettings.displayEachGameResult) std::cout << "Result Of game " << gameNumber << ": Player Two Wins!\n";
+					if (this->gameSettings.gameType == GameType::Single)
+						std::cout << "Result Of game " << gameNumber << ": Player Two Wins!\n";
 					this->playerTwoWins++;
 					break;
 				
 				case GameResult::Tie:
-					if (this->gameSettings.displayEachGameResult) std::cout << "Result Of game " << gameNumber << ": Tie!\n";
+					if (this->gameSettings.gameType == GameType::Single)
+						std::cout << "Result Of game " << gameNumber << ": Tie!\n";
 					this->gamesTied++;
-					break;
-				
-				default:
-					std::cout << "An error occured.\n";
 					break;
 			}
 		}
 		
-		if (this->gameSettings.displayStatistics) displayStatistics();
+		if (this->gameSettings.gameType == GameType::Multiple) displayStatistics();
 	}
 	
 	struct GameSettings
 	{
-		bool displayMoves = true;
-		bool displayStatistics = false;
-		bool displayEachGameResult = true;
+		GameType gameType = GameType::Single;
 		unsigned delayBetweenMoves = 1;
 		unsigned numberOfGames = 1;
 	} gameSettings;
@@ -73,11 +66,11 @@ class Game
 	Player * playerTwo;
 	Player * currentPlayer;
 	Board board;
-	unsigned playerOneWins, playerTwoWins, gamesTied;
+	unsigned playerOneWins = 0, playerTwoWins = 0, gamesTied = 0;
 	
 	GameResult getGameResult()
 	{
-		if (this->gameSettings.displayMoves) printBoard(board);
+		if (this->gameSettings.gameType == GameType::Single) printBoard(board);
 		
 		while(!boardIsInWinningState(board) && numAvailableMoves(board) > 0)
 		{
@@ -87,7 +80,7 @@ class Game
 			{
 				board = copyBoard(boardAfterPlayerMove);
 				toggleCurrentPlayer();
-				if (this->gameSettings.displayMoves)
+				if (this->gameSettings.gameType == GameType::Single)
 				{
 					sleep(this->gameSettings.delayBetweenMoves);
 					printBoard(board);
@@ -103,6 +96,11 @@ class Game
 		if(playerHasWon(board, this->playerOne->getPlayerBoardValue())) return GameResult::PlayerOneWin;
 		else if (playerHasWon(board, this->playerTwo->getPlayerBoardValue())) return GameResult::PlayerTwoWin;
 		else return GameResult::Tie;
+	}
+	
+	resetBoard()
+	{
+		this->board = createNewBoard();
 	}
 	
 	toggleCurrentPlayer()
