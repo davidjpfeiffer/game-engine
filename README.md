@@ -2,6 +2,16 @@
 
 This simple C++ command line interface program written by David Pfeiffer for the 2016 Southeast Missouri State Hackathon allows any two algorithms to face off in a game of Tic Tac Toe. The program was written to better understand how game engines work. In the future I plan to make game engines that work for more complex games like Connect Four or chess.
 
+### Project Setup
+
+Open a command line prompt in the directory you would like to clone the project. You can clone, compile, and run the project using the following commands:
+```
+$ git clone https://github.com/davidjpfeiffer/tic-tac-toe
+$ cd tic-tac-toe/src
+$ g++ -o main -std=c++11 main.cpp
+$ main.exe
+```
+
 ### Getting Started
 
 To create and play games you must include the game engine and a collection of algorithms (called players) into a program. The <code>Game</code> constructor accepts two arguments of type <code>Player</code>. Once a game is created, you can execute the game by calling the <code>play()</code> method on the game object.
@@ -15,14 +25,6 @@ int main()
 	Game game(playerOne, playerTwo);
 	game.play();
 }
-```
-
-### How To Compile
-
-This project was written in C++ 11. You must indicate which version you are using when compiling. This can be done using the following command, which should be run inside the project directory.
-
-```
-g++ -o main -std=c++11 main.cpp
 ```
 
 ### Pre-Built Algorithms
