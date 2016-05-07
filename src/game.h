@@ -5,21 +5,17 @@
 #include <cstdlib>
 #include <unistd.h>
 
-#include "utilities.h"
-#include "player.h"
+#include "gameEngine.h"
 
-class Game
+class Game : public GameEngine
 {
 	public:
 	
-	Game(Player & playerOne, Player & playerTwo)
+	Game(Player & playerOne, Player & playerTwo) : GameEngine(playerOne, playerTwo)
 	{
-		playerOne.setPlayerBoardValue(BoardValue::O);
-		playerTwo.setPlayerBoardValue(BoardValue::X);
-		
-		this->playerOne = & playerOne;
-		this->playerTwo = & playerTwo;
-		this->currentPlayer = this->playerOne;
+		this->gameSettings.gameType = GameType::Single;
+		this->gameSettings.delayBetweenMoves = 1;
+		this->gameSettings.numberOfGames = 1;
 	}
 	
 	void play()
@@ -53,37 +49,26 @@ class Game
 		if (this->gameSettings.gameType == GameType::Multiple) displayStatistics();
 	}
 	
-	struct GameSettings
-	{
-		GameType gameType = GameType::Single;
-		unsigned delayBetweenMoves = 1;
-		unsigned numberOfGames = 1;
-	} gameSettings;
-	
 	private:
 	
-	Player * playerOne;
-	Player * playerTwo;
-	Player * currentPlayer;
-	Board board;
 	unsigned playerOneWins = 0, playerTwoWins = 0, gamesTied = 0;
 	
 	GameResult getGameResult()
 	{
-		if (this->gameSettings.gameType == GameType::Single) printBoard(board);
+		if (this->gameSettings.gameType == GameType::Single) printBoard(this->board);
 		
-		while(!boardIsInWinningState(board) && numAvailableMoves(board) > 0)
+		while(!boardIsInWinningState(this->board) && numAvailableMoves(this->board) > 0)
 		{
-			Board boardAfterPlayerMove = this->currentPlayer->getMove(board);
+			Board boardAfterPlayerMove = this->currentPlayer->getMove(this->board);
 			
-			if (validMove(board, boardAfterPlayerMove, this->currentPlayer->getPlayerBoardValue()))
+			if (validMove(this->board, boardAfterPlayerMove, this->currentPlayer->getPlayerBoardValue()))
 			{
-				board = copyBoard(boardAfterPlayerMove);
+				this->board = copyBoard(boardAfterPlayerMove);
 				toggleCurrentPlayer();
 				if (this->gameSettings.gameType == GameType::Single)
 				{
 					sleep(this->gameSettings.delayBetweenMoves);
-					printBoard(board);
+					printBoard(this->board);
 				}
 			}
 			else
@@ -93,22 +78,17 @@ class Game
 			}
 		}
 		
-		if(playerHasWon(board, this->playerOne->getPlayerBoardValue())) return GameResult::PlayerOneWin;
-		else if (playerHasWon(board, this->playerTwo->getPlayerBoardValue())) return GameResult::PlayerTwoWin;
+		if(playerHasWon(this->board, this->playerOne->getPlayerBoardValue())) return GameResult::PlayerOneWin;
+		else if (playerHasWon(this->board, this->playerTwo->getPlayerBoardValue())) return GameResult::PlayerTwoWin;
 		else return GameResult::Tie;
 	}
 	
-	resetBoard()
+	void resetBoard()
 	{
 		this->board = createNewBoard();
 	}
 	
-	toggleCurrentPlayer()
-	{
-		this->currentPlayer = this->currentPlayer == this->playerOne ? this->playerTwo : this->playerOne;
-	}
-	
-	displayStatistics()
+	void displayStatistics()
 	{
 		std::cout << "------------------------------\n";
 		std::cout << "Game Statistics\n";
