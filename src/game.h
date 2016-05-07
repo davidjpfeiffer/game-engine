@@ -63,7 +63,7 @@ class Game : public GameEngine
 			
 			if (validMove(this->board, boardAfterPlayerMove, this->currentPlayer->getPlayerBoardValue()))
 			{
-				this->board = copyBoard(boardAfterPlayerMove);
+				this->board = createCopyOfBoard(boardAfterPlayerMove);
 				toggleCurrentPlayer();
 				if (this->gameSettings.gameType == GameType::Single)
 				{
@@ -85,7 +85,7 @@ class Game : public GameEngine
 	
 	void resetBoard()
 	{
-		this->board = createNewBoard();
+		this->board = createEmptyBoard();
 	}
 	
 	void displayStatistics()

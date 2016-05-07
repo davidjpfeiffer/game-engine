@@ -14,8 +14,8 @@ enum GameType {Single, Multiple};
 typedef std::vector<std::vector<BoardValue> > Board;
 
 void printBoard(const Board & board);
-Board copyBoard(const Board & original);
-Board createNewBoard();
+Board createCopyOfBoard(const Board & original);
+Board createEmptyBoard();
 bool playerHasWon(const Board & board, unsigned player);
 bool boardIsInWinningState(const Board & board);
 unsigned numAvailableMoves(const Board & board);
@@ -52,16 +52,16 @@ void printBoard(const Board & board)
 	std::cout << "###########################\n\n";
 }
 
-Board copyBoard(const Board & original)
+Board createCopyOfBoard(const Board & original)
 {
-	Board copyBoard = createNewBoard();
+	Board copy = createEmptyBoard();
 	
-	std::copy(original.begin(), original.begin() + BOARD_SIZE, copyBoard.begin());
+	std::copy(original.begin(), original.begin() + BOARD_SIZE, copy.begin());
 	
-	return copyBoard;
+	return copy;
 }
 
-Board createNewBoard()
+Board createEmptyBoard()
 {
 	return {{ BoardValue::Empty, BoardValue::Empty, BoardValue::Empty },
 			{ BoardValue::Empty, BoardValue::Empty, BoardValue::Empty },
@@ -173,7 +173,7 @@ bool validMove(const Board & board, const Board & boardAfterPlayerMove, BoardVal
 
 Board makeRandomMove(const Board & board, BoardValue playerBoardValue)
 {
-	Board newBoard = copyBoard(board);
+	Board newBoard = createCopyOfBoard(board);
 	std::vector<std::pair<unsigned, unsigned> > availableMoves;
 	
 	for(unsigned i = 0; i < BOARD_SIZE; i++)

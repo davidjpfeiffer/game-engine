@@ -10,7 +10,7 @@ class ComputerPlayer : public Player
 	
 	Board getMove(const Board & board)
 	{
-		Board mainBoard = copyBoard(board);
+		Board mainBoard = createCopyOfBoard(board);
 		Board theoreticalBoard;
 		
 		// If we can win, take win
@@ -18,7 +18,7 @@ class ComputerPlayer : public Player
 		{
 			for(unsigned j = 0; j < BOARD_SIZE; j++)
 			{
-				theoreticalBoard = copyBoard(board);
+				theoreticalBoard = createCopyOfBoard(board);
 				if(theoreticalBoard[i][j] == BoardValue::Empty)
 				{
 					theoreticalBoard[i][j] = this->getPlayerBoardValue();
@@ -37,7 +37,7 @@ class ComputerPlayer : public Player
 		{
 			for(unsigned j = 0; j < BOARD_SIZE; j++)
 			{
-				theoreticalBoard = copyBoard(board);
+				theoreticalBoard = createCopyOfBoard(board);
 				if(theoreticalBoard[i][j] == BoardValue::Empty)
 				{
 					theoreticalBoard[i][j] = this->getOpponentBoardValue();

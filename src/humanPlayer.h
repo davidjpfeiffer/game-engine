@@ -26,7 +26,7 @@ class HumanPlayer : public Player
 			std::cout << "Enter the column: ";
 			std::cin >> column;
 			
-			newBoard = copyBoard(board);
+			newBoard = createCopyOfBoard(board);
 			
 			if(row > 0 && row < 4 && column > 0 && column < 4)
 			{
