@@ -38,6 +38,7 @@ class HumanPlayer : public Player
 			}
 			
 			validMoveMade = validMove(board, newBoard, this->getPlayerBoardValue());
+			
 			if (!validMoveMade)
 			{
 				std::cout << "That was not a valid move. Please try again.\n";
