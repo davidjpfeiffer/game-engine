@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <cstdlib>
-#include <unistd.h>
+#include <windows.h>
 
 #include "gameEngine.h"
 
@@ -67,8 +67,13 @@ class Game : public GameEngine
 				toggleCurrentPlayer();
 				if (this->gameSettings.gameType == GameType::Single)
 				{
+<<<<<<< HEAD
 					sleep(this->gameSettings.delayBetweenMoves);
 					printBoard(this->board);
+=======
+					Sleep(this->gameSettings.delayBetweenMoves);
+					printBoard(board);
+>>>>>>> c0caf2c5fd1c2ec8b71c0d10a161c10f87434c75
 				}
 			}
 			else
