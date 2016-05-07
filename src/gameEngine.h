@@ -27,7 +27,6 @@ class GameEngine
 	struct GameSettings
 	{
 		GameType gameType;
-		unsigned delayBetweenMoves;
 		unsigned numberOfGames;
 	} gameSettings;
 	
