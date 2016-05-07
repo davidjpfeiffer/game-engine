@@ -1,4 +1,4 @@
-## A C++ Game Engine for Tic Tac Toe
+## Game Engine for Tic Tac Toe
 
 This simple C++ command line interface program written by David Pfeiffer for the 2016 Southeast Missouri State Hackathon allows any two algorithms to face off in a game of Tic Tac Toe. The program was written to better understand how game engines work. In the future I plan to make game engines that work for more complex games like Connect Four or chess.
 
