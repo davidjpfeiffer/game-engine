@@ -17,7 +17,7 @@ class Player
 	void setPlayerBoardValue(BoardValue playerBoardValue)
 	{
 		this->playerBoardValue = playerBoardValue;
-		this->opponentBoardValue = this->playerBoardValue == BoardValue::X ? BoardValue::O : BoardValue::X;
+		this->opponentBoardValue = this->playerBoardValue == BoardValue::PlayerTwo ? BoardValue::PlayerOne : BoardValue::PlayerTwo;
 	}
 	
 	BoardValue getPlayerBoardValue()

@@ -7,8 +7,8 @@
 
 const unsigned BOARD_SIZE = 3;
 
-enum GameResult {PlayerOneWin, PlayerTwoWin, Tie};
-enum BoardValue {Empty, O, X};
+enum GameResult {Tie, PlayerOneWin, PlayerTwoWin};
+enum BoardValue {Empty, PlayerOne, PlayerTwo};
 enum GameType {Single, Multiple};
 
 typedef std::vector<std::vector<BoardValue> > Board;
@@ -39,11 +39,11 @@ void printBoard(const Board & board)
 				case BoardValue::Empty:
 					std::cout << "     ###";
 					break;
-				case BoardValue::X:
-					std::cout << "  X  ###";
-					break;
-				case BoardValue::O:
+				case BoardValue::PlayerOne:
 					std::cout << "  O  ###";
+					break;
+				case BoardValue::PlayerTwo:
+					std::cout << "  X  ###";
 					break;
 			}
 		}
@@ -103,7 +103,7 @@ bool playerHasWon(const Board & board, BoardValue playerBoardValue)
 
 bool boardIsInWinningState(const Board & board)
 {
-	return playerHasWon(board, BoardValue::O) || playerHasWon(board, BoardValue::X);
+	return playerHasWon(board, BoardValue::PlayerOne) || playerHasWon(board, BoardValue::PlayerTwo);
 }
 
 unsigned numAvailableMoves(const Board & board)

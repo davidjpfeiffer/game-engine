@@ -1,7 +1,7 @@
 #include <cstdlib>
 #include <time.h>
 
-#include "game.h"
+#include "gameEngine.h"
 
 #include "randomPlayer.h"
 #include "humanPlayer.h"
@@ -13,9 +13,9 @@ int main()
 {
 	srand(time(NULL));
 	
-	HumanPlayer playerOne;
+	ComputerPlayer playerOne;
 	ComputerPlayer playerTwo;
 	
-	Game game(playerOne, playerTwo);
-	game.play();
+	GameEngine gameEngine(playerOne, playerTwo);
+	gameEngine.play();
 }
