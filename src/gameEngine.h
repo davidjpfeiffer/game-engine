@@ -25,8 +25,10 @@ class GameEngine
 		this->gameSettings.numberOfGames = 1;
 	}
 	
-	void play()
+	void play(unsigned numberOfGames)
 	{
+		this->configureGameSettings(numberOfGames);
+		
 		for(unsigned gameNumber = 1; gameNumber <= this->gameSettings.numberOfGames; gameNumber++)
 		{
 			resetBoard();
@@ -119,6 +121,20 @@ class GameEngine
 	void toggleCurrentPlayer()
 	{
 		this->currentPlayer = this->currentPlayer == this->playerOne ? this->playerTwo : this->playerOne;
+	}
+	
+	void configureGameSettings(unsigned numberOfGames)
+	{
+		if (numberOfGames == 1)
+		{
+			this->gameSettings.gameType = GameType::Single;
+		}
+		else
+		{
+			this->gameSettings.gameType = GameType::Multiple;
+		}
+		
+		this->gameSettings.numberOfGames = numberOfGames;
 	}
 };
 
