@@ -29,24 +29,16 @@ int main()
 
 ### Pre-Built Algorithms
 
-<ul>
-<li>Random Player</li>
-<ul>
-<li>Selects a random move every turn</li>
-<li>Should be default move for all other algorithms</li>
-</ul>
-<li>Computer Player</li>
-<ul>
-<li>A simple algorithm that makes moves based on certain conditions</li>
-<li>Because this game is easy, this algorithm actually plays a perfect game</li>
-</ul>
-<li>Human Player</li>
-<ul>
-<li>Prompts the user to enter input for each move</li>
-<li>Works just like other algorithms</li>
-<li>Allows humans to play computers, and other fun combinations</li>
-</ul>
-</ul>
+* Random Player
+ * Selects a random move every turn
+ * Should be default move for all other algorithms
+* Computer Player
+ * A simple algorithm that makes moves based on certain conditions
+ * Because this game is easy, this algorithm actually plays a perfect game
+* Human Player
+ * Prompts the user to enter input for each move
+ * Works just like other algorithms
+ * Allows humans to play computers, and other fun combinations
 
 ### Create Your Own Algorithm
 
