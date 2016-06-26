@@ -16,7 +16,7 @@ class GameEngine
 	{
 		playerOne.setPlayerBoardValue(BoardValue::PlayerOne);
 		playerTwo.setPlayerBoardValue(BoardValue::PlayerTwo);
-		
+
 		this->playerOne = & playerOne;
 		this->playerTwo = & playerTwo;
 		this->currentPlayer = this->playerOne;
