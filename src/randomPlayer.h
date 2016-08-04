@@ -11,7 +11,7 @@ public:
 
   Board getMove(const Board & board)
   {
-    return makeRandomMove(board, this->getPlayerBoardValue());
+    return makeRandomMove(board, this->getBoardValue());
   }
 };
 

@@ -20,6 +20,9 @@ bool playerHasWon(const Board & board, BoardValue playerBoardValue);
 bool boardIsInWinningState(const Board & board);
 unsigned numAvailableMoves(const Board & board);
 unsigned numDifferencesBetweenBoards(const Board & boardOne, const Board & boardTwo);
+bool validRow(int row);
+bool validColumn(int column);
+bool validRowAndColumn(int row, int column);
 bool validMove(const Board & board, const Board & boardAfterPlayerMove, BoardValue playerBoardValue);
 Board makeRandomMove(const Board & board);
 int getBoardValueAsInt(BoardValue boardValue);
@@ -142,6 +145,21 @@ unsigned numDifferencesBetweenBoards(const Board & boardOne, const Board & board
   }
 
   return numDifferences;
+}
+
+bool validRow(int row)
+{
+  return row >= 0 && row < BOARD_SIZE;
+}
+
+bool validColumn(int column)
+{
+  return column >= 0 && column < BOARD_SIZE;
+}
+
+bool validRowAndColumn(int row, int column)
+{
+  return validRow(row) && validColumn(column);
 }
 
 bool validMove(const Board & board, const Board & boardAfterPlayerMove, BoardValue playerBoardValue)

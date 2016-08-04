@@ -12,8 +12,8 @@ public:
 
   GameEngine(Player & playerOne, Player & playerTwo)
   {
-    playerOne.setPlayerBoardValue(BoardValue::PlayerOne);
-    playerTwo.setPlayerBoardValue(BoardValue::PlayerTwo);
+    playerOne.setBoardValue(BoardValue::PlayerOne);
+    playerTwo.setBoardValue(BoardValue::PlayerTwo);
 
     this->playerOne = & playerOne;
     this->playerTwo = & playerTwo;
@@ -65,22 +65,19 @@ private:
 
     while (!boardIsInWinningState(this->board) && numAvailableMoves(this->board) > 0)
     {
-      Board boardAfterPlayerMove = this->currentPlayer->getMove(this->board);
+      Board boardAfterMove = this->currentPlayer->getMove(this->board);
 
-      if (validMove(this->board, boardAfterPlayerMove, this->currentPlayer->getPlayerBoardValue()))
+      if (validMove(this->board, boardAfterMove, this->currentPlayer->getBoardValue()))
       {
-        this->board = createCopyOfBoard(boardAfterPlayerMove);
+        this->board = createCopyOfBoard(boardAfterMove);
         toggleCurrentPlayer();
-        if (playingSingleGame())
-        {
-          printBoard(board);
-        }
+        if (playingSingleGame()) printBoard(board);
       }
       else exitWithErrorMessage(this->currentPlayer->getName() + " did not submit a valid move.");
     }
 
-    if (playerHasWon(this->board, this->playerOne->getPlayerBoardValue())) return GameResult::PlayerOneWin;
-    else if (playerHasWon(this->board, this->playerTwo->getPlayerBoardValue())) return GameResult::PlayerTwoWin;
+    if (playerHasWon(this->board, this->playerOne->getBoardValue())) return GameResult::PlayerOneWin;
+    else if (playerHasWon(this->board, this->playerTwo->getBoardValue())) return GameResult::PlayerTwoWin;
     else return GameResult::Tie;
   }
 

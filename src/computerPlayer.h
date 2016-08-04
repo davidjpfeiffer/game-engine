@@ -22,10 +22,10 @@ public:
         theoreticalBoard = createCopyOfBoard(board);
         if (theoreticalBoard[i][j] == BoardValue::Empty)
         {
-          theoreticalBoard[i][j] = this->getPlayerBoardValue();
-          if (playerHasWon(theoreticalBoard, this->getPlayerBoardValue()))
+          theoreticalBoard[i][j] = this->getBoardValue();
+          if (playerHasWon(theoreticalBoard, this->getBoardValue()))
           {
-            mainBoard[i][j] = this->getPlayerBoardValue();
+            mainBoard[i][j] = this->getBoardValue();
             return mainBoard;
           }
         }
@@ -44,7 +44,7 @@ public:
           theoreticalBoard[i][j] = this->getOpponentBoardValue();
           if (playerHasWon(theoreticalBoard, this->getOpponentBoardValue()))
           {
-            mainBoard[i][j] = this->getPlayerBoardValue();
+            mainBoard[i][j] = this->getBoardValue();
             return mainBoard;
           }
         }
@@ -55,31 +55,31 @@ public:
     // If middle available, take middle
     if (mainBoard[1][1] == BoardValue::Empty)
     {
-      mainBoard[1][1] = this->getPlayerBoardValue();
+      mainBoard[1][1] = this->getBoardValue();
       return mainBoard;
     }
 
     // Offensive Strategy
-    if (mainBoard[1][1] == this->getPlayerBoardValue() && numAvailableMoves(board) == 7)
+    if (mainBoard[1][1] == this->getBoardValue() && numAvailableMoves(board) == 7)
     {
       if (mainBoard[0][1] == this->getOpponentBoardValue())
       {
-        mainBoard[2][2] = this->getPlayerBoardValue();
+        mainBoard[2][2] = this->getBoardValue();
         return mainBoard;
       }
       else if (mainBoard[1][2] == this->getOpponentBoardValue())
       {
-        mainBoard[2][0] = this->getPlayerBoardValue();
+        mainBoard[2][0] = this->getBoardValue();
         return mainBoard;
       }
       else if (mainBoard[2][1] == this->getOpponentBoardValue())
       {
-        mainBoard[0][0] = this->getPlayerBoardValue();
+        mainBoard[0][0] = this->getBoardValue();
         return mainBoard;
       }
       else if (mainBoard[1][0] == this->getOpponentBoardValue())
       {
-        mainBoard[2][2] = this->getPlayerBoardValue();
+        mainBoard[2][2] = this->getBoardValue();
         return mainBoard;
       }
     }
@@ -87,49 +87,49 @@ public:
     // Defensive Strategy
     if (mainBoard[1][0] == this->getOpponentBoardValue() && mainBoard[2][1] == this->getOpponentBoardValue() && mainBoard[2][0] == BoardValue::Empty)
     {
-      mainBoard[2][0] = this->getPlayerBoardValue();
+      mainBoard[2][0] = this->getBoardValue();
       return mainBoard;
     }
     else if (mainBoard[1][0] == this->getOpponentBoardValue() && mainBoard[0][1] == this->getOpponentBoardValue() && mainBoard[0][0] == BoardValue::Empty)
     {
-      mainBoard[0][0] = this->getPlayerBoardValue();
+      mainBoard[0][0] = this->getBoardValue();
       return mainBoard;
     }
     else if (mainBoard[0][1] == this->getOpponentBoardValue() && mainBoard[1][2] == this->getOpponentBoardValue() && mainBoard[0][2] == BoardValue::Empty)
     {
-      mainBoard[0][2] = this->getPlayerBoardValue();
+      mainBoard[0][2] = this->getBoardValue();
       return mainBoard;
     }
     else if (mainBoard[2][1] == this->getOpponentBoardValue() && mainBoard[1][2] == this->getOpponentBoardValue() && mainBoard[2][2] == BoardValue::Empty)
     {
-      mainBoard[2][2] = this->getPlayerBoardValue();
+      mainBoard[2][2] = this->getBoardValue();
       return mainBoard;
     }
 
     // If corner available, take corner
     if (mainBoard[0][0] == BoardValue::Empty)
     {
-      mainBoard[0][0] = this->getPlayerBoardValue();
+      mainBoard[0][0] = this->getBoardValue();
       return mainBoard;
     }
     else if (mainBoard[0][2] == BoardValue::Empty)
     {
-      mainBoard[0][2] = this->getPlayerBoardValue();
+      mainBoard[0][2] = this->getBoardValue();
       return mainBoard;
     }
     else if (mainBoard[2][0] == BoardValue::Empty)
     {
-      mainBoard[2][0] = this->getPlayerBoardValue();
+      mainBoard[2][0] = this->getBoardValue();
       return mainBoard;
     }
     else if (mainBoard[2][2] == BoardValue::Empty)
     {
-      mainBoard[2][2] = this->getPlayerBoardValue();
+      mainBoard[2][2] = this->getBoardValue();
       return mainBoard;
     }
 
     // Default to random move
-    return makeRandomMove(board, this->getPlayerBoardValue());
+    return makeRandomMove(board, this->getBoardValue());
   }
 };
 

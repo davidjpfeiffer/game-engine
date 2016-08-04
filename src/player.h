@@ -9,29 +9,29 @@ class Player
 {
 private:
 
-  BoardValue playerBoardValue;
+  BoardValue boardValue;
   BoardValue opponentBoardValue;
 
 public:
 
-  virtual std::string getName()
-  {
-    std::string prefix = "Player ";
-    char playerNumber = getBoardValueAsChar(this->getPlayerBoardValue());
-    return prefix + playerNumber;
-  }
-
   virtual Board getMove(const Board &) = 0;
 
-  void setPlayerBoardValue(BoardValue playerBoardValue)
+  std::string getName()
   {
-    this->playerBoardValue = playerBoardValue;
-    this->opponentBoardValue = this->playerBoardValue == BoardValue::PlayerTwo ? BoardValue::PlayerOne : BoardValue::PlayerTwo;
+    std::string prefix = "Player ";
+    char playerNumber = getBoardValueAsChar(this->getBoardValue());
+    return prefix + playerNumber;
+  }
+  
+  void setBoardValue(BoardValue boardValue)
+  {
+    this->boardValue = boardValue;
+    this->opponentBoardValue = this->boardValue == BoardValue::PlayerTwo ? BoardValue::PlayerOne : BoardValue::PlayerTwo;
   }
 
-  BoardValue getPlayerBoardValue()
+  BoardValue getBoardValue()
   {
-    return this->playerBoardValue;
+    return this->boardValue;
   }
 
   BoardValue getOpponentBoardValue()

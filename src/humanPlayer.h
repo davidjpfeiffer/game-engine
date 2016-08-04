@@ -14,30 +14,31 @@ public:
   {
     Board newBoard;
     bool validMoveMade = false;
-    unsigned row, column;
+    unsigned row, column, indexOfRow, indexOfColumn;
 
-    std::cout << "Player " << this->getPlayerBoardValue() << "s turn\n";
+    std::cout << this->getName() << "'s turn!\n";
 
     while (!validMoveMade)
     {
       std::cout << "Enter the row: ";
       std::cin >> row;
+      indexOfRow = row - 1;
 
       std::cout << "Enter the column: ";
       std::cin >> column;
+      indexOfColumn = column - 1;
 
       newBoard = createCopyOfBoard(board);
 
-      if (row > 0 && row < 4 && column > 0 && column < 4)
+      if (validRowAndColumn(indexOfRow, indexOfColumn))
       {
-        newBoard[row - 1][column - 1] = this->getPlayerBoardValue();
+        newBoard[indexOfRow][indexOfColumn] = this->getBoardValue();
+        validMoveMade = validMove(board, newBoard, this->getBoardValue());
       }
       else
       {
-        std::cout << "Row and column must be between 1 and 3!\n";
+        std::cout << "Row and column must be between 1 and 3 inclusive.\n";
       }
-
-      validMoveMade = validMove(board, newBoard, this->getPlayerBoardValue());
 
       if (!validMoveMade)
       {
