@@ -16,7 +16,9 @@ public:
 
   virtual std::string getName()
   {
-    return "Player";
+    std::string prefix = "Player ";
+    char playerNumber = getBoardValueAsChar(this->getPlayerBoardValue());
+    return prefix + playerNumber;
   }
 
   virtual Board getMove(const Board &) = 0;
