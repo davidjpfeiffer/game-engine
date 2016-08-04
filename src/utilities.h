@@ -10,20 +10,22 @@ const unsigned BOARD_SIZE = 3;
 
 enum GameResult {Tie, PlayerOneWin, PlayerTwoWin};
 enum BoardValue {Empty, PlayerOne, PlayerTwo};
-enum GameType {Single, Multiple};
 
 typedef std::vector<std::vector<BoardValue> > Board;
 
 void printBoard(const Board & board);
 Board createCopyOfBoard(const Board & original);
 Board createEmptyBoard();
-bool playerHasWon(const Board & board, unsigned player);
+bool playerHasWon(const Board & board, BoardValue playerBoardValue);
 bool boardIsInWinningState(const Board & board);
 unsigned numAvailableMoves(const Board & board);
 unsigned numDifferencesBetweenBoards(const Board & boardOne, const Board & boardTwo);
 bool validMove(const Board & board, const Board & boardAfterPlayerMove, BoardValue playerBoardValue);
 Board makeRandomMove(const Board & board);
+int getBoardValueAsInt(BoardValue boardValue);
+char getBoardValueAsChar(BoardValue boardValue);
 unsigned getRandomNumber(unsigned mod);
+void exitWithErrorMessage(std::string errorMessage);
 
 void printBoard(const Board & board)
 {
@@ -37,15 +39,15 @@ void printBoard(const Board & board)
     {
       switch (board[i][j])
       {
-      case BoardValue::Empty:
-        std::cout << "     ###";
-        break;
-      case BoardValue::PlayerOne:
-        std::cout << "  O  ###";
-        break;
-      case BoardValue::PlayerTwo:
-        std::cout << "  X  ###";
-        break;
+        case BoardValue::Empty:
+          std::cout << "     ###";
+          break;
+        case BoardValue::PlayerOne:
+          std::cout << "  O  ###";
+          break;
+        case BoardValue::PlayerTwo:
+          std::cout << "  X  ###";
+          break;
       }
     }
     std::cout << "\n###     ###     ###     ###\n";
@@ -66,18 +68,17 @@ Board createEmptyBoard()
 {
   return {{ BoardValue::Empty, BoardValue::Empty, BoardValue::Empty },
     { BoardValue::Empty, BoardValue::Empty, BoardValue::Empty },
-    { BoardValue::Empty, BoardValue::Empty, BoardValue::Empty }  };
+    { BoardValue::Empty, BoardValue::Empty, BoardValue::Empty }
+  };
 }
 
 bool playerHasWon(const Board & board, BoardValue playerBoardValue)
 {
-  bool won = false;
-
   for (unsigned row = 0; row < BOARD_SIZE; row++)
   {
     if (board[row][0] == playerBoardValue && board[row][1] == playerBoardValue && board[row][2] == playerBoardValue)
     {
-      won = true;
+      return true;
     }
   }
 
@@ -85,21 +86,21 @@ bool playerHasWon(const Board & board, BoardValue playerBoardValue)
   {
     if (board[0][column] == playerBoardValue && board[1][column] == playerBoardValue && board[2][column] == playerBoardValue)
     {
-      won = true;
+      return true;
     }
   }
 
   if (board[0][0] == playerBoardValue && board[1][1] == playerBoardValue && board[2][2] == playerBoardValue)
   {
-    won = true;
+    return true;
   }
 
   if (board[0][2] == playerBoardValue && board[1][1] == playerBoardValue && board[2][0] == playerBoardValue)
   {
-    won = true;
+    return true;
   }
 
-  return won;
+  return false;
 }
 
 bool boardIsInWinningState(const Board & board)
@@ -192,6 +193,32 @@ Board makeRandomMove(const Board & board, BoardValue playerBoardValue)
   return newBoard;
 }
 
+int getBoardValueAsInt(BoardValue boardValue)
+{
+  switch (boardValue)
+  {
+    case BoardValue::PlayerOne:
+      return 1;
+    case BoardValue::PlayerTwo:
+      return 2;
+    default:
+      return 0;
+  }
+}
+
+char getBoardValueAsChar(BoardValue boardValue)
+{
+  switch (boardValue)
+  {
+    case BoardValue::PlayerOne:
+      return '1';
+    case BoardValue::PlayerTwo:
+      return '2';
+    default:
+      return '0';
+  }
+}
+
 unsigned getRandomNumber(unsigned mod)
 {
   if (mod == 0)
@@ -207,8 +234,7 @@ unsigned getRandomNumber(unsigned mod)
 void exitWithErrorMessage(std::string errorMessage)
 {
   std::cout << errorMessage << '\n';
-  exit(0);
+  exit(1);
 }
-
 
 #endif
