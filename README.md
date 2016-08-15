@@ -14,7 +14,7 @@ $ main.exe
 
 ### Getting Started
 
-To create and play games you must include the game engine and a collection of algorithms (called players) into a program. The <code>Game</code> constructor accepts two arguments of type <code>Player</code>. Once a game is created, you can execute the game by calling the <code>play()</code> method on the game object.
+To create and play games you must include the game engine and a collection of algorithms (called players) into a program. The `Game` constructor accepts two arguments of type `Player`. Once a game is created, you can execute the game by calling the `play()` method on the game object.
 
 ```c++
 int main()
@@ -42,9 +42,9 @@ int main()
 
 ### Create Your Own Algorithm
 
-Tic Tac Toe is an easy game, so the algorithms aren't hard to write. If you would like to create your own for fun, create a C++ class that inherits from the abstract base class <code>Player</code>. You must implement the <code>getMove()</code> method on your new class, which the game engine will use to get your move each turn. The current game board will be passed to you as a parameter, and you must return a new game board with your desired move. The game engine checks to make sure that all moves made are valid.
+Tic Tac Toe is an easy game, so the algorithms aren't hard to write. If you would like to create your own for fun, create a C++ class that inherits from the abstract base class `Player`. You must implement the `getMove()` method on your new class, which the game engine will use to get your move each turn. The current game board will be passed to you as a parameter, and you must return a new game board with your desired move. The game engine checks to make sure that all moves made are valid.
 
-You can determine which player you are using the <code>getPlayerBoardValue()</code> method implemented on the Player class. This returns a <code>BoardValue</code> which is an enumeration defined in <i>utilities.cpp</i>. Your opponents board value is also available.
+You can determine which player you are using the `getBoardValue()` method implemented on the Player class. This returns a `BoardValue` which is an enumeration defined in <i>utilities.cpp</i>. Your opponents board value is also available.
 
 ```c++
 class MyPlayer : public Player
