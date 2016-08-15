@@ -19,20 +19,20 @@ public:
   
   static bool isOver(const Board & board)
   {
-    return numAvailableMoves(board) == 0 || boardIsInWinningState(board);
+    return board.numberOfAvailableMoves() == 0 || playerOneHasWon(board) || playerTwoHasWon(board);
   }
   
-  static bool isValidMove(const Board & board, const Board & boardAfterMove, const BoardValue & playerBoardValue)
+  static bool isValidMove(const Board & boardBeforeMove, const Board & boardAfterMove, const BoardValue & playerBoardValue)
   {
-    if (numDifferencesBetweenBoards(board, boardAfterMove) == 1)
+    if (numberOfDifferencesBetweenBoards(boardBeforeMove, boardAfterMove) == 1)
     {
       for (unsigned i = 0; i < BOARD_SIZE; i++)
       {
         for (unsigned j = 0; j < BOARD_SIZE; j++)
         {
-          if (board.get(i, j) != boardAfterMove.get(i, j))
+          if (boardBeforeMove.get(i, j) != boardAfterMove.get(i, j))
           {
-            if (board.get(i, j) != BoardValue::Empty)
+            if (boardBeforeMove.get(i, j) != BoardValue::Empty)
             {
               return false;
             }
@@ -48,41 +48,6 @@ public:
     return false;
   }
   
-  static void printBoard(const Board & board)
-  {
-    std::cout << '\n';
-    for (unsigned i = 0; i < BOARD_SIZE; i++)
-    {
-      std::cout << "###########################\n";
-      std::cout << "###     ###     ###     ###\n";
-      std::cout << "###";
-      for (unsigned j = 0; j < BOARD_SIZE; j++)
-      {
-        switch (board.get(i, j))
-        {
-          case BoardValue::Empty:
-            std::cout << "     ###";
-            break;
-          case BoardValue::PlayerOne:
-            std::cout << "  O  ###";
-            break;
-          case BoardValue::PlayerTwo:
-            std::cout << "  X  ###";
-            break;
-        }
-      }
-      std::cout << "\n###     ###     ###     ###\n";
-    }
-    std::cout << "###########################\n\n";
-  }
-  
-  // Custom Methods
-  
-  static bool boardIsInWinningState(const Board & board)
-  {
-    return playerOneHasWon(board) || playerTwoHasWon(board);
-  }
-  
   static bool playerOneHasWon(const Board & board)
   {
     return playerHasWon(board, BoardValue::PlayerOne);
@@ -93,25 +58,9 @@ public:
     return playerHasWon(board, BoardValue::PlayerTwo);
   }
   
-  static unsigned numAvailableMoves(const Board & board)
-  {
-    unsigned availableMoves = 0;
-
-    for (unsigned i = 0; i < BOARD_SIZE; i++)
-    {
-      for (unsigned j = 0; j < BOARD_SIZE; j++)
-      {
-        if (board.get(i, j) == BoardValue::Empty)
-        {
-          availableMoves++;
-        }
-      }
-    }
-
-    return availableMoves;
-  }
+  // Custom Methods
   
-  static unsigned numDifferencesBetweenBoards(const Board & boardOne, const Board & boardTwo)
+  static unsigned numberOfDifferencesBetweenBoards(const Board & boardOne, const Board & boardTwo)
   {
     unsigned numDifferences = 0;
 

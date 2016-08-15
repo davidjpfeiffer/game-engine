@@ -59,7 +59,7 @@ public:
     }
 
     // Offensive Strategy
-    if (mainBoard.get(1, 1) == this->getBoardValue() && TicTacToe::numAvailableMoves(board) == 7)
+    if (mainBoard.get(1, 1) == this->getBoardValue() && board.numberOfAvailableMoves() == 7)
     {
       if (mainBoard.get(0, 1) == this->getOpponentBoardValue())
       {

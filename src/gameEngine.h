@@ -62,9 +62,7 @@ private:
 
   GameResult getGameResult()
   {
-    
-    
-    if (isPlayingSingleGame()) this->game.printBoard(this->board);
+    if (isPlayingSingleGame()) this->board.print();
 
     while (!this->game.isOver(this->board))
     {
@@ -74,7 +72,7 @@ private:
       {
         this->board = boardAfterMove;
         toggleCurrentPlayer();
-        if (isPlayingSingleGame()) this->game.printBoard(board);
+        if (isPlayingSingleGame()) this->board.print();
       }
       else exitWithErrorMessage(this->currentPlayer->getName() + " did not submit a valid move.");
     }
