@@ -5,14 +5,10 @@
 #include <vector>
 #include <utility>
 #include <string>
+#include "board.h"
 #include "utilities.h"
 
-const unsigned BOARD_SIZE = 3;
-
 enum GameResult {Tie, PlayerOneWin, PlayerTwoWin};
-enum BoardValue {Empty, PlayerOne, PlayerTwo};
-
-typedef std::vector<std::vector<BoardValue> > Board;
 
 class TicTacToe
 {
@@ -34,13 +30,13 @@ public:
       {
         for (unsigned j = 0; j < BOARD_SIZE; j++)
         {
-          if (board[i][j] != boardAfterMove[i][j])
+          if (board.get(i, j) != boardAfterMove.get(i, j))
           {
-            if (board[i][j] != BoardValue::Empty)
+            if (board.get(i, j) != BoardValue::Empty)
             {
               return false;
             }
-            if (boardAfterMove[i][j] == playerBoardValue)
+            if (boardAfterMove.get(i, j) == playerBoardValue)
             {
               return true;
             }
@@ -50,23 +46,6 @@ public:
     }
 
     return false;
-  }
-  
-  static Board getEmptyBoard()
-  {
-    return {{ BoardValue::Empty, BoardValue::Empty, BoardValue::Empty },
-      { BoardValue::Empty, BoardValue::Empty, BoardValue::Empty },
-      { BoardValue::Empty, BoardValue::Empty, BoardValue::Empty }
-    };
-  }
-  
-  static Board getCopyOfBoard(const Board & board)
-  {
-    Board copy = getEmptyBoard();
-
-    std::copy(board.begin(), board.begin() + BOARD_SIZE, copy.begin());
-
-    return copy;
   }
   
   static void printBoard(const Board & board)
@@ -79,7 +58,7 @@ public:
       std::cout << "###";
       for (unsigned j = 0; j < BOARD_SIZE; j++)
       {
-        switch (board[i][j])
+        switch (board.get(i, j))
         {
           case BoardValue::Empty:
             std::cout << "     ###";
@@ -122,7 +101,7 @@ public:
     {
       for (unsigned j = 0; j < BOARD_SIZE; j++)
       {
-        if (board[i][j] == BoardValue::Empty)
+        if (board.get(i, j) == BoardValue::Empty)
         {
           availableMoves++;
         }
@@ -140,7 +119,7 @@ public:
     {
       for (unsigned j = 0; j < BOARD_SIZE; j++)
       {
-        if (boardOne[i][j] != boardTwo[i][j])
+        if (boardOne.get(i, j) != boardTwo.get(i, j))
         {
           numDifferences++;
         }
@@ -150,31 +129,17 @@ public:
     return numDifferences;
   }
   
-  static bool isValidRow(int row)
-  {
-    return row >= 0 && row < BOARD_SIZE;
-  }
-
-  static bool isValidColumn(int column)
-  {
-    return column >= 0 && column < BOARD_SIZE;
-  }
-
-  static bool isValidRowAndColumn(int row, int column)
-  {
-    return isValidRow(row) && isValidColumn(column);
-  }
-  
   static Board makeRandomMove(const Board & board, BoardValue playerBoardValue)
   {
-    Board newBoard = getCopyOfBoard(board);
+    Board newBoard = board;
+    
     std::vector<std::pair<unsigned, unsigned> > availableMoves;
 
     for (unsigned i = 0; i < BOARD_SIZE; i++)
     {
       for (unsigned j = 0; j < BOARD_SIZE; j++)
       {
-        if (board[i][j] == BoardValue::Empty)
+        if (board.get(i, j) == BoardValue::Empty)
         {
           availableMoves.push_back(std::make_pair(i, j));
         }
@@ -183,7 +148,7 @@ public:
 
     unsigned randomMove = getRandomNumber(availableMoves.size() - 1);
 
-    newBoard[availableMoves[randomMove].first][availableMoves[randomMove].second] = playerBoardValue;
+    newBoard.set(availableMoves[randomMove].first, availableMoves[randomMove].second, playerBoardValue);
 
     return newBoard;
   }
@@ -220,7 +185,7 @@ private:
   {
     for (unsigned row = 0; row < BOARD_SIZE; row++)
     {
-      if (board[row][0] == playerBoardValue && board[row][1] == playerBoardValue && board[row][2] == playerBoardValue)
+      if (board.get(row, 0) == playerBoardValue && board.get(row, 1) == playerBoardValue && board.get(row, 2) == playerBoardValue)
       {
         return true;
       }
@@ -228,18 +193,18 @@ private:
 
     for (unsigned column = 0; column < BOARD_SIZE; column++)
     {
-      if (board[0][column] == playerBoardValue && board[1][column] == playerBoardValue && board[2][column] == playerBoardValue)
+      if (board.get(0, column) == playerBoardValue && board.get(1, column) == playerBoardValue && board.get(2, column) == playerBoardValue)
       {
         return true;
       }
     }
 
-    if (board[0][0] == playerBoardValue && board[1][1] == playerBoardValue && board[2][2] == playerBoardValue)
+    if (board.get(0, 0) == playerBoardValue && board.get(1, 1) == playerBoardValue && board.get(2, 2) == playerBoardValue)
     {
       return true;
     }
 
-    if (board[0][2] == playerBoardValue && board[1][1] == playerBoardValue && board[2][0] == playerBoardValue)
+    if (board.get(0, 2) == playerBoardValue && board.get(1, 1) == playerBoardValue && board.get(2, 0) == playerBoardValue)
     {
       return true;
     }

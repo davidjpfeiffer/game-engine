@@ -26,7 +26,7 @@ public:
 
     for (unsigned gameNumber = 1; gameNumber <= this->numberOfGames; gameNumber++)
     {
-      resetBoard();
+      this->board.reset();
 
       switch (getGameResult())
       {
@@ -72,7 +72,7 @@ private:
 
       if (this->game.isValidMove(this->board, boardAfterMove, this->currentPlayer->getBoardValue()))
       {
-        this->board = this->game.getCopyOfBoard(boardAfterMove);
+        this->board = boardAfterMove;
         toggleCurrentPlayer();
         if (isPlayingSingleGame()) this->game.printBoard(board);
       }
@@ -92,11 +92,6 @@ private:
   bool isPlayingMultipleGames()
   {
     return this->numberOfGames > 1;
-  }
-
-  void resetBoard()
-  {
-    this->board = this->game.getEmptyBoard();
   }
 
   void displayStatistics()

@@ -28,11 +28,11 @@ public:
       std::cin >> column;
       indexOfColumn = column - 1;
 
-      newBoard = TicTacToe::getCopyOfBoard(board);
+      newBoard = board;
 
-      if (TicTacToe::isValidRowAndColumn(indexOfRow, indexOfColumn))
+      if (Board::isValidRowAndColumn(indexOfRow, indexOfColumn))
       {
-        newBoard[indexOfRow][indexOfColumn] = this->getBoardValue();
+        newBoard.set(indexOfRow, indexOfColumn, this->getBoardValue());
         validMoveMade = TicTacToe::isValidMove(board, newBoard, this->getBoardValue());
       }
       else

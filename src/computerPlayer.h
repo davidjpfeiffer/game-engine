@@ -11,7 +11,7 @@ public:
 
   Board getMove(const Board & board)
   {
-    Board mainBoard = TicTacToe::getCopyOfBoard(board);
+    Board mainBoard = board;
     Board theoreticalBoard;
 
     // If we can win, take win
@@ -19,13 +19,13 @@ public:
     {
       for (unsigned j = 0; j < BOARD_SIZE; j++)
       {
-        theoreticalBoard = TicTacToe::getCopyOfBoard(board);
-        if (theoreticalBoard[i][j] == BoardValue::Empty)
+        theoreticalBoard = board;
+        if (theoreticalBoard.get(i, j) == BoardValue::Empty)
         {
-          theoreticalBoard[i][j] = this->getBoardValue();
+          theoreticalBoard.set(i, j, this->getBoardValue());
           if (IHaveWonOnBoard(theoreticalBoard))
           {
-            mainBoard[i][j] = this->getBoardValue();
+            mainBoard.set(i, j, this->getBoardValue());
             return mainBoard;
           }
         }
@@ -38,13 +38,13 @@ public:
     {
       for (unsigned j = 0; j < BOARD_SIZE; j++)
       {
-        theoreticalBoard = TicTacToe::getCopyOfBoard(board);
-        if (theoreticalBoard[i][j] == BoardValue::Empty)
+        theoreticalBoard = board;
+        if (theoreticalBoard.get(i, j) == BoardValue::Empty)
         {
-          theoreticalBoard[i][j] = this->getOpponentBoardValue();
+          theoreticalBoard.set(i, j, this->getOpponentBoardValue());
           if (opponentHasWonOnBoard(theoreticalBoard))
           {
-            mainBoard[i][j] = this->getBoardValue();
+            mainBoard.set(i, j, this->getBoardValue());
             return mainBoard;
           }
         }
@@ -52,78 +52,78 @@ public:
     }
 
     // If middle available, take middle
-    if (mainBoard[1][1] == BoardValue::Empty)
+    if (mainBoard.get(1, 1) == BoardValue::Empty)
     {
-      mainBoard[1][1] = this->getBoardValue();
+      mainBoard.set(1, 1, this->getBoardValue());
       return mainBoard;
     }
 
     // Offensive Strategy
-    if (mainBoard[1][1] == this->getBoardValue() && TicTacToe::numAvailableMoves(board) == 7)
+    if (mainBoard.get(1, 1) == this->getBoardValue() && TicTacToe::numAvailableMoves(board) == 7)
     {
-      if (mainBoard[0][1] == this->getOpponentBoardValue())
+      if (mainBoard.get(0, 1) == this->getOpponentBoardValue())
       {
-        mainBoard[2][2] = this->getBoardValue();
+        mainBoard.set(2, 2, this->getBoardValue());
         return mainBoard;
       }
-      else if (mainBoard[1][2] == this->getOpponentBoardValue())
+      else if (mainBoard.get(1, 2) == this->getOpponentBoardValue())
       {
-        mainBoard[2][0] = this->getBoardValue();
+        mainBoard.set(2, 0, this->getBoardValue());
         return mainBoard;
       }
-      else if (mainBoard[2][1] == this->getOpponentBoardValue())
+      else if (mainBoard.get(2, 1) == this->getOpponentBoardValue())
       {
-        mainBoard[0][0] = this->getBoardValue();
+        mainBoard.set(0, 0, this->getBoardValue());
         return mainBoard;
       }
-      else if (mainBoard[1][0] == this->getOpponentBoardValue())
+      else if (mainBoard.get(1, 0) == this->getOpponentBoardValue())
       {
-        mainBoard[2][2] = this->getBoardValue();
+        mainBoard.set(2, 2, this->getBoardValue());
         return mainBoard;
       }
     }
 
     // Defensive Strategy
-    if (mainBoard[1][0] == this->getOpponentBoardValue() && mainBoard[2][1] == this->getOpponentBoardValue() && mainBoard[2][0] == BoardValue::Empty)
+    if (mainBoard.get(1, 0) == this->getOpponentBoardValue() && mainBoard.get(2, 1) == this->getOpponentBoardValue() && mainBoard.get(2, 0) == BoardValue::Empty)
     {
-      mainBoard[2][0] = this->getBoardValue();
+      mainBoard.set(2, 0, this->getBoardValue());
       return mainBoard;
     }
-    else if (mainBoard[1][0] == this->getOpponentBoardValue() && mainBoard[0][1] == this->getOpponentBoardValue() && mainBoard[0][0] == BoardValue::Empty)
+    else if (mainBoard.get(1, 0) == this->getOpponentBoardValue() && mainBoard.get(0, 1) == this->getOpponentBoardValue() && mainBoard.get(0, 0) == BoardValue::Empty)
     {
-      mainBoard[0][0] = this->getBoardValue();
+      mainBoard.set(0, 0, this->getBoardValue());
       return mainBoard;
     }
-    else if (mainBoard[0][1] == this->getOpponentBoardValue() && mainBoard[1][2] == this->getOpponentBoardValue() && mainBoard[0][2] == BoardValue::Empty)
+    else if (mainBoard.get(0, 1) == this->getOpponentBoardValue() && mainBoard.get(1, 2) == this->getOpponentBoardValue() && mainBoard.get(0, 2) == BoardValue::Empty)
     {
-      mainBoard[0][2] = this->getBoardValue();
+      mainBoard.set(0, 2, this->getBoardValue());
       return mainBoard;
     }
-    else if (mainBoard[2][1] == this->getOpponentBoardValue() && mainBoard[1][2] == this->getOpponentBoardValue() && mainBoard[2][2] == BoardValue::Empty)
+    else if (mainBoard.get(2, 1) == this->getOpponentBoardValue() && mainBoard.get(1, 2) == this->getOpponentBoardValue() && mainBoard.get(2, 2) == BoardValue::Empty)
     {
-      mainBoard[2][2] = this->getBoardValue();
+      mainBoard.set(2, 2, this->getBoardValue());
       return mainBoard;
     }
 
     // If corner available, take corner
-    if (mainBoard[0][0] == BoardValue::Empty)
+    if (mainBoard.get(0, 0) == BoardValue::Empty)
     {
-      mainBoard[0][0] = this->getBoardValue();
+      mainBoard.set(0, 0, this->getBoardValue());
       return mainBoard;
     }
-    else if (mainBoard[0][2] == BoardValue::Empty)
+    else if (mainBoard.get(0, 2) == BoardValue::Empty)
     {
-      mainBoard[0][2] = this->getBoardValue();
+      mainBoard.set(0, 2, this->getBoardValue());
       return mainBoard;
     }
-    else if (mainBoard[2][0] == BoardValue::Empty)
+    else if (mainBoard.get(2, 0) == BoardValue::Empty)
     {
-      mainBoard[2][0] = this->getBoardValue();
+      mainBoard.set(2, 0, this->getBoardValue());
       return mainBoard;
     }
-    else if (mainBoard[2][2] == BoardValue::Empty)
+    else if (mainBoard.get(2, 2) == BoardValue::Empty)
     {
-      mainBoard[2][2] = this->getBoardValue();
+      mainBoard.set(2, 2, this->getBoardValue());
       return mainBoard;
     }
 

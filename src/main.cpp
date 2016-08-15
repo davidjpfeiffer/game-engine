@@ -13,7 +13,7 @@ int main()
   srand(time(NULL));
 
   RandomPlayer playerOne;
-  ComputerPlayer playerTwo;
+  RandomPlayer playerTwo;
 
   GameEngine gameEngine(playerOne, playerTwo);
   gameEngine.play();
