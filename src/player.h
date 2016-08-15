@@ -3,7 +3,7 @@
 
 #include <string>
 #include <cstring>
-#include "utilities.h"
+#include "ticTacToe.h"
 
 class Player
 {
@@ -12,6 +12,10 @@ private:
   BoardValue boardValue;
   BoardValue opponentBoardValue;
 
+protected:
+
+  TicTacToe game;
+  
 public:
 
   virtual Board getMove(const Board &) = 0;
@@ -19,7 +23,7 @@ public:
   std::string getName()
   {
     std::string prefix = "Player ";
-    char playerNumber = getBoardValueAsChar(this->getBoardValue());
+    char playerNumber = this->game.getBoardValueAsChar(this->getBoardValue());
     return prefix + playerNumber;
   }
   

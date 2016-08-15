@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 #include "player.h"
-#include "utilities.h"
+#include "ticTacToe.h"
 
 class HumanPlayer : public Player
 {
@@ -28,12 +28,12 @@ public:
       std::cin >> column;
       indexOfColumn = column - 1;
 
-      newBoard = createCopyOfBoard(board);
+      newBoard = this->game.getCopyOfBoard(board);
 
-      if (validRowAndColumn(indexOfRow, indexOfColumn))
+      if (this->game.isValidRowAndColumn(indexOfRow, indexOfColumn))
       {
         newBoard[indexOfRow][indexOfColumn] = this->getBoardValue();
-        validMoveMade = validMove(board, newBoard, this->getBoardValue());
+        validMoveMade = this->game.isValidMove(board, newBoard, this->getBoardValue());
       }
       else
       {

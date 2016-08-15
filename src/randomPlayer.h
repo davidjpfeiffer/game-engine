@@ -3,7 +3,7 @@
 
 #include <string>
 #include "player.h"
-#include "utilities.h"
+#include "ticTacToe.h"
 
 class RandomPlayer : public Player
 {
@@ -11,7 +11,7 @@ public:
 
   Board getMove(const Board & board)
   {
-    return makeRandomMove(board, this->getBoardValue());
+    return this->game.makeRandomMove(board, this->getBoardValue());
   }
 };
 

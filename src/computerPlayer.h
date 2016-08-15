@@ -3,7 +3,7 @@
 
 #include <string>
 #include "player.h"
-#include "utilities.h"
+#include "ticTacToe.h"
 
 class ComputerPlayer : public Player
 {
@@ -11,7 +11,7 @@ public:
 
   Board getMove(const Board & board)
   {
-    Board mainBoard = createCopyOfBoard(board);
+    Board mainBoard = this->game.getCopyOfBoard(board);
     Board theoreticalBoard;
 
     // If we can win, take win
@@ -19,11 +19,11 @@ public:
     {
       for (unsigned j = 0; j < BOARD_SIZE; j++)
       {
-        theoreticalBoard = createCopyOfBoard(board);
+        theoreticalBoard = this->game.getCopyOfBoard(board);
         if (theoreticalBoard[i][j] == BoardValue::Empty)
         {
           theoreticalBoard[i][j] = this->getBoardValue();
-          if (playerHasWon(theoreticalBoard, this->getBoardValue()))
+          if (IHaveWonOnBoard(theoreticalBoard))
           {
             mainBoard[i][j] = this->getBoardValue();
             return mainBoard;
@@ -38,17 +38,16 @@ public:
     {
       for (unsigned j = 0; j < BOARD_SIZE; j++)
       {
-        theoreticalBoard = createCopyOfBoard(board);
+        theoreticalBoard = this->game.getCopyOfBoard(board);
         if (theoreticalBoard[i][j] == BoardValue::Empty)
         {
           theoreticalBoard[i][j] = this->getOpponentBoardValue();
-          if (playerHasWon(theoreticalBoard, this->getOpponentBoardValue()))
+          if (opponentHasWonOnBoard(theoreticalBoard))
           {
             mainBoard[i][j] = this->getBoardValue();
             return mainBoard;
           }
         }
-
       }
     }
 
@@ -60,7 +59,7 @@ public:
     }
 
     // Offensive Strategy
-    if (mainBoard[1][1] == this->getBoardValue() && numAvailableMoves(board) == 7)
+    if (mainBoard[1][1] == this->getBoardValue() && this->game.numAvailableMoves(board) == 7)
     {
       if (mainBoard[0][1] == this->getOpponentBoardValue())
       {
@@ -129,9 +128,22 @@ public:
     }
 
     // Default to random move
-    return makeRandomMove(board, this->getBoardValue());
+    return this->game.makeRandomMove(board, this->getBoardValue());
+  }
+  
+private:
+
+  bool IHaveWonOnBoard(const Board & board)
+  {
+    if (this->getBoardValue() == BoardValue::PlayerOne) return this->game.playerOneHasWon(board);
+    else return this->game.playerTwoHasWon(board);
+  }
+
+  bool opponentHasWonOnBoard(const Board & board)
+  {
+    if (this->getOpponentBoardValue() == BoardValue::PlayerOne) return this->game.playerOneHasWon(board);
+    else return this->game.playerTwoHasWon(board);
   }
 };
-
 
 #endif

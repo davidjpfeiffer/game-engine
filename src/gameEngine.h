@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <cstdlib>
-#include "utilities.h"
+#include "ticTacToe.h"
 #include "player.h"
 
 class GameEngine
@@ -20,7 +20,7 @@ public:
     this->currentPlayer = this->playerOne;
   }
 
-  void play(unsigned numberOfGames)
+  void play(unsigned numberOfGames = 1)
   {
     this->setNumberOfGames(numberOfGames);
 
@@ -31,23 +31,23 @@ public:
       switch (getGameResult())
       {
       case GameResult::PlayerOneWin:
-        if (playingSingleGame()) std::cout << "Result Of game " << gameNumber << ": " << this->playerOne->getName() << " wins!\n";
+        if (isPlayingSingleGame()) std::cout << "Result Of game " << gameNumber << ": " << this->playerOne->getName() << " wins!\n";
         else this->playerOneWins++;
         break;
 
       case GameResult::PlayerTwoWin:
-        if (playingSingleGame()) std::cout << "Result Of game " << gameNumber << ": " << this->playerTwo->getName() << " wins!\n";
+        if (isPlayingSingleGame()) std::cout << "Result Of game " << gameNumber << ": " << this->playerTwo->getName() << " wins!\n";
         else this->playerTwoWins++;
         break;
 
       case GameResult::Tie:
-        if (playingSingleGame()) std::cout << "Result Of game " << gameNumber << ": Tie!\n";
+        if (isPlayingSingleGame()) std::cout << "Result Of game " << gameNumber << ": Tie!\n";
         else this->gamesTied++;
         break;
       }
     }
 
-    if (playingMultipleGames()) displayStatistics();
+    if (isPlayingMultipleGames()) displayStatistics();
   }
 
 private:
@@ -58,42 +58,45 @@ private:
   Player * playerTwo;
   Player * currentPlayer;
   Board board;
+  TicTacToe game;
 
   GameResult getGameResult()
   {
-    if (playingSingleGame()) printBoard(this->board);
+    
+    
+    if (isPlayingSingleGame()) this->game.printBoard(this->board);
 
-    while (!boardIsInWinningState(this->board) && numAvailableMoves(this->board) > 0)
+    while (!this->game.isOver(this->board))
     {
       Board boardAfterMove = this->currentPlayer->getMove(this->board);
 
-      if (validMove(this->board, boardAfterMove, this->currentPlayer->getBoardValue()))
+      if (this->game.isValidMove(this->board, boardAfterMove, this->currentPlayer->getBoardValue()))
       {
-        this->board = createCopyOfBoard(boardAfterMove);
+        this->board = this->game.getCopyOfBoard(boardAfterMove);
         toggleCurrentPlayer();
-        if (playingSingleGame()) printBoard(board);
+        if (isPlayingSingleGame()) this->game.printBoard(board);
       }
       else exitWithErrorMessage(this->currentPlayer->getName() + " did not submit a valid move.");
     }
 
-    if (playerHasWon(this->board, this->playerOne->getBoardValue())) return GameResult::PlayerOneWin;
-    else if (playerHasWon(this->board, this->playerTwo->getBoardValue())) return GameResult::PlayerTwoWin;
+    if (this->game.playerOneHasWon(this->board)) return GameResult::PlayerOneWin;
+    else if (this->game.playerTwoHasWon(this->board)) return GameResult::PlayerTwoWin;
     else return GameResult::Tie;
   }
 
-  bool playingSingleGame()
+  bool isPlayingSingleGame()
   {
     return this->numberOfGames == 1;
   }
 
-  bool playingMultipleGames()
+  bool isPlayingMultipleGames()
   {
     return this->numberOfGames > 1;
   }
 
   void resetBoard()
   {
-    this->board = createEmptyBoard();
+    this->board = this->game.getEmptyBoard();
   }
 
   void displayStatistics()
@@ -114,11 +117,11 @@ private:
 
   void setNumberOfGames(unsigned numberOfGames)
   {
-    if (validNumberOfGames(numberOfGames)) this->numberOfGames = numberOfGames;
+    if (isValidNumberOfGames(numberOfGames)) this->numberOfGames = numberOfGames;
     else exitWithErrorMessage("Number of games must be greater than 0.");
   }
 
-  bool validNumberOfGames(int numberOfGames)
+  bool isValidNumberOfGames(int numberOfGames)
   {
     return numberOfGames > 0 && numberOfGames < 1000000;
   }

@@ -16,5 +16,5 @@ int main()
   ComputerPlayer playerTwo;
 
   GameEngine gameEngine(playerOne, playerTwo);
-  gameEngine.play(1);
+  gameEngine.play();
 }
