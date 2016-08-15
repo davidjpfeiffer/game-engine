@@ -99,19 +99,6 @@ public:
     return newBoard;
   }
 
-  static int getBoardValueAsInt(BoardValue boardValue)
-  {
-    switch (boardValue)
-    {
-      case BoardValue::PlayerOne:
-        return 1;
-      case BoardValue::PlayerTwo:
-        return 2;
-      default:
-        return 0;
-    }
-  }
-
   static char getBoardValueAsChar(BoardValue boardValue)
   {
     switch (boardValue)

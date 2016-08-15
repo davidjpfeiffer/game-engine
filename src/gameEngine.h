@@ -113,7 +113,7 @@ private:
     else exitWithErrorMessage("Number of games must be greater than 0.");
   }
 
-  bool isValidNumberOfGames(int numberOfGames)
+  bool isValidNumberOfGames(unsigned numberOfGames)
   {
     return numberOfGames > 0 && numberOfGames < 1000000;
   }

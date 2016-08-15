@@ -13,18 +13,18 @@ public:
 
   Board()
   {
-    for(int row = 0; row < BOARD_SIZE; row++)
+    for(unsigned row = 0; row < BOARD_SIZE; row++)
       this->board.push_back({ BoardValue::Empty, BoardValue::Empty, BoardValue::Empty });
   }
 
-  BoardValue get(int row, int column) const
+  BoardValue get(unsigned row, unsigned column) const
   {
     handleInvalidRowOrColumn(row, column);
     
     return this->board[row][column];
   }
   
-  void set(int row, int column, BoardValue boardValue)
+  void set(unsigned row, unsigned column, BoardValue boardValue)
   {
     handleInvalidRowOrColumn(row, column);
     
@@ -33,8 +33,8 @@ public:
   
   void reset()
   {
-    for(int row = 0; row < BOARD_SIZE; row++)
-      for(int column = 0; column < BOARD_SIZE; column++)
+    for(unsigned row = 0; row < BOARD_SIZE; row++)
+      for(unsigned column = 0; column < BOARD_SIZE; column++)
         this->board[row][column] = BoardValue::Empty;
   }
   
@@ -66,7 +66,7 @@ public:
     std::cout << "###########################\n\n";
   }
   
-  int numberOfAvailableMoves() const
+  unsigned numberOfAvailableMoves() const
   {
     unsigned availableMoves = 0;
 
@@ -84,17 +84,17 @@ public:
     return availableMoves;
   }
 
-  static bool isValidRow(int row)
+  static bool isValidRow(unsigned row)
   {
-    return row >= 0 && row < BOARD_SIZE;
+    return row < BOARD_SIZE;
   }
 
-  static bool isValidColumn(int column)
+  static bool isValidColumn(unsigned column)
   {
-    return column >= 0 && column < BOARD_SIZE;
+    return column < BOARD_SIZE;
   }
 
-  static bool isValidRowAndColumn(int row, int column)
+  static bool isValidRowAndColumn(unsigned row, unsigned column)
   {
     return isValidRow(row) && isValidColumn(column);
   }
@@ -103,7 +103,7 @@ private:
 
   std::vector<std::vector<BoardValue> > board;
   
-  void handleInvalidRowOrColumn(int row, int column) const
+  void handleInvalidRowOrColumn(unsigned row, unsigned column) const
   {
     if (!isValidRowAndColumn(row, column)) exitWithErrorMessage("Invalid row or column");
   }
