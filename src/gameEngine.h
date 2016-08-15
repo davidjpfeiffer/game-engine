@@ -110,12 +110,12 @@ private:
   void setNumberOfGames(unsigned numberOfGames)
   {
     if (isValidNumberOfGames(numberOfGames)) this->numberOfGames = numberOfGames;
-    else exitWithErrorMessage("Number of games must be greater than 0.");
+    else exitWithErrorMessage("Number of games must be less than 10,000.");
   }
 
   bool isValidNumberOfGames(unsigned numberOfGames)
   {
-    return numberOfGames > 0 && numberOfGames < 1000000;
+    return numberOfGames < 100000;
   }
 };
 
