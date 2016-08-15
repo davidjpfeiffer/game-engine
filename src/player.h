@@ -11,10 +11,6 @@ private:
 
   BoardValue boardValue;
   BoardValue opponentBoardValue;
-
-protected:
-
-  TicTacToe game;
   
 public:
 
@@ -23,7 +19,7 @@ public:
   std::string getName()
   {
     std::string prefix = "Player ";
-    char playerNumber = this->game.getBoardValueAsChar(this->getBoardValue());
+    char playerNumber = TicTacToe::getBoardValueAsChar(this->getBoardValue());
     return prefix + playerNumber;
   }
   

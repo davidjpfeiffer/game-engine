@@ -21,12 +21,12 @@ public:
   
   // Abstract Game Class Methods
   
-  bool isOver(const Board & board)
+  static bool isOver(const Board & board)
   {
     return numAvailableMoves(board) == 0 || boardIsInWinningState(board);
   }
   
-  bool isValidMove(const Board & board, const Board & boardAfterMove, const BoardValue & playerBoardValue)
+  static bool isValidMove(const Board & board, const Board & boardAfterMove, const BoardValue & playerBoardValue)
   {
     if (numDifferencesBetweenBoards(board, boardAfterMove) == 1)
     {
@@ -52,7 +52,7 @@ public:
     return false;
   }
   
-  Board getEmptyBoard()
+  static Board getEmptyBoard()
   {
     return {{ BoardValue::Empty, BoardValue::Empty, BoardValue::Empty },
       { BoardValue::Empty, BoardValue::Empty, BoardValue::Empty },
@@ -60,7 +60,7 @@ public:
     };
   }
   
-  Board getCopyOfBoard(const Board & board)
+  static Board getCopyOfBoard(const Board & board)
   {
     Board copy = getEmptyBoard();
 
@@ -69,7 +69,7 @@ public:
     return copy;
   }
   
-  void printBoard(const Board & board)
+  static void printBoard(const Board & board)
   {
     std::cout << '\n';
     for (unsigned i = 0; i < BOARD_SIZE; i++)
@@ -99,22 +99,22 @@ public:
   
   // Custom Methods
   
-  bool boardIsInWinningState(const Board & board)
+  static bool boardIsInWinningState(const Board & board)
   {
     return playerOneHasWon(board) || playerTwoHasWon(board);
   }
   
-  bool playerOneHasWon(const Board & board)
+  static bool playerOneHasWon(const Board & board)
   {
     return playerHasWon(board, BoardValue::PlayerOne);
   }
   
-  bool playerTwoHasWon(const Board & board)
+  static bool playerTwoHasWon(const Board & board)
   {
     return playerHasWon(board, BoardValue::PlayerTwo);
   }
   
-  unsigned numAvailableMoves(const Board & board)
+  static unsigned numAvailableMoves(const Board & board)
   {
     unsigned availableMoves = 0;
 
@@ -132,7 +132,7 @@ public:
     return availableMoves;
   }
   
-  unsigned numDifferencesBetweenBoards(const Board & boardOne, const Board & boardTwo)
+  static unsigned numDifferencesBetweenBoards(const Board & boardOne, const Board & boardTwo)
   {
     unsigned numDifferences = 0;
 
@@ -150,22 +150,22 @@ public:
     return numDifferences;
   }
   
-  bool isValidRow(int row)
+  static bool isValidRow(int row)
   {
     return row >= 0 && row < BOARD_SIZE;
   }
 
-  bool isValidColumn(int column)
+  static bool isValidColumn(int column)
   {
     return column >= 0 && column < BOARD_SIZE;
   }
 
-  bool isValidRowAndColumn(int row, int column)
+  static bool isValidRowAndColumn(int row, int column)
   {
     return isValidRow(row) && isValidColumn(column);
   }
   
-  Board makeRandomMove(const Board & board, BoardValue playerBoardValue)
+  static Board makeRandomMove(const Board & board, BoardValue playerBoardValue)
   {
     Board newBoard = getCopyOfBoard(board);
     std::vector<std::pair<unsigned, unsigned> > availableMoves;
@@ -188,7 +188,7 @@ public:
     return newBoard;
   }
 
-  int getBoardValueAsInt(BoardValue boardValue)
+  static int getBoardValueAsInt(BoardValue boardValue)
   {
     switch (boardValue)
     {
@@ -201,7 +201,7 @@ public:
     }
   }
 
-  char getBoardValueAsChar(BoardValue boardValue)
+  static char getBoardValueAsChar(BoardValue boardValue)
   {
     switch (boardValue)
     {
@@ -216,7 +216,7 @@ public:
   
 private:
 
-  bool playerHasWon(const Board & board, BoardValue playerBoardValue)
+  static bool playerHasWon(const Board & board, BoardValue playerBoardValue)
   {
     for (unsigned row = 0; row < BOARD_SIZE; row++)
     {

@@ -11,7 +11,7 @@ public:
 
   Board getMove(const Board & board)
   {
-    Board mainBoard = this->game.getCopyOfBoard(board);
+    Board mainBoard = TicTacToe::getCopyOfBoard(board);
     Board theoreticalBoard;
 
     // If we can win, take win
@@ -19,7 +19,7 @@ public:
     {
       for (unsigned j = 0; j < BOARD_SIZE; j++)
       {
-        theoreticalBoard = this->game.getCopyOfBoard(board);
+        theoreticalBoard = TicTacToe::getCopyOfBoard(board);
         if (theoreticalBoard[i][j] == BoardValue::Empty)
         {
           theoreticalBoard[i][j] = this->getBoardValue();
@@ -38,7 +38,7 @@ public:
     {
       for (unsigned j = 0; j < BOARD_SIZE; j++)
       {
-        theoreticalBoard = this->game.getCopyOfBoard(board);
+        theoreticalBoard = TicTacToe::getCopyOfBoard(board);
         if (theoreticalBoard[i][j] == BoardValue::Empty)
         {
           theoreticalBoard[i][j] = this->getOpponentBoardValue();
@@ -59,7 +59,7 @@ public:
     }
 
     // Offensive Strategy
-    if (mainBoard[1][1] == this->getBoardValue() && this->game.numAvailableMoves(board) == 7)
+    if (mainBoard[1][1] == this->getBoardValue() && TicTacToe::numAvailableMoves(board) == 7)
     {
       if (mainBoard[0][1] == this->getOpponentBoardValue())
       {
@@ -128,21 +128,21 @@ public:
     }
 
     // Default to random move
-    return this->game.makeRandomMove(board, this->getBoardValue());
+    return TicTacToe::makeRandomMove(board, this->getBoardValue());
   }
   
 private:
 
   bool IHaveWonOnBoard(const Board & board)
   {
-    if (this->getBoardValue() == BoardValue::PlayerOne) return this->game.playerOneHasWon(board);
-    else return this->game.playerTwoHasWon(board);
+    if (this->getBoardValue() == BoardValue::PlayerOne) return TicTacToe::playerOneHasWon(board);
+    else return TicTacToe::playerTwoHasWon(board);
   }
 
   bool opponentHasWonOnBoard(const Board & board)
   {
-    if (this->getOpponentBoardValue() == BoardValue::PlayerOne) return this->game.playerOneHasWon(board);
-    else return this->game.playerTwoHasWon(board);
+    if (this->getOpponentBoardValue() == BoardValue::PlayerOne) return TicTacToe::playerOneHasWon(board);
+    else return TicTacToe::playerTwoHasWon(board);
   }
 };
 

@@ -11,7 +11,7 @@ public:
 
   Board getMove(const Board & board)
   {
-    return this->game.makeRandomMove(board, this->getBoardValue());
+    return TicTacToe::makeRandomMove(board, this->getBoardValue());
   }
 };
 
