@@ -53,7 +53,7 @@ class MyPlayer : public Player
 	
 	Board getMove(const Board & board)
 	{
-		Board newBoard = copyBoard(board);
+		Board newBoard = board;
 		
 		// Make changes to newBoard
 		
