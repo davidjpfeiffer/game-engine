@@ -2,9 +2,7 @@
 #define __HUMANPLAYER
 
 #include <iostream>
-#include <string>
 #include "player.h"
-#include "ticTacToe.h"
 
 class HumanPlayer : public Player
 {

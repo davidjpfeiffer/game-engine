@@ -3,12 +3,9 @@
 
 #include <iostream>
 #include <vector>
-#include <utility>
-#include <string>
 #include "board.h"
+#include "gameResult.h"
 #include "utilities.h"
-
-enum GameResult {Tie, PlayerOneWin, PlayerTwoWin};
 
 class TicTacToe
 {

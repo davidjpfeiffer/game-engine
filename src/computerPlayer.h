@@ -1,9 +1,7 @@
 #ifndef __COMPUTERPLAYER
 #define __COMPUTERPLAYER
 
-#include <string>
 #include "player.h"
-#include "ticTacToe.h"
 
 class ComputerPlayer : public Player
 {

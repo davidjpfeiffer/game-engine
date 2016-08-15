@@ -2,11 +2,10 @@
 #define __BOARD
 
 #include <vector>
+#include "boardValue.h"
 #include "utilities.h"
 
 const unsigned BOARD_SIZE = 3;
-
-enum BoardValue {Empty, PlayerOne, PlayerTwo};
 
 class Board
 {
