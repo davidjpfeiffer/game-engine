@@ -18,9 +18,9 @@ public:
 
   std::string getName()
   {
-    std::string prefix = "Player ";
+    std::string player = "Player ";
     char playerNumber = TicTacToe::getBoardValueAsChar(this->getBoardValue());
-    return prefix + playerNumber;
+    return player + playerNumber;
   }
   
   void setBoardValue(BoardValue boardValue)
