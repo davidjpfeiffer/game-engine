@@ -67,7 +67,7 @@ private:
     {
       GameState gameStateAfterMove = this->currentPlayer->getMove(this->gameState);
 
-      if (this->game.isValidMove(this->gameState, gameStateAfterMove, this->currentPlayer->getBoardValue()))
+      if (this->game.isValidMove(this->gameState, gameStateAfterMove, * this->currentPlayer))
       {
         this->gameState = gameStateAfterMove;
         toggleCurrentPlayer();

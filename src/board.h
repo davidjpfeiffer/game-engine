@@ -38,7 +38,7 @@ public:
         this->board[row][column] = BoardValue::Empty;
   }
   
-  void print()
+  void print() const
   {
     std::cout << '\n';
     for (unsigned i = 0; i < BOARD_SIZE; i++)

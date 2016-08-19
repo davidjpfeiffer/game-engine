@@ -9,7 +9,7 @@ public:
 
   GameState getMove(const GameState & gameState)
   {
-    return TicTacToe::makeRandomMove(gameState, this->getBoardValue());
+    return TicTacToe::makeRandomMove(gameState, * this);
   }
 };
 

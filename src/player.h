@@ -3,7 +3,7 @@
 
 #include <string>
 #include <cstring>
-#include "ticTacToe.h"
+#include "gameState.h"
 
 class Player
 {
@@ -16,11 +16,10 @@ public:
 
   virtual GameState getMove(const GameState &) = 0;
 
-  std::string getName()
+  std::string getName() const
   {
-    std::string player = "Player ";
-    char playerNumber = TicTacToe::getBoardValueAsChar(this->getBoardValue());
-    return player + playerNumber;
+    if (this->boardValue == BoardValue::PlayerOne) return "Player 1";
+    else return "Player 2";
   }
   
   void setBoardValue(BoardValue boardValue)
@@ -29,12 +28,12 @@ public:
     this->opponentBoardValue = this->boardValue == BoardValue::PlayerTwo ? BoardValue::PlayerOne : BoardValue::PlayerTwo;
   }
 
-  BoardValue getBoardValue()
+  BoardValue getBoardValue() const
   {
     return this->boardValue;
   }
 
-  BoardValue getOpponentBoardValue()
+  BoardValue getOpponentBoardValue() const
   {
     return this->opponentBoardValue;
   }

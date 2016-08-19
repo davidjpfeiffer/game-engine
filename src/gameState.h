@@ -14,7 +14,7 @@ public:
     this->board.reset();
   }
   
-  void print()
+  void print() const
   {
     this->board.print();
   }

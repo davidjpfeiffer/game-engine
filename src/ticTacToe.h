@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include "player.h"
 #include "gameState.h"
 #include "gameResult.h"
 #include "utilities.h"
@@ -18,7 +19,7 @@ public:
     return gameState.board.numberOfAvailableMoves() == 0 || playerOneHasWon(gameState) || playerTwoHasWon(gameState);
   }
   
-  static bool isValidMove(const GameState & gameStateBeforeMove, const GameState & gameStateAfterMove, const BoardValue & playerBoardValue)
+  static bool isValidMove(const GameState & gameStateBeforeMove, const GameState & gameStateAfterMove, const Player & player)
   {
     if (numberOfDifferencesBetweenBoards(gameStateBeforeMove.board, gameStateAfterMove.board) == 1)
     {
@@ -32,7 +33,7 @@ public:
             {
               return false;
             }
-            if (gameStateAfterMove.board.get(i, j) == playerBoardValue)
+            if (gameStateAfterMove.board.get(i, j) == player.getBoardValue())
             {
               return true;
             }
@@ -56,7 +57,7 @@ public:
   
   // Custom Methods
   
-  static GameState makeRandomMove(const GameState & gameState, BoardValue playerBoardValue)
+  static GameState makeRandomMove(const GameState & gameState, const Player & player)
   {
     GameState gameStateAfterMove = gameState;
     
@@ -75,22 +76,9 @@ public:
 
     unsigned randomMove = getRandomNumber(availableMoves.size() - 1);
 
-    gameStateAfterMove.board.set(availableMoves[randomMove].first, availableMoves[randomMove].second, playerBoardValue);
+    gameStateAfterMove.board.set(availableMoves[randomMove].first, availableMoves[randomMove].second, player.getBoardValue());
 
     return gameStateAfterMove;
-  }
-
-  static char getBoardValueAsChar(BoardValue boardValue)
-  {
-    switch (boardValue)
-    {
-      case BoardValue::PlayerOne:
-        return '1';
-      case BoardValue::PlayerTwo:
-        return '2';
-      default:
-        return '0';
-    }
   }
   
 private:

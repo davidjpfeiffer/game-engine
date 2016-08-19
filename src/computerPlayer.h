@@ -133,7 +133,7 @@ public:
 
     // Default to random move
     
-    return TicTacToe::makeRandomMove(gameState, this->getBoardValue());
+    return TicTacToe::makeRandomMove(gameState, * this);
   }
   
 private:
