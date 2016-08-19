@@ -9,7 +9,7 @@ public:
 
   GameState getMove(const GameState & gameState)
   {
-    GameState gameStateAfterMove = gameState;
+    GameState move = gameState;
     GameState theoreticalGameState;
 
     // If we can win, take win
@@ -24,8 +24,8 @@ public:
           theoreticalGameState.board.set(i, j, this->getBoardValue());
           if (thisPlayerHasWon(theoreticalGameState))
           {
-            gameStateAfterMove.board.set(i, j, this->getBoardValue());
-            return gameStateAfterMove;
+            move.board.set(i, j, this->getBoardValue());
+            return move;
           }
         }
 
@@ -44,8 +44,8 @@ public:
           theoreticalGameState.board.set(i, j, this->getOpponentBoardValue());
           if (otherPlayerHasWon(theoreticalGameState))
           {
-            gameStateAfterMove.board.set(i, j, this->getBoardValue());
-            return gameStateAfterMove;
+            move.board.set(i, j, this->getBoardValue());
+            return move;
           }
         }
       }
@@ -53,82 +53,82 @@ public:
 
     // If middle available, take middle
     
-    if (gameStateAfterMove.board.get(1, 1) == BoardValue::Empty)
+    if (move.board.get(1, 1) == BoardValue::Empty)
     {
-      gameStateAfterMove.board.set(1, 1, this->getBoardValue());
-      return gameStateAfterMove;
+      move.board.set(1, 1, this->getBoardValue());
+      return move;
     }
 
     // Offensive Strategy
     
-    if (gameStateAfterMove.board.get(1, 1) == this->getBoardValue() && gameState.board.numberOfAvailableMoves() == 7)
+    if (move.board.get(1, 1) == this->getBoardValue() && gameState.board.numberOfAvailableMoves() == 7)
     {
-      if (gameStateAfterMove.board.get(0, 1) == this->getOpponentBoardValue())
+      if (move.board.get(0, 1) == this->getOpponentBoardValue())
       {
-        gameStateAfterMove.board.set(2, 2, this->getBoardValue());
-        return gameStateAfterMove;
+        move.board.set(2, 2, this->getBoardValue());
+        return move;
       }
-      else if (gameStateAfterMove.board.get(1, 2) == this->getOpponentBoardValue())
+      else if (move.board.get(1, 2) == this->getOpponentBoardValue())
       {
-        gameStateAfterMove.board.set(2, 0, this->getBoardValue());
-        return gameStateAfterMove;
+        move.board.set(2, 0, this->getBoardValue());
+        return move;
       }
-      else if (gameStateAfterMove.board.get(2, 1) == this->getOpponentBoardValue())
+      else if (move.board.get(2, 1) == this->getOpponentBoardValue())
       {
-        gameStateAfterMove.board.set(0, 0, this->getBoardValue());
-        return gameStateAfterMove;
+        move.board.set(0, 0, this->getBoardValue());
+        return move;
       }
-      else if (gameStateAfterMove.board.get(1, 0) == this->getOpponentBoardValue())
+      else if (move.board.get(1, 0) == this->getOpponentBoardValue())
       {
-        gameStateAfterMove.board.set(2, 2, this->getBoardValue());
-        return gameStateAfterMove;
+        move.board.set(2, 2, this->getBoardValue());
+        return move;
       }
     }
 
     // Defensive Strategy
     
-    if (gameStateAfterMove.board.get(1, 0) == this->getOpponentBoardValue() && gameStateAfterMove.board.get(2, 1) == this->getOpponentBoardValue() && gameStateAfterMove.board.get(2, 0) == BoardValue::Empty)
+    if (move.board.get(1, 0) == this->getOpponentBoardValue() && move.board.get(2, 1) == this->getOpponentBoardValue() && move.board.get(2, 0) == BoardValue::Empty)
     {
-      gameStateAfterMove.board.set(2, 0, this->getBoardValue());
-      return gameStateAfterMove;
+      move.board.set(2, 0, this->getBoardValue());
+      return move;
     }
-    else if (gameStateAfterMove.board.get(1, 0) == this->getOpponentBoardValue() && gameStateAfterMove.board.get(0, 1) == this->getOpponentBoardValue() && gameStateAfterMove.board.get(0, 0) == BoardValue::Empty)
+    else if (move.board.get(1, 0) == this->getOpponentBoardValue() && move.board.get(0, 1) == this->getOpponentBoardValue() && move.board.get(0, 0) == BoardValue::Empty)
     {
-      gameStateAfterMove.board.set(0, 0, this->getBoardValue());
-      return gameStateAfterMove;
+      move.board.set(0, 0, this->getBoardValue());
+      return move;
     }
-    else if (gameStateAfterMove.board.get(0, 1) == this->getOpponentBoardValue() && gameStateAfterMove.board.get(1, 2) == this->getOpponentBoardValue() && gameStateAfterMove.board.get(0, 2) == BoardValue::Empty)
+    else if (move.board.get(0, 1) == this->getOpponentBoardValue() && move.board.get(1, 2) == this->getOpponentBoardValue() && move.board.get(0, 2) == BoardValue::Empty)
     {
-      gameStateAfterMove.board.set(0, 2, this->getBoardValue());
-      return gameStateAfterMove;
+      move.board.set(0, 2, this->getBoardValue());
+      return move;
     }
-    else if (gameStateAfterMove.board.get(2, 1) == this->getOpponentBoardValue() && gameStateAfterMove.board.get(1, 2) == this->getOpponentBoardValue() && gameStateAfterMove.board.get(2, 2) == BoardValue::Empty)
+    else if (move.board.get(2, 1) == this->getOpponentBoardValue() && move.board.get(1, 2) == this->getOpponentBoardValue() && move.board.get(2, 2) == BoardValue::Empty)
     {
-      gameStateAfterMove.board.set(2, 2, this->getBoardValue());
-      return gameStateAfterMove;
+      move.board.set(2, 2, this->getBoardValue());
+      return move;
     }
 
     // If corner available, take corner
     
-    if (gameStateAfterMove.board.get(0, 0) == BoardValue::Empty)
+    if (move.board.get(0, 0) == BoardValue::Empty)
     {
-      gameStateAfterMove.board.set(0, 0, this->getBoardValue());
-      return gameStateAfterMove;
+      move.board.set(0, 0, this->getBoardValue());
+      return move;
     }
-    else if (gameStateAfterMove.board.get(0, 2) == BoardValue::Empty)
+    else if (move.board.get(0, 2) == BoardValue::Empty)
     {
-      gameStateAfterMove.board.set(0, 2, this->getBoardValue());
-      return gameStateAfterMove;
+      move.board.set(0, 2, this->getBoardValue());
+      return move;
     }
-    else if (gameStateAfterMove.board.get(2, 0) == BoardValue::Empty)
+    else if (move.board.get(2, 0) == BoardValue::Empty)
     {
-      gameStateAfterMove.board.set(2, 0, this->getBoardValue());
-      return gameStateAfterMove;
+      move.board.set(2, 0, this->getBoardValue());
+      return move;
     }
-    else if (gameStateAfterMove.board.get(2, 2) == BoardValue::Empty)
+    else if (move.board.get(2, 2) == BoardValue::Empty)
     {
-      gameStateAfterMove.board.set(2, 2, this->getBoardValue());
-      return gameStateAfterMove;
+      move.board.set(2, 2, this->getBoardValue());
+      return move;
     }
 
     // Default to random move
