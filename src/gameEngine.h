@@ -11,8 +11,7 @@ public:
 
   GameEngine(Player & playerOne, Player & playerTwo)
   {
-    playerOne.setBoardValue(BoardValue::PlayerOne); // make this a method on the game object
-    playerTwo.setBoardValue(BoardValue::PlayerTwo);
+    this->game.setupPlayers(playerOne, playerTwo);
 
     this->playerOne = & playerOne;
     this->playerTwo = & playerTwo;

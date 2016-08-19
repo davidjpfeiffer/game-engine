@@ -14,6 +14,12 @@ public:
   
   // Abstract Game Class Methods
   
+  void setupPlayers(Player & playerOne, Player & playerTwo)
+  {
+    playerOne.setBoardValue(BoardValue::PlayerOne);
+    playerTwo.setBoardValue(BoardValue::PlayerTwo);
+  }
+  
   static bool isOver(const GameState & gameState)
   {
     return gameState.board.numberOfAvailableMoves() == 0 || playerOneHasWon(gameState) || playerTwoHasWon(gameState);
