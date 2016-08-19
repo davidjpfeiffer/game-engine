@@ -66,7 +66,7 @@ private:
     {
       GameState gameStateAfterMove = this->currentPlayer->getMove(this->gameState);
 
-      if (this->game.isValidMove(this->gameState, gameStateAfterMove, * this->currentPlayer))
+      if (this->game.isValidMove(this->gameState, gameStateAfterMove, this->currentPlayer->getPlayerValue()))
       {
         this->gameState = gameStateAfterMove;
         toggleCurrentPlayer();
@@ -75,8 +75,8 @@ private:
       else exitWithErrorMessage(this->currentPlayer->getName() + " did not submit a valid move.");
     }
 
-    if (this->game.playerOneHasWon(this->gameState)) return GameResult::PlayerOneWin;
-    else if (this->game.playerTwoHasWon(this->gameState)) return GameResult::PlayerTwoWin;
+    if (this->game.playerHasWon(this->gameState, PlayerValue::PlayerOne)) return GameResult::PlayerOneWin;
+    else if (this->game.playerHasWon(this->gameState, PlayerValue::PlayerTwo)) return GameResult::PlayerTwoWin;
     else return GameResult::Tie;
   }
 

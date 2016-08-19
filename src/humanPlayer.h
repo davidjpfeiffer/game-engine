@@ -31,7 +31,7 @@ public:
       if (Board::isValidRowAndColumn(indexOfRow, indexOfColumn))
       {
         gameStateAfterMove.board.set(indexOfRow, indexOfColumn, this->getBoardValue());
-        validMoveMade = TicTacToe::isValidMove(gameState, gameStateAfterMove, * this);
+        validMoveMade = TicTacToe::isValidMove(gameState, gameStateAfterMove, this->getPlayerValue());
       }
       else
       {

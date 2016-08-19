@@ -16,16 +16,16 @@ public:
   
   void setupPlayers(Player & playerOne, Player & playerTwo)
   {
-    playerOne.setBoardValue(BoardValue::PlayerOne);
-    playerTwo.setBoardValue(BoardValue::PlayerTwo);
+    playerOne.setPlayerValue(PlayerValue::PlayerOne);
+    playerTwo.setPlayerValue(PlayerValue::PlayerTwo);
   }
   
   static bool isOver(const GameState & gameState)
   {
-    return gameState.board.numberOfAvailableMoves() == 0 || playerOneHasWon(gameState) || playerTwoHasWon(gameState);
+    return gameState.board.numberOfAvailableMoves() == 0 || playerHasWon(gameState, PlayerValue::PlayerOne) || playerHasWon(gameState, PlayerValue::PlayerTwo);
   }
   
-  static bool isValidMove(const GameState & gameStateBeforeMove, const GameState & gameStateAfterMove, const Player & player)
+  static bool isValidMove(const GameState & gameStateBeforeMove, const GameState & gameStateAfterMove, const PlayerValue & playerValue)
   {
     if (numberOfDifferencesBetweenBoards(gameStateBeforeMove.board, gameStateAfterMove.board) == 1)
     {
@@ -39,7 +39,7 @@ public:
             {
               return false;
             }
-            if (gameStateAfterMove.board.get(i, j) == player.getBoardValue())
+            if (isPlayersBoardValue(playerValue, gameStateAfterMove.board.get(i, j)))
             {
               return true;
             }
@@ -51,19 +51,48 @@ public:
     return false;
   }
   
-  static bool playerOneHasWon(const GameState & gameState)
+  static bool playerHasWon(const GameState & gameState, const PlayerValue & playerValue)
   {
-    return playerHasWon(gameState, BoardValue::PlayerOne);
-  }
-  
-  static bool playerTwoHasWon(const GameState & gameState)
-  {
-    return playerHasWon(gameState, BoardValue::PlayerTwo);
+    for (unsigned row = 0; row < BOARD_SIZE; row++)
+    {
+      if ( isPlayersBoardValue(playerValue, gameState.board.get(row, 0))
+        && isPlayersBoardValue(playerValue, gameState.board.get(row, 1))
+        && isPlayersBoardValue(playerValue, gameState.board.get(row, 2)))
+      {
+        return true;
+      }
+    }
+
+    for (unsigned column = 0; column < BOARD_SIZE; column++)
+    {
+      if ( isPlayersBoardValue(playerValue, gameState.board.get(0, column))
+        && isPlayersBoardValue(playerValue, gameState.board.get(1, column))
+        && isPlayersBoardValue(playerValue, gameState.board.get(2, column)))
+      {
+        return true;
+      }
+    }
+
+    if ( isPlayersBoardValue(playerValue, gameState.board.get(0, 0))
+      && isPlayersBoardValue(playerValue, gameState.board.get(1, 1))
+      && isPlayersBoardValue(playerValue, gameState.board.get(2, 2)))
+    {
+      return true;
+    }
+
+    if ( isPlayersBoardValue(playerValue, gameState.board.get(0, 2))
+      && isPlayersBoardValue(playerValue, gameState.board.get(1, 1))
+      && isPlayersBoardValue(playerValue, gameState.board.get(2, 0)))
+    {
+      return true;
+    }
+
+    return false;
   }
   
   // Custom Methods
   
-  static GameState makeRandomMove(const GameState & gameState, const Player & player)
+  static GameState makeRandomMove(const GameState & gameState, const PlayerValue & playerValue)
   {
     GameState gameStateAfterMove = gameState;
     
@@ -82,9 +111,27 @@ public:
 
     unsigned randomMove = getRandomNumber(availableMoves.size() - 1);
 
-    gameStateAfterMove.board.set(availableMoves[randomMove].first, availableMoves[randomMove].second, player.getBoardValue());
+    gameStateAfterMove.board.set(availableMoves[randomMove].first, availableMoves[randomMove].second, playerValueToBoardValue(playerValue));
 
     return gameStateAfterMove;
+  }
+  
+  static bool isPlayersBoardValue(const PlayerValue & playerValue, const BoardValue & boardValue)
+  {
+    return playerValue == PlayerValue::PlayerOne ? boardValue == BoardValue::O : boardValue == BoardValue::X;
+  }
+  
+  static BoardValue playerValueToBoardValue(PlayerValue playerValue)
+  {
+    if (playerValue == PlayerValue::PlayerOne) return BoardValue::O;
+    else return BoardValue::X;
+  }
+  
+  static PlayerValue boardValueToPlayerValue(BoardValue boardValue)
+  {
+    if (boardValue == BoardValue::O) return PlayerValue::PlayerOne;
+    else if (boardValue == BoardValue::X) return PlayerValue::PlayerTwo;
+    else exitWithErrorMessage("Invalid board value passed to BoardValueToPlayerOrder method.");
   }
   
 private:
@@ -105,37 +152,6 @@ private:
     }
 
     return numDifferences;
-  }
-
-  static bool playerHasWon(const GameState & gameState, BoardValue playerBoardValue)
-  {
-    for (unsigned row = 0; row < BOARD_SIZE; row++)
-    {
-      if (gameState.board.get(row, 0) == playerBoardValue && gameState.board.get(row, 1) == playerBoardValue && gameState.board.get(row, 2) == playerBoardValue)
-      {
-        return true;
-      }
-    }
-
-    for (unsigned column = 0; column < BOARD_SIZE; column++)
-    {
-      if (gameState.board.get(0, column) == playerBoardValue && gameState.board.get(1, column) == playerBoardValue && gameState.board.get(2, column) == playerBoardValue)
-      {
-        return true;
-      }
-    }
-
-    if (gameState.board.get(0, 0) == playerBoardValue && gameState.board.get(1, 1) == playerBoardValue && gameState.board.get(2, 2) == playerBoardValue)
-    {
-      return true;
-    }
-
-    if (gameState.board.get(0, 2) == playerBoardValue && gameState.board.get(1, 1) == playerBoardValue && gameState.board.get(2, 0) == playerBoardValue)
-    {
-      return true;
-    }
-
-    return false;
   }
 };
 

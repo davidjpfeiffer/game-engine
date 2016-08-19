@@ -1,6 +1,6 @@
 #ifndef __BOARDVALUE
 #define __BOARDVALUE
 
-enum BoardValue {Empty, PlayerOne, PlayerTwo};
+enum BoardValue {Empty, O, X};
 
 #endif

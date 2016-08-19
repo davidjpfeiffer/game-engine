@@ -133,21 +133,19 @@ public:
 
     // Default to random move
     
-    return TicTacToe::makeRandomMove(gameState, * this);
+    return TicTacToe::makeRandomMove(gameState, this->getPlayerValue());
   }
   
 private:
 
   bool thisPlayerHasWon(const GameState & gameState)
   {
-    if (this->getBoardValue() == BoardValue::PlayerOne) return TicTacToe::playerOneHasWon(gameState);
-    else return TicTacToe::playerTwoHasWon(gameState);
+    return TicTacToe::playerHasWon(gameState, this->getPlayerValue());
   }
 
   bool otherPlayerHasWon(const GameState & gameState)
   {
-    if (this->getOpponentBoardValue() == BoardValue::PlayerOne) return TicTacToe::playerOneHasWon(gameState);
-    else return TicTacToe::playerTwoHasWon(gameState);
+    return TicTacToe::playerHasWon(gameState, this->getOpponentPlayerValue());
   }
 };
 

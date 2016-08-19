@@ -53,10 +53,10 @@ public:
           case BoardValue::Empty:
             std::cout << "     ###";
             break;
-          case BoardValue::PlayerOne:
+          case BoardValue::O:
             std::cout << "  O  ###";
             break;
-          case BoardValue::PlayerTwo:
+          case BoardValue::X:
             std::cout << "  X  ###";
             break;
         }
