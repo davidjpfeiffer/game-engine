@@ -7,24 +7,25 @@ class ComputerPlayer : public Player
 {
 public:
 
-  Board getMove(const Board & board)
+  GameState getMove(const GameState & gameState)
   {
-    Board mainBoard = board;
-    Board theoreticalBoard;
+    GameState gameStateAfterMove = gameState;
+    GameState theoreticalGameState;
 
     // If we can win, take win
+    
     for (unsigned i = 0; i < BOARD_SIZE; i++)
     {
       for (unsigned j = 0; j < BOARD_SIZE; j++)
       {
-        theoreticalBoard = board;
-        if (theoreticalBoard.get(i, j) == BoardValue::Empty)
+        theoreticalGameState.board = gameState.board;
+        if (theoreticalGameState.board.get(i, j) == BoardValue::Empty)
         {
-          theoreticalBoard.set(i, j, this->getBoardValue());
-          if (IHaveWonOnBoard(theoreticalBoard))
+          theoreticalGameState.board.set(i, j, this->getBoardValue());
+          if (thisPlayerHasWon(theoreticalGameState))
           {
-            mainBoard.set(i, j, this->getBoardValue());
-            return mainBoard;
+            gameStateAfterMove.board.set(i, j, this->getBoardValue());
+            return gameStateAfterMove;
           }
         }
 
@@ -32,115 +33,121 @@ public:
     }
 
     // If they can win, prevent win
+    
     for (unsigned i = 0; i < BOARD_SIZE; i++)
     {
       for (unsigned j = 0; j < BOARD_SIZE; j++)
       {
-        theoreticalBoard = board;
-        if (theoreticalBoard.get(i, j) == BoardValue::Empty)
+        theoreticalGameState.board = gameState.board;
+        if (theoreticalGameState.board.get(i, j) == BoardValue::Empty)
         {
-          theoreticalBoard.set(i, j, this->getOpponentBoardValue());
-          if (opponentHasWonOnBoard(theoreticalBoard))
+          theoreticalGameState.board.set(i, j, this->getOpponentBoardValue());
+          if (otherPlayerHasWon(theoreticalGameState))
           {
-            mainBoard.set(i, j, this->getBoardValue());
-            return mainBoard;
+            gameStateAfterMove.board.set(i, j, this->getBoardValue());
+            return gameStateAfterMove;
           }
         }
       }
     }
 
     // If middle available, take middle
-    if (mainBoard.get(1, 1) == BoardValue::Empty)
+    
+    if (gameStateAfterMove.board.get(1, 1) == BoardValue::Empty)
     {
-      mainBoard.set(1, 1, this->getBoardValue());
-      return mainBoard;
+      gameStateAfterMove.board.set(1, 1, this->getBoardValue());
+      return gameStateAfterMove;
     }
 
     // Offensive Strategy
-    if (mainBoard.get(1, 1) == this->getBoardValue() && board.numberOfAvailableMoves() == 7)
+    
+    if (gameStateAfterMove.board.get(1, 1) == this->getBoardValue() && gameState.board.numberOfAvailableMoves() == 7)
     {
-      if (mainBoard.get(0, 1) == this->getOpponentBoardValue())
+      if (gameStateAfterMove.board.get(0, 1) == this->getOpponentBoardValue())
       {
-        mainBoard.set(2, 2, this->getBoardValue());
-        return mainBoard;
+        gameStateAfterMove.board.set(2, 2, this->getBoardValue());
+        return gameStateAfterMove;
       }
-      else if (mainBoard.get(1, 2) == this->getOpponentBoardValue())
+      else if (gameStateAfterMove.board.get(1, 2) == this->getOpponentBoardValue())
       {
-        mainBoard.set(2, 0, this->getBoardValue());
-        return mainBoard;
+        gameStateAfterMove.board.set(2, 0, this->getBoardValue());
+        return gameStateAfterMove;
       }
-      else if (mainBoard.get(2, 1) == this->getOpponentBoardValue())
+      else if (gameStateAfterMove.board.get(2, 1) == this->getOpponentBoardValue())
       {
-        mainBoard.set(0, 0, this->getBoardValue());
-        return mainBoard;
+        gameStateAfterMove.board.set(0, 0, this->getBoardValue());
+        return gameStateAfterMove;
       }
-      else if (mainBoard.get(1, 0) == this->getOpponentBoardValue())
+      else if (gameStateAfterMove.board.get(1, 0) == this->getOpponentBoardValue())
       {
-        mainBoard.set(2, 2, this->getBoardValue());
-        return mainBoard;
+        gameStateAfterMove.board.set(2, 2, this->getBoardValue());
+        return gameStateAfterMove;
       }
     }
 
     // Defensive Strategy
-    if (mainBoard.get(1, 0) == this->getOpponentBoardValue() && mainBoard.get(2, 1) == this->getOpponentBoardValue() && mainBoard.get(2, 0) == BoardValue::Empty)
+    
+    if (gameStateAfterMove.board.get(1, 0) == this->getOpponentBoardValue() && gameStateAfterMove.board.get(2, 1) == this->getOpponentBoardValue() && gameStateAfterMove.board.get(2, 0) == BoardValue::Empty)
     {
-      mainBoard.set(2, 0, this->getBoardValue());
-      return mainBoard;
+      gameStateAfterMove.board.set(2, 0, this->getBoardValue());
+      return gameStateAfterMove;
     }
-    else if (mainBoard.get(1, 0) == this->getOpponentBoardValue() && mainBoard.get(0, 1) == this->getOpponentBoardValue() && mainBoard.get(0, 0) == BoardValue::Empty)
+    else if (gameStateAfterMove.board.get(1, 0) == this->getOpponentBoardValue() && gameStateAfterMove.board.get(0, 1) == this->getOpponentBoardValue() && gameStateAfterMove.board.get(0, 0) == BoardValue::Empty)
     {
-      mainBoard.set(0, 0, this->getBoardValue());
-      return mainBoard;
+      gameStateAfterMove.board.set(0, 0, this->getBoardValue());
+      return gameStateAfterMove;
     }
-    else if (mainBoard.get(0, 1) == this->getOpponentBoardValue() && mainBoard.get(1, 2) == this->getOpponentBoardValue() && mainBoard.get(0, 2) == BoardValue::Empty)
+    else if (gameStateAfterMove.board.get(0, 1) == this->getOpponentBoardValue() && gameStateAfterMove.board.get(1, 2) == this->getOpponentBoardValue() && gameStateAfterMove.board.get(0, 2) == BoardValue::Empty)
     {
-      mainBoard.set(0, 2, this->getBoardValue());
-      return mainBoard;
+      gameStateAfterMove.board.set(0, 2, this->getBoardValue());
+      return gameStateAfterMove;
     }
-    else if (mainBoard.get(2, 1) == this->getOpponentBoardValue() && mainBoard.get(1, 2) == this->getOpponentBoardValue() && mainBoard.get(2, 2) == BoardValue::Empty)
+    else if (gameStateAfterMove.board.get(2, 1) == this->getOpponentBoardValue() && gameStateAfterMove.board.get(1, 2) == this->getOpponentBoardValue() && gameStateAfterMove.board.get(2, 2) == BoardValue::Empty)
     {
-      mainBoard.set(2, 2, this->getBoardValue());
-      return mainBoard;
+      gameStateAfterMove.board.set(2, 2, this->getBoardValue());
+      return gameStateAfterMove;
     }
 
     // If corner available, take corner
-    if (mainBoard.get(0, 0) == BoardValue::Empty)
+    
+    if (gameStateAfterMove.board.get(0, 0) == BoardValue::Empty)
     {
-      mainBoard.set(0, 0, this->getBoardValue());
-      return mainBoard;
+      gameStateAfterMove.board.set(0, 0, this->getBoardValue());
+      return gameStateAfterMove;
     }
-    else if (mainBoard.get(0, 2) == BoardValue::Empty)
+    else if (gameStateAfterMove.board.get(0, 2) == BoardValue::Empty)
     {
-      mainBoard.set(0, 2, this->getBoardValue());
-      return mainBoard;
+      gameStateAfterMove.board.set(0, 2, this->getBoardValue());
+      return gameStateAfterMove;
     }
-    else if (mainBoard.get(2, 0) == BoardValue::Empty)
+    else if (gameStateAfterMove.board.get(2, 0) == BoardValue::Empty)
     {
-      mainBoard.set(2, 0, this->getBoardValue());
-      return mainBoard;
+      gameStateAfterMove.board.set(2, 0, this->getBoardValue());
+      return gameStateAfterMove;
     }
-    else if (mainBoard.get(2, 2) == BoardValue::Empty)
+    else if (gameStateAfterMove.board.get(2, 2) == BoardValue::Empty)
     {
-      mainBoard.set(2, 2, this->getBoardValue());
-      return mainBoard;
+      gameStateAfterMove.board.set(2, 2, this->getBoardValue());
+      return gameStateAfterMove;
     }
 
     // Default to random move
-    return TicTacToe::makeRandomMove(board, this->getBoardValue());
+    
+    return TicTacToe::makeRandomMove(gameState, this->getBoardValue());
   }
   
 private:
 
-  bool IHaveWonOnBoard(const Board & board)
+  bool thisPlayerHasWon(const GameState & gameState)
   {
-    if (this->getBoardValue() == BoardValue::PlayerOne) return TicTacToe::playerOneHasWon(board);
-    else return TicTacToe::playerTwoHasWon(board);
+    if (this->getBoardValue() == BoardValue::PlayerOne) return TicTacToe::playerOneHasWon(gameState);
+    else return TicTacToe::playerTwoHasWon(gameState);
   }
 
-  bool opponentHasWonOnBoard(const Board & board)
+  bool otherPlayerHasWon(const GameState & gameState)
   {
-    if (this->getOpponentBoardValue() == BoardValue::PlayerOne) return TicTacToe::playerOneHasWon(board);
-    else return TicTacToe::playerTwoHasWon(board);
+    if (this->getOpponentBoardValue() == BoardValue::PlayerOne) return TicTacToe::playerOneHasWon(gameState);
+    else return TicTacToe::playerTwoHasWon(gameState);
   }
 };
 

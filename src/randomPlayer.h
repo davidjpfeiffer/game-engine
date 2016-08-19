@@ -7,9 +7,9 @@ class RandomPlayer : public Player
 {
 public:
 
-  Board getMove(const Board & board)
+  GameState getMove(const GameState & gameState)
   {
-    return TicTacToe::makeRandomMove(board, this->getBoardValue());
+    return TicTacToe::makeRandomMove(gameState, this->getBoardValue());
   }
 };
 

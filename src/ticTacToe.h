@@ -3,37 +3,36 @@
 
 #include <iostream>
 #include <vector>
-#include "board.h"
+#include "gameState.h"
 #include "gameResult.h"
 #include "utilities.h"
 
 class TicTacToe
 {
-
 public:
   
   // Abstract Game Class Methods
   
-  static bool isOver(const Board & board)
+  static bool isOver(const GameState & gameState)
   {
-    return board.numberOfAvailableMoves() == 0 || playerOneHasWon(board) || playerTwoHasWon(board);
+    return gameState.board.numberOfAvailableMoves() == 0 || playerOneHasWon(gameState) || playerTwoHasWon(gameState);
   }
   
-  static bool isValidMove(const Board & boardBeforeMove, const Board & boardAfterMove, const BoardValue & playerBoardValue)
+  static bool isValidMove(const GameState & gameStateBeforeMove, const GameState & gameStateAfterMove, const BoardValue & playerBoardValue)
   {
-    if (numberOfDifferencesBetweenBoards(boardBeforeMove, boardAfterMove) == 1)
+    if (numberOfDifferencesBetweenBoards(gameStateBeforeMove.board, gameStateAfterMove.board) == 1)
     {
       for (unsigned i = 0; i < BOARD_SIZE; i++)
       {
         for (unsigned j = 0; j < BOARD_SIZE; j++)
         {
-          if (boardBeforeMove.get(i, j) != boardAfterMove.get(i, j))
+          if (gameStateBeforeMove.board.get(i, j) != gameStateAfterMove.board.get(i, j))
           {
-            if (boardBeforeMove.get(i, j) != BoardValue::Empty)
+            if (gameStateBeforeMove.board.get(i, j) != BoardValue::Empty)
             {
               return false;
             }
-            if (boardAfterMove.get(i, j) == playerBoardValue)
+            if (gameStateAfterMove.board.get(i, j) == playerBoardValue)
             {
               return true;
             }
@@ -45,39 +44,21 @@ public:
     return false;
   }
   
-  static bool playerOneHasWon(const Board & board)
+  static bool playerOneHasWon(const GameState & gameState)
   {
-    return playerHasWon(board, BoardValue::PlayerOne);
+    return playerHasWon(gameState, BoardValue::PlayerOne);
   }
   
-  static bool playerTwoHasWon(const Board & board)
+  static bool playerTwoHasWon(const GameState & gameState)
   {
-    return playerHasWon(board, BoardValue::PlayerTwo);
+    return playerHasWon(gameState, BoardValue::PlayerTwo);
   }
   
   // Custom Methods
   
-  static unsigned numberOfDifferencesBetweenBoards(const Board & boardOne, const Board & boardTwo)
+  static GameState makeRandomMove(const GameState & gameState, BoardValue playerBoardValue)
   {
-    unsigned numDifferences = 0;
-
-    for (unsigned i = 0; i < BOARD_SIZE; i++)
-    {
-      for (unsigned j = 0; j < BOARD_SIZE; j++)
-      {
-        if (boardOne.get(i, j) != boardTwo.get(i, j))
-        {
-          numDifferences++;
-        }
-      }
-    }
-
-    return numDifferences;
-  }
-  
-  static Board makeRandomMove(const Board & board, BoardValue playerBoardValue)
-  {
-    Board newBoard = board;
+    GameState gameStateAfterMove = gameState;
     
     std::vector<std::pair<unsigned, unsigned> > availableMoves;
 
@@ -85,7 +66,7 @@ public:
     {
       for (unsigned j = 0; j < BOARD_SIZE; j++)
       {
-        if (board.get(i, j) == BoardValue::Empty)
+        if (gameState.board.get(i, j) == BoardValue::Empty)
         {
           availableMoves.push_back(std::make_pair(i, j));
         }
@@ -94,9 +75,9 @@ public:
 
     unsigned randomMove = getRandomNumber(availableMoves.size() - 1);
 
-    newBoard.set(availableMoves[randomMove].first, availableMoves[randomMove].second, playerBoardValue);
+    gameStateAfterMove.board.set(availableMoves[randomMove].first, availableMoves[randomMove].second, playerBoardValue);
 
-    return newBoard;
+    return gameStateAfterMove;
   }
 
   static char getBoardValueAsChar(BoardValue boardValue)
@@ -114,11 +95,29 @@ public:
   
 private:
 
-  static bool playerHasWon(const Board & board, BoardValue playerBoardValue)
+  static unsigned numberOfDifferencesBetweenBoards(const Board & boardOne, const Board & boardTwo)
+  {
+    unsigned numDifferences = 0;
+
+    for (unsigned i = 0; i < BOARD_SIZE; i++)
+    {
+      for (unsigned j = 0; j < BOARD_SIZE; j++)
+      {
+        if (boardOne.get(i, j) != boardTwo.get(i, j))
+        {
+          numDifferences++;
+        }
+      }
+    }
+
+    return numDifferences;
+  }
+
+  static bool playerHasWon(const GameState & gameState, BoardValue playerBoardValue)
   {
     for (unsigned row = 0; row < BOARD_SIZE; row++)
     {
-      if (board.get(row, 0) == playerBoardValue && board.get(row, 1) == playerBoardValue && board.get(row, 2) == playerBoardValue)
+      if (gameState.board.get(row, 0) == playerBoardValue && gameState.board.get(row, 1) == playerBoardValue && gameState.board.get(row, 2) == playerBoardValue)
       {
         return true;
       }
@@ -126,18 +125,18 @@ private:
 
     for (unsigned column = 0; column < BOARD_SIZE; column++)
     {
-      if (board.get(0, column) == playerBoardValue && board.get(1, column) == playerBoardValue && board.get(2, column) == playerBoardValue)
+      if (gameState.board.get(0, column) == playerBoardValue && gameState.board.get(1, column) == playerBoardValue && gameState.board.get(2, column) == playerBoardValue)
       {
         return true;
       }
     }
 
-    if (board.get(0, 0) == playerBoardValue && board.get(1, 1) == playerBoardValue && board.get(2, 2) == playerBoardValue)
+    if (gameState.board.get(0, 0) == playerBoardValue && gameState.board.get(1, 1) == playerBoardValue && gameState.board.get(2, 2) == playerBoardValue)
     {
       return true;
     }
 
-    if (board.get(0, 2) == playerBoardValue && board.get(1, 1) == playerBoardValue && board.get(2, 0) == playerBoardValue)
+    if (gameState.board.get(0, 2) == playerBoardValue && gameState.board.get(1, 1) == playerBoardValue && gameState.board.get(2, 0) == playerBoardValue)
     {
       return true;
     }

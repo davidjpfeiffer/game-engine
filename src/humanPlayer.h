@@ -8,9 +8,9 @@ class HumanPlayer : public Player
 {
 public:
 
-  Board getMove(const Board & board)
+  GameState getMove(const GameState & gameState)
   {
-    Board newBoard;
+    GameState gameStateAfterMove;
     bool validMoveMade = false;
     unsigned row, column, indexOfRow, indexOfColumn;
 
@@ -26,12 +26,12 @@ public:
       std::cin >> column;
       indexOfColumn = column - 1;
 
-      newBoard = board;
+      gameStateAfterMove.board = gameState.board;
 
       if (Board::isValidRowAndColumn(indexOfRow, indexOfColumn))
       {
-        newBoard.set(indexOfRow, indexOfColumn, this->getBoardValue());
-        validMoveMade = TicTacToe::isValidMove(board, newBoard, this->getBoardValue());
+        gameStateAfterMove.board.set(indexOfRow, indexOfColumn, this->getBoardValue());
+        validMoveMade = TicTacToe::isValidMove(gameState, gameStateAfterMove, this->getBoardValue());
       }
       else
       {
@@ -44,7 +44,7 @@ public:
       }
     }
 
-    return newBoard;
+    return gameStateAfterMove;
   }
 };
 

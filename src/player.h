@@ -14,7 +14,7 @@ private:
   
 public:
 
-  virtual Board getMove(const Board &) = 0;
+  virtual GameState getMove(const GameState &) = 0;
 
   std::string getName()
   {
