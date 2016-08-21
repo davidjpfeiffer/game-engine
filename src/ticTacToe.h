@@ -3,12 +3,11 @@
 
 #include <iostream>
 #include <vector>
-#include "player.h"
-#include "gameState.h"
+#include "game.h"
 #include "gameResult.h"
 #include "utilities.h"
 
-class TicTacToe
+class TicTacToe : public Game
 {
 public:
   
@@ -20,12 +19,12 @@ public:
     playerTwo.setPlayerValue(PlayerValue::PlayerTwo);
   }
   
-  static bool isOver(const GameState & gameState)
+  bool isOver(const GameState & gameState)
   {
     return gameState.board.numberOfAvailableMoves() == 0 || playerHasWon(gameState, PlayerValue::PlayerOne) || playerHasWon(gameState, PlayerValue::PlayerTwo);
   }
   
-  static bool isValidMove(const GameState & gameStateBeforeMove, const GameState & gameStateAfterMove, const PlayerValue & playerValue)
+  bool isValidMove(const GameState & gameStateBeforeMove, const GameState & gameStateAfterMove, const PlayerValue & playerValue)
   {
     if (numberOfDifferencesBetweenBoards(gameStateBeforeMove.board, gameStateAfterMove.board) == 1)
     {
@@ -51,7 +50,7 @@ public:
     return false;
   }
   
-  static bool playerHasWon(const GameState & gameState, const PlayerValue & playerValue)
+  bool playerHasWon(const GameState & gameState, const PlayerValue & playerValue)
   {
     for (unsigned row = 0; row < BOARD_SIZE; row++)
     {
@@ -92,7 +91,7 @@ public:
   
   // Custom Methods
   
-  static GameState makeRandomMove(const GameState & gameState, const PlayerValue & playerValue)
+  GameState makeRandomMove(const GameState & gameState, const PlayerValue & playerValue)
   {
     GameState gameStateAfterMove = gameState;
     
@@ -116,18 +115,18 @@ public:
     return gameStateAfterMove;
   }
   
-  static bool isPlayersBoardValue(const PlayerValue & playerValue, const BoardValue & boardValue)
+  bool isPlayersBoardValue(const PlayerValue & playerValue, const BoardValue & boardValue)
   {
     return playerValue == PlayerValue::PlayerOne ? boardValue == BoardValue::O : boardValue == BoardValue::X;
   }
   
-  static BoardValue playerValueToBoardValue(PlayerValue playerValue)
+  BoardValue playerValueToBoardValue(PlayerValue playerValue)
   {
     if (playerValue == PlayerValue::PlayerOne) return BoardValue::O;
     else return BoardValue::X;
   }
   
-  static PlayerValue boardValueToPlayerValue(BoardValue boardValue)
+  PlayerValue boardValueToPlayerValue(BoardValue boardValue)
   {
     if (boardValue == BoardValue::O) return PlayerValue::PlayerOne;
     else if (boardValue == BoardValue::X) return PlayerValue::PlayerTwo;
@@ -136,7 +135,7 @@ public:
   
 private:
 
-  static unsigned numberOfDifferencesBetweenBoards(const Board & boardOne, const Board & boardTwo)
+  unsigned numberOfDifferencesBetweenBoards(const Board & boardOne, const Board & boardTwo)
   {
     unsigned numDifferences = 0;
 

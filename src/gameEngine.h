@@ -2,20 +2,22 @@
 #define __GAMEENGINE
 
 #include <iostream>
-#include "ticTacToe.h"
+#include "game.h"
 #include "player.h"
+#include "ticTacToe.h"
 
 class GameEngine
 {
 public:
 
-  GameEngine(Player & playerOne, Player & playerTwo)
+  GameEngine(Game & game, Player & playerOne, Player & playerTwo)
   {
-    this->game.setupPlayers(playerOne, playerTwo);
-
+    this->game = & game;
     this->playerOne = & playerOne;
     this->playerTwo = & playerTwo;
     this->currentPlayer = this->playerOne;
+    
+    this->game->setupPlayers(playerOne, playerTwo);
   }
 
   void play(unsigned numberOfGames = 1)
@@ -52,21 +54,21 @@ private:
 
   unsigned numberOfGames, playerOneWins = 0, playerTwoWins = 0, gamesTied = 0;
 
+  Game * game;
   Player * playerOne;
   Player * playerTwo;
   Player * currentPlayer;
   GameState gameState;
-  TicTacToe game;
 
   GameResult getGameResult()
   {
     if (isPlayingSingleGame()) this->gameState.print();
 
-    while (!this->game.isOver(this->gameState))
+    while (!this->game->isOver(this->gameState))
     {
       GameState gameStateAfterMove = this->currentPlayer->getMove(this->gameState);
 
-      if (this->game.isValidMove(this->gameState, gameStateAfterMove, this->currentPlayer->getPlayerValue()))
+      if (this->game->isValidMove(this->gameState, gameStateAfterMove, this->currentPlayer->getPlayerValue()))
       {
         this->gameState = gameStateAfterMove;
         toggleCurrentPlayer();
@@ -75,8 +77,8 @@ private:
       else exitWithErrorMessage(this->currentPlayer->getName() + " did not submit a valid move.");
     }
 
-    if (this->game.playerHasWon(this->gameState, PlayerValue::PlayerOne)) return GameResult::PlayerOneWin;
-    else if (this->game.playerHasWon(this->gameState, PlayerValue::PlayerTwo)) return GameResult::PlayerTwoWin;
+    if (this->game->playerHasWon(this->gameState, PlayerValue::PlayerOne)) return GameResult::PlayerOneWin;
+    else if (this->game->playerHasWon(this->gameState, PlayerValue::PlayerTwo)) return GameResult::PlayerTwoWin;
     else return GameResult::Tie;
   }
 

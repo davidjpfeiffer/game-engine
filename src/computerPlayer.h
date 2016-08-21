@@ -1,9 +1,9 @@
 #ifndef __COMPUTERPLAYER
 #define __COMPUTERPLAYER
 
-#include "player.h"
+#include "ticTacToePlayer.h"
 
-class ComputerPlayer : public Player
+class ComputerPlayer : public TicTacToePlayer
 {
 public:
 
@@ -133,19 +133,19 @@ public:
 
     // Default to random move
     
-    return TicTacToe::makeRandomMove(gameState, this->getPlayerValue());
+    return this->game->makeRandomMove(gameState, this->getPlayerValue());
   }
   
 private:
 
   bool thisPlayerHasWon(const GameState & gameState)
   {
-    return TicTacToe::playerHasWon(gameState, this->getPlayerValue());
+    return this->game->playerHasWon(gameState, this->getPlayerValue());
   }
 
   bool otherPlayerHasWon(const GameState & gameState)
   {
-    return TicTacToe::playerHasWon(gameState, this->getOpponentPlayerValue());
+    return this->game->playerHasWon(gameState, this->getOpponentPlayerValue());
   }
 };
 

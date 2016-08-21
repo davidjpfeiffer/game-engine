@@ -2,9 +2,9 @@
 #define __HUMANPLAYER
 
 #include <iostream>
-#include "player.h"
+#include "ticTacToePlayer.h"
 
-class HumanPlayer : public Player
+class HumanPlayer : public TicTacToePlayer
 {
 public:
 
@@ -31,7 +31,7 @@ public:
       if (Board::isValidRowAndColumn(indexOfRow, indexOfColumn))
       {
         gameStateAfterMove.board.set(indexOfRow, indexOfColumn, this->getBoardValue());
-        validMoveMade = TicTacToe::isValidMove(gameState, gameStateAfterMove, this->getPlayerValue());
+        validMoveMade = this->game->isValidMove(gameState, gameStateAfterMove, this->getPlayerValue());
       }
       else
       {

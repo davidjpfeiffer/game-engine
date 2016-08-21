@@ -1,15 +1,15 @@
 #ifndef __RANDOMPLAYER
 #define __RANDOMPLAYER
 
-#include "player.h"
+#include "ticTacToePlayer.h"
 
-class RandomPlayer : public Player
+class RandomPlayer : public TicTacToePlayer
 {
 public:
 
   GameState getMove(const GameState & gameState)
   {
-    return TicTacToe::makeRandomMove(gameState, this->getPlayerValue());
+    return this->game->makeRandomMove(gameState, this->getPlayerValue());
   }
 };
 

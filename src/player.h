@@ -7,7 +7,7 @@
 #include "playerValue.h"
 
 class Player
-{
+{ 
 private:
 
   BoardValue playerBoardValue;
