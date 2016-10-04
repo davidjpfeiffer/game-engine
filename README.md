@@ -1,6 +1,6 @@
 ## Game Engine for Tic Tac Toe
 
-This project was originally written for Tic Tac Toe, but is currently in the process of being redesigned to work for any two-player turn-based strategy game.
+This project was originally written for Tic Tac Toe, but is currently being redesigned to work for any two-player turn-based strategy game. This process should be completed before Summer 2017. All documentation for this project will be updated after redesign.
 
 This simple C++ command line interface program written by David Pfeiffer for the 2016 Southeast Missouri State Hackathon allows any two algorithms to face off in a game of Tic Tac Toe. The program was written to better understand how game engines work. In the future I plan to make game engines that work for more complex games like Connect Four or chess.
 
