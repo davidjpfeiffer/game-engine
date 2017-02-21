@@ -22,15 +22,18 @@ public:
     playerTwo.setPlayerValue(PlayerValue::PlayerTwo);
   }
   
-  bool isOver(GameState * gameState)
+  bool isOver(GameState * p_gameState)
   {
-    TicTacToeGameState ticTacToeGameState = * gameState;
+    TicTacToeGameState * gameState = static_cast<TicTacToeGameState *>(p_gameState);
     
-    return ticTacToeGameState.board.numberOfAvailableMoves() == 0 || playerHasWon(& ticTacToeGameState, PlayerValue::PlayerOne) || playerHasWon(& ticTacToeGameState, PlayerValue::PlayerTwo);
+    return gameState->board.numberOfAvailableMoves() == 0 || playerHasWon(gameState, PlayerValue::PlayerOne) || playerHasWon(gameState, PlayerValue::PlayerTwo);
   }
   
-  bool isValidMove(TicTacToeGameState * gameStateBeforeMove, TicTacToeGameState * gameStateAfterMove, const PlayerValue & playerValue)
+  bool isValidMove(GameState * p_gameStateBeforeMove, GameState * p_gameStateAfterMove, const PlayerValue & playerValue)
   {
+    TicTacToeGameState * gameStateBeforeMove = static_cast<TicTacToeGameState *>(p_gameStateBeforeMove);
+    TicTacToeGameState * gameStateAfterMove = static_cast<TicTacToeGameState *>(p_gameStateAfterMove);
+    
     if (numberOfDifferencesBetweenBoards(gameStateBeforeMove->board, gameStateAfterMove->board) == 1)
     {
       for (unsigned i = 0; i < BOARD_SIZE; i++)
@@ -55,8 +58,10 @@ public:
     return false;
   }
   
-  bool playerHasWon(TicTacToeGameState * gameState, const PlayerValue & playerValue)
+  bool playerHasWon(GameState * p_gameState, const PlayerValue & playerValue)
   {
+    TicTacToeGameState * gameState = static_cast<TicTacToeGameState *>(p_gameState);
+    
     for (unsigned row = 0; row < BOARD_SIZE; row++)
     {
       if ( isPlayersBoardValue(playerValue, gameState->board.get(row, 0))
@@ -94,11 +99,21 @@ public:
     return false;
   }
   
+  // GameState * getCopyOfGameState(GameState * p_gameState)
+  // {
+    // TicTacToeGameState * gameState = static_cast<TicTacToeGameState *>(p_gameState);
+    
+    // TicTacToeBoard board = gameState->board;
+  // }
+  
   // Custom Methods
   
-  GameState * makeRandomMove(TicTacToeGameState * gameState, const PlayerValue & playerValue)
+  GameState * makeRandomMove(GameState * p_gameState, const PlayerValue & playerValue)
   {
-    TicTacToeGameState gameStateAfterMove = * gameState;
+    TicTacToeGameState * gameState = static_cast<TicTacToeGameState *>(p_gameState);
+    
+    TicTacToeGameState gameStateAfterMove;
+    gameStateAfterMove.board = gameState->board;
     
     std::vector<std::pair<unsigned, unsigned> > availableMoves;
 

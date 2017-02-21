@@ -8,7 +8,7 @@ class TicTacToePlayer : public Player
 {
 private:
 
-  virtual void onPlayerValueSet(const PlayerValue & playerValue)
+  void onPlayerValueSet(const PlayerValue & playerValue)
   {
     this->playerBoardValue = playerValue == PlayerValue::PlayerOne ? TicTacToeBoardValue::O : TicTacToeBoardValue::X;
     this->opponentBoardValue = playerValue == PlayerValue::PlayerOne ? TicTacToeBoardValue::X : TicTacToeBoardValue::O;

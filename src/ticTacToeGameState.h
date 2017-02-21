@@ -10,12 +10,12 @@ public:
 
   TicTacToeBoard board;
   
-  virtual void reset()
+  void reset()
   {
     this->board.reset();
   }
   
-  virtual void print() const
+  void print() const
   {
     this->board.print();
   }

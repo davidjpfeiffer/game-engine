@@ -10,8 +10,10 @@ class HumanTicTacToePlayer : public TicTacToePlayer
 {
 public:
 
-  GameState * getMove(const TicTacToeGameState * gameState)
+  GameState * getMove(GameState * p_gameState)
   {
+    TicTacToeGameState * gameState = static_cast<TicTacToeGameState *>(p_gameState);
+    
     TicTacToeGameState gameStateAfterMove;
     bool validMoveMade = false;
     unsigned row, column, indexOfRow, indexOfColumn;

@@ -26,8 +26,12 @@ public:
 
     for (unsigned gameNumber = 1; gameNumber <= this->numberOfGames; gameNumber++)
     {
+      std::cout << "test\n";
+      
       this->gameState->reset();
-
+      
+      std::cout << "test\n";
+      
       switch (getGameResult())
       {
       case GameResult::PlayerOneWin:

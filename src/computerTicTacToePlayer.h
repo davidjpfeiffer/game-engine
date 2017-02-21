@@ -9,9 +9,12 @@ class ComputerTicTacToePlayer : public TicTacToePlayer
 {
 public:
 
-  GameState * getMove(const TicTacToeGameState * gameState)
+  GameState * getMove(GameState * p_gameState)
   {
-    TicTacToeGameState move = * gameState;
+    TicTacToeGameState * gameState = static_cast<TicTacToeGameState *>(p_gameState);
+    
+    TicTacToeGameState move;
+    move.board = gameState->board;
     TicTacToeGameState theoreticalGameState;
 
     // If we can win, take win
@@ -140,12 +143,12 @@ public:
   
 private:
 
-  bool thisPlayerHasWon(const TicTacToeGameState * gameState)
+  bool thisPlayerHasWon(TicTacToeGameState * gameState)
   {
     return this->game->playerHasWon(gameState, this->getPlayerValue());
   }
 
-  bool otherPlayerHasWon(const TicTacToeGameState * gameState)
+  bool otherPlayerHasWon(TicTacToeGameState * gameState)
   {
     return this->game->playerHasWon(gameState, this->getOpponentPlayerValue());
   }

@@ -21,7 +21,7 @@ protected:
   
 public:
 
-  virtual GameState * getMove(const GameState *) = 0;
+  virtual GameState * getMove(GameState *) = 0;
 
   std::string getName() const
   {

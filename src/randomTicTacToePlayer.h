@@ -8,7 +8,7 @@ class RandomTicTacToePlayer : public TicTacToePlayer
 {
 public:
 
-  GameState * getMove(const TicTacToeGameState * gameState)
+  GameState * getMove(GameState * gameState)
   {
     return this->game->makeRandomMove(gameState, this->getPlayerValue());
   }

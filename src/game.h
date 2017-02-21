@@ -15,6 +15,8 @@ public:
   virtual bool isValidMove(GameState * gameStateBeforeMove, GameState * gameStateAfterMove, const PlayerValue & playerValue) = 0;
   
   virtual bool playerHasWon(GameState * gameState, const PlayerValue & playerValue) = 0;
+  
+  // virtual GameState * getCopyOfGameState(GameState * gameState);
 };
 
 #endif
