@@ -4,6 +4,9 @@
 #include <iostream>
 #include <vector>
 #include "game.h"
+#include "ticTacToeGameState.h"
+#include "ticTacToeBoard.h"
+#include "ticTacToeBoardValue.h"
 #include "gameResult.h"
 #include "utilities.h"
 
@@ -19,26 +22,28 @@ public:
     playerTwo.setPlayerValue(PlayerValue::PlayerTwo);
   }
   
-  bool isOver(const GameState & gameState)
+  bool isOver(GameState * gameState)
   {
-    return gameState.board.numberOfAvailableMoves() == 0 || playerHasWon(gameState, PlayerValue::PlayerOne) || playerHasWon(gameState, PlayerValue::PlayerTwo);
+    TicTacToeGameState ticTacToeGameState = * gameState;
+    
+    return ticTacToeGameState.board.numberOfAvailableMoves() == 0 || playerHasWon(& ticTacToeGameState, PlayerValue::PlayerOne) || playerHasWon(& ticTacToeGameState, PlayerValue::PlayerTwo);
   }
   
-  bool isValidMove(const GameState & gameStateBeforeMove, const GameState & gameStateAfterMove, const PlayerValue & playerValue)
+  bool isValidMove(TicTacToeGameState * gameStateBeforeMove, TicTacToeGameState * gameStateAfterMove, const PlayerValue & playerValue)
   {
-    if (numberOfDifferencesBetweenBoards(gameStateBeforeMove.board, gameStateAfterMove.board) == 1)
+    if (numberOfDifferencesBetweenBoards(gameStateBeforeMove->board, gameStateAfterMove->board) == 1)
     {
       for (unsigned i = 0; i < BOARD_SIZE; i++)
       {
         for (unsigned j = 0; j < BOARD_SIZE; j++)
         {
-          if (gameStateBeforeMove.board.get(i, j) != gameStateAfterMove.board.get(i, j))
+          if (gameStateBeforeMove->board.get(i, j) != gameStateAfterMove->board.get(i, j))
           {
-            if (gameStateBeforeMove.board.get(i, j) != BoardValue::Empty)
+            if (gameStateBeforeMove->board.get(i, j) != TicTacToeBoardValue::Empty)
             {
               return false;
             }
-            if (isPlayersBoardValue(playerValue, gameStateAfterMove.board.get(i, j)))
+            if (isPlayersBoardValue(playerValue, gameStateAfterMove->board.get(i, j)))
             {
               return true;
             }
@@ -50,13 +55,13 @@ public:
     return false;
   }
   
-  bool playerHasWon(const GameState & gameState, const PlayerValue & playerValue)
+  bool playerHasWon(TicTacToeGameState * gameState, const PlayerValue & playerValue)
   {
     for (unsigned row = 0; row < BOARD_SIZE; row++)
     {
-      if ( isPlayersBoardValue(playerValue, gameState.board.get(row, 0))
-        && isPlayersBoardValue(playerValue, gameState.board.get(row, 1))
-        && isPlayersBoardValue(playerValue, gameState.board.get(row, 2)))
+      if ( isPlayersBoardValue(playerValue, gameState->board.get(row, 0))
+        && isPlayersBoardValue(playerValue, gameState->board.get(row, 1))
+        && isPlayersBoardValue(playerValue, gameState->board.get(row, 2)))
       {
         return true;
       }
@@ -64,24 +69,24 @@ public:
 
     for (unsigned column = 0; column < BOARD_SIZE; column++)
     {
-      if ( isPlayersBoardValue(playerValue, gameState.board.get(0, column))
-        && isPlayersBoardValue(playerValue, gameState.board.get(1, column))
-        && isPlayersBoardValue(playerValue, gameState.board.get(2, column)))
+      if ( isPlayersBoardValue(playerValue, gameState->board.get(0, column))
+        && isPlayersBoardValue(playerValue, gameState->board.get(1, column))
+        && isPlayersBoardValue(playerValue, gameState->board.get(2, column)))
       {
         return true;
       }
     }
 
-    if ( isPlayersBoardValue(playerValue, gameState.board.get(0, 0))
-      && isPlayersBoardValue(playerValue, gameState.board.get(1, 1))
-      && isPlayersBoardValue(playerValue, gameState.board.get(2, 2)))
+    if ( isPlayersBoardValue(playerValue, gameState->board.get(0, 0))
+      && isPlayersBoardValue(playerValue, gameState->board.get(1, 1))
+      && isPlayersBoardValue(playerValue, gameState->board.get(2, 2)))
     {
       return true;
     }
 
-    if ( isPlayersBoardValue(playerValue, gameState.board.get(0, 2))
-      && isPlayersBoardValue(playerValue, gameState.board.get(1, 1))
-      && isPlayersBoardValue(playerValue, gameState.board.get(2, 0)))
+    if ( isPlayersBoardValue(playerValue, gameState->board.get(0, 2))
+      && isPlayersBoardValue(playerValue, gameState->board.get(1, 1))
+      && isPlayersBoardValue(playerValue, gameState->board.get(2, 0)))
     {
       return true;
     }
@@ -91,9 +96,9 @@ public:
   
   // Custom Methods
   
-  GameState makeRandomMove(const GameState & gameState, const PlayerValue & playerValue)
+  GameState * makeRandomMove(TicTacToeGameState * gameState, const PlayerValue & playerValue)
   {
-    GameState gameStateAfterMove = gameState;
+    TicTacToeGameState gameStateAfterMove = * gameState;
     
     std::vector<std::pair<unsigned, unsigned> > availableMoves;
 
@@ -101,7 +106,7 @@ public:
     {
       for (unsigned j = 0; j < BOARD_SIZE; j++)
       {
-        if (gameState.board.get(i, j) == BoardValue::Empty)
+        if (gameState->board.get(i, j) == TicTacToeBoardValue::Empty)
         {
           availableMoves.push_back(std::make_pair(i, j));
         }
@@ -112,30 +117,30 @@ public:
 
     gameStateAfterMove.board.set(availableMoves[randomMove].first, availableMoves[randomMove].second, playerValueToBoardValue(playerValue));
 
-    return gameStateAfterMove;
+    return & gameStateAfterMove;
   }
   
-  bool isPlayersBoardValue(const PlayerValue & playerValue, const BoardValue & boardValue)
+  bool isPlayersBoardValue(const PlayerValue & playerValue, const TicTacToeBoardValue & boardValue)
   {
-    return playerValue == PlayerValue::PlayerOne ? boardValue == BoardValue::O : boardValue == BoardValue::X;
+    return playerValue == PlayerValue::PlayerOne ? boardValue == TicTacToeBoardValue::O : boardValue == TicTacToeBoardValue::X;
   }
   
-  BoardValue playerValueToBoardValue(PlayerValue playerValue)
+  TicTacToeBoardValue playerValueToBoardValue(PlayerValue playerValue)
   {
-    if (playerValue == PlayerValue::PlayerOne) return BoardValue::O;
-    else return BoardValue::X;
+    if (playerValue == PlayerValue::PlayerOne) return TicTacToeBoardValue::O;
+    else return TicTacToeBoardValue::X;
   }
   
-  PlayerValue boardValueToPlayerValue(BoardValue boardValue)
+  PlayerValue boardValueToPlayerValue(TicTacToeBoardValue boardValue)
   {
-    if (boardValue == BoardValue::O) return PlayerValue::PlayerOne;
-    else if (boardValue == BoardValue::X) return PlayerValue::PlayerTwo;
+    if (boardValue == TicTacToeBoardValue::O) return PlayerValue::PlayerOne;
+    else if (boardValue == TicTacToeBoardValue::X) return PlayerValue::PlayerTwo;
     else exitWithErrorMessage("Invalid board value passed to BoardValueToPlayerOrder method.");
   }
   
 private:
 
-  unsigned numberOfDifferencesBetweenBoards(const Board & boardOne, const Board & boardTwo)
+  unsigned numberOfDifferencesBetweenBoards(const TicTacToeBoard & boardOne, const TicTacToeBoard & boardTwo)
   {
     unsigned numDifferences = 0;
 

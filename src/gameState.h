@@ -1,23 +1,13 @@
 #ifndef __GAMESTATE
 #define __GAMESTATE
 
-#include "board.h"
-
 class GameState
 {
 public:
 
-  Board board;
+  virtual void reset() = 0;
   
-  void reset()
-  {
-    this->board.reset();
-  }
-  
-  void print() const
-  {
-    this->board.print();
-  }
+  virtual void print() const = 0;
 };
 
 #endif

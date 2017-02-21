@@ -10,35 +10,34 @@ class Player
 { 
 private:
 
-  BoardValue playerBoardValue;
-  BoardValue opponentBoardValue;
-
   PlayerValue playerValue;
   PlayerValue opponentPlayerValue;
   
   bool playerValueSet = false;
   
+protected:
+
+  virtual void onPlayerValueSet(const PlayerValue & playerValue) = 0;
+  
 public:
 
-  virtual GameState getMove(const GameState &) = 0;
+  virtual GameState * getMove(const GameState *) = 0;
 
   std::string getName() const
   {
-    if (this->playerValue == PlayerValue::PlayerOne) return "Player 1";
-    else return "Player 2";
+    return this->playerValue == PlayerValue::PlayerOne ? "Player One" : "Player Two";
   }
   
   void setPlayerValue(const PlayerValue & playerValue)
   {
-    if (!this->playerValueSet)
-    {
-      this->playerBoardValue = playerValue == PlayerValue::PlayerOne ? BoardValue::O : BoardValue::X;
-      this->opponentBoardValue = playerValue == PlayerValue::PlayerOne ? BoardValue::X : BoardValue::O;
-      
+    if (this->playerValueSet == false)
+    {      
       this->playerValue = playerValue;
       this->opponentPlayerValue = playerValue == PlayerValue::PlayerOne ? PlayerValue::PlayerTwo : PlayerValue::PlayerOne;
       
       this->playerValueSet = true;
+      
+      onPlayerValueSet(playerValue);
     }
   }
   
@@ -50,16 +49,6 @@ public:
   PlayerValue getOpponentPlayerValue() const
   {
     return this->opponentPlayerValue;
-  }
-  
-  BoardValue getBoardValue() const
-  {
-    return this->playerBoardValue;
-  }
-  
-  BoardValue getOpponentBoardValue() const
-  {
-    return this->opponentBoardValue;
   }
 };
 

@@ -10,11 +10,11 @@ public:
 
   virtual void setupPlayers(Player & playerOne, Player & playerTwo) = 0;
   
-  virtual bool isOver(const GameState & gameState) = 0;
+  virtual bool isOver(GameState * gameState) = 0;
   
-  virtual bool isValidMove(const GameState & gameStateBeforeMove, const GameState & gameStateAfterMove, const PlayerValue & playerValue) = 0;
+  virtual bool isValidMove(GameState * gameStateBeforeMove, GameState * gameStateAfterMove, const PlayerValue & playerValue) = 0;
   
-  virtual bool playerHasWon(const GameState & gameState, const PlayerValue & playerValue) = 0;
+  virtual bool playerHasWon(GameState * gameState, const PlayerValue & playerValue) = 0;
 };
 
 #endif

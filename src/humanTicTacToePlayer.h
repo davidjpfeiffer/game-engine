@@ -1,16 +1,18 @@
-#ifndef __HUMANPLAYER
-#define __HUMANPLAYER
+#ifndef __HUMANTICTACTOEPLAYER
+#define __HUMANTICTACTOEPLAYER
 
 #include <iostream>
 #include "ticTacToePlayer.h"
+#include "ticTacToeGameState.h"
+#include "ticTacToeBoard.h"
 
-class HumanPlayer : public TicTacToePlayer
+class HumanTicTacToePlayer : public TicTacToePlayer
 {
 public:
 
-  GameState getMove(const GameState & gameState)
+  GameState * getMove(const TicTacToeGameState * gameState)
   {
-    GameState gameStateAfterMove;
+    TicTacToeGameState gameStateAfterMove;
     bool validMoveMade = false;
     unsigned row, column, indexOfRow, indexOfColumn;
 
@@ -26,12 +28,12 @@ public:
       std::cin >> column;
       indexOfColumn = column - 1;
 
-      gameStateAfterMove.board = gameState.board;
+      gameStateAfterMove.board = gameState->board;
 
-      if (Board::isValidRowAndColumn(indexOfRow, indexOfColumn))
+      if (TicTacToeBoard::isValidRowAndColumn(indexOfRow, indexOfColumn))
       {
         gameStateAfterMove.board.set(indexOfRow, indexOfColumn, this->getBoardValue());
-        validMoveMade = this->game->isValidMove(gameState, gameStateAfterMove, this->getPlayerValue());
+        validMoveMade = this->game->isValidMove(gameState, & gameStateAfterMove, this->getPlayerValue());
       }
       else
       {
@@ -44,7 +46,7 @@ public:
       }
     }
 
-    return gameStateAfterMove;
+    return & gameStateAfterMove;
   }
 };
 

@@ -26,7 +26,7 @@ public:
 
     for (unsigned gameNumber = 1; gameNumber <= this->numberOfGames; gameNumber++)
     {
-      this->gameState.reset();
+      this->gameState->reset();
 
       switch (getGameResult())
       {
@@ -47,7 +47,7 @@ public:
       }
     }
 
-    if (isPlayingMultipleGames()) displayStatistics();
+    if (isPlayingMultipleGames()) displayResults();
   }
 
 private:
@@ -58,21 +58,21 @@ private:
   Player * playerOne;
   Player * playerTwo;
   Player * currentPlayer;
-  GameState gameState;
+  GameState * gameState;
 
   GameResult getGameResult()
   {
-    if (isPlayingSingleGame()) this->gameState.print();
+    if (isPlayingSingleGame()) this->gameState->print();
 
     while (!this->game->isOver(this->gameState))
     {
-      GameState gameStateAfterMove = this->currentPlayer->getMove(this->gameState);
+      GameState * gameStateAfterMove = this->currentPlayer->getMove(this->gameState);
 
       if (this->game->isValidMove(this->gameState, gameStateAfterMove, this->currentPlayer->getPlayerValue()))
       {
         this->gameState = gameStateAfterMove;
         toggleCurrentPlayer();
-        if (isPlayingSingleGame()) this->gameState.print();
+        if (isPlayingSingleGame()) this->gameState->print();
       }
       else exitWithErrorMessage(this->currentPlayer->getName() + " did not submit a valid move.");
     }
@@ -92,7 +92,7 @@ private:
     return this->numberOfGames > 1;
   }
 
-  void displayStatistics()
+  void displayResults()
   {
     std::cout << "------------------------------\n";
     std::cout << "Game Statistics\n";
@@ -116,7 +116,7 @@ private:
 
   bool isValidNumberOfGames(unsigned numberOfGames)
   {
-    return numberOfGames < 100000;
+    return numberOfGames < 10000;
   }
 };
 

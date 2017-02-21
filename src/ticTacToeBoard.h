@@ -1,30 +1,30 @@
-#ifndef __BOARD
-#define __BOARD
+#ifndef __TICTACTOEBOARD
+#define __TICTACTOEBOARD
 
 #include <vector>
-#include "boardValue.h"
+#include "ticTacToeBoardValue.h"
 #include "utilities.h"
 
 const unsigned BOARD_SIZE = 3;
 
-class Board
+class TicTacToeBoard
 {
 public:
 
-  Board()
+  TicTacToeBoard()
   {
     for(unsigned row = 0; row < BOARD_SIZE; row++)
-      this->board.push_back({ BoardValue::Empty, BoardValue::Empty, BoardValue::Empty });
+      this->board.push_back({ TicTacToeBoardValue::Empty, TicTacToeBoardValue::Empty, TicTacToeBoardValue::Empty });
   }
 
-  BoardValue get(unsigned row, unsigned column) const
+  TicTacToeBoardValue get(unsigned row, unsigned column) const
   {
     handleInvalidRowOrColumn(row, column);
     
     return this->board[row][column];
   }
   
-  void set(unsigned row, unsigned column, BoardValue boardValue)
+  void set(unsigned row, unsigned column, TicTacToeBoardValue boardValue)
   {
     handleInvalidRowOrColumn(row, column);
     
@@ -35,7 +35,7 @@ public:
   {
     for(unsigned row = 0; row < BOARD_SIZE; row++)
       for(unsigned column = 0; column < BOARD_SIZE; column++)
-        this->board[row][column] = BoardValue::Empty;
+        this->board[row][column] = TicTacToeBoardValue::Empty;
   }
   
   void print() const
@@ -50,13 +50,13 @@ public:
       {
         switch (this->board[i][j])
         {
-          case BoardValue::Empty:
+          case TicTacToeBoardValue::Empty:
             std::cout << "     ###";
             break;
-          case BoardValue::O:
+          case TicTacToeBoardValue::O:
             std::cout << "  O  ###";
             break;
-          case BoardValue::X:
+          case TicTacToeBoardValue::X:
             std::cout << "  X  ###";
             break;
         }
@@ -74,7 +74,7 @@ public:
     {
       for (unsigned j = 0; j < BOARD_SIZE; j++)
       {
-        if (this->board[i][j] == BoardValue::Empty)
+        if (this->board[i][j] == TicTacToeBoardValue::Empty)
         {
           availableMoves++;
         }
@@ -101,7 +101,7 @@ public:
   
 private:
 
-  std::vector<std::vector<BoardValue> > board;
+  std::vector<std::vector<TicTacToeBoardValue> > board;
   
   void handleInvalidRowOrColumn(unsigned row, unsigned column) const
   {

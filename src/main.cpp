@@ -5,9 +5,9 @@
 
 #include "ticTacToe.h"
 
-#include "randomPlayer.h"
-#include "humanPlayer.h"
-#include "computerPlayer.h"
+#include "randomTicTacToePlayer.h"
+#include "humanTicTacToePlayer.h"
+#include "computerTicTacToePlayer.h"
 
 using namespace std;
 
@@ -16,8 +16,8 @@ int main()
   srand(time(NULL));
 
   TicTacToe game;
-  RandomPlayer playerOne;
-  RandomPlayer playerTwo;
+  RandomTicTacToePlayer playerOne;
+  RandomTicTacToePlayer playerTwo;
 
   GameEngine gameEngine(game, playerOne, playerTwo);
   gameEngine.play();
