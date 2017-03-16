@@ -8,20 +8,20 @@
 
 class Player
 { 
-private:
+  private:
 
   PlayerValue playerValue;
   PlayerValue opponentPlayerValue;
   
   bool playerValueSet = false;
   
-protected:
+  protected:
 
   virtual void onPlayerValueSet(const PlayerValue & playerValue) = 0;
   
-public:
+  public:
 
-  virtual GameState * getMove(GameState *) = 0;
+  virtual void getMove(GameState *) = 0;
 
   std::string getName() const
   {

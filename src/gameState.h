@@ -3,7 +3,7 @@
 
 class GameState
 {
-public:
+  public:
 
   virtual void reset() = 0;
   

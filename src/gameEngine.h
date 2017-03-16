@@ -8,8 +8,8 @@
 
 class GameEngine
 {
-public:
-
+  public:
+  
   GameEngine(Game & game, Player & playerOne, Player & playerTwo)
   {
     this->game = & game;
@@ -18,6 +18,12 @@ public:
     this->currentPlayer = this->playerOne;
     
     this->game->setupPlayers(playerOne, playerTwo);
+    this->game->createGameState(& this->gameState);
+  }
+  
+  ~GameEngine()
+  {
+    this->game->deleteGameState(& this->gameState);
   }
 
   void play(unsigned numberOfGames = 1)
@@ -26,38 +32,34 @@ public:
 
     for (unsigned gameNumber = 1; gameNumber <= this->numberOfGames; gameNumber++)
     {
-      std::cout << "test\n";
-      
       this->gameState->reset();
-      
-      std::cout << "test\n";
       
       switch (getGameResult())
       {
       case GameResult::PlayerOneWin:
-        if (isPlayingSingleGame()) std::cout << "Result Of game " << gameNumber << ": " << this->playerOne->getName() << " wins!\n";
+        if (playingSingleGame()) std::cout << "Result Of game " << gameNumber << ": " << this->playerOne->getName() << " wins!\n";
         else this->playerOneWins++;
         break;
 
       case GameResult::PlayerTwoWin:
-        if (isPlayingSingleGame()) std::cout << "Result Of game " << gameNumber << ": " << this->playerTwo->getName() << " wins!\n";
+        if (playingSingleGame()) std::cout << "Result Of game " << gameNumber << ": " << this->playerTwo->getName() << " wins!\n";
         else this->playerTwoWins++;
         break;
 
       case GameResult::Tie:
-        if (isPlayingSingleGame()) std::cout << "Result Of game " << gameNumber << ": Tie!\n";
+        if (playingSingleGame()) std::cout << "Result Of game " << gameNumber << ": Tie!\n";
         else this->gamesTied++;
         break;
       }
     }
 
-    if (isPlayingMultipleGames()) displayResults();
+    if (playingMultipleGames()) displayResults();
   }
-
-private:
-
+  
+  private:
+  
   unsigned numberOfGames, playerOneWins = 0, playerTwoWins = 0, gamesTied = 0;
-
+  
   Game * game;
   Player * playerOne;
   Player * playerTwo;
@@ -66,32 +68,40 @@ private:
 
   GameResult getGameResult()
   {
-    if (isPlayingSingleGame()) this->gameState->print();
+    if (playingSingleGame()) this->gameState->print();
 
     while (!this->game->isOver(this->gameState))
     {
-      GameState * gameStateAfterMove = this->currentPlayer->getMove(this->gameState);
-
+      GameState * gameStateAfterMove = this->game->getCopyOfGameState(this->gameState);
+      this->currentPlayer->getMove(gameStateAfterMove);
+      
       if (this->game->isValidMove(this->gameState, gameStateAfterMove, this->currentPlayer->getPlayerValue()))
       {
+        delete this->gameState;
         this->gameState = gameStateAfterMove;
+        
         toggleCurrentPlayer();
-        if (isPlayingSingleGame()) this->gameState->print();
+        if (playingSingleGame()) this->gameState->print();
       }
-      else exitWithErrorMessage(this->currentPlayer->getName() + " did not submit a valid move.");
+      else
+      {
+        delete gameStateAfterMove;
+        
+        exitWithErrorMessage(this->currentPlayer->getName() + " did not submit a valid move.");
+      }
     }
-
+    
     if (this->game->playerHasWon(this->gameState, PlayerValue::PlayerOne)) return GameResult::PlayerOneWin;
     else if (this->game->playerHasWon(this->gameState, PlayerValue::PlayerTwo)) return GameResult::PlayerTwoWin;
     else return GameResult::Tie;
   }
 
-  bool isPlayingSingleGame()
+  bool playingSingleGame()
   {
     return this->numberOfGames == 1;
   }
 
-  bool isPlayingMultipleGames()
+  bool playingMultipleGames()
   {
     return this->numberOfGames > 1;
   }

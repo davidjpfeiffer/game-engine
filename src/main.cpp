@@ -18,7 +18,7 @@ int main()
   TicTacToe game;
   RandomTicTacToePlayer playerOne;
   RandomTicTacToePlayer playerTwo;
-
+  
   GameEngine gameEngine(game, playerOne, playerTwo);
   gameEngine.play();
 }

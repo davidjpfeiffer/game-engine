@@ -12,7 +12,7 @@
 
 class TicTacToe : public Game
 {
-public:
+  public:
   
   // Abstract Game Class Methods
   
@@ -20,6 +20,25 @@ public:
   {
     playerOne.setPlayerValue(PlayerValue::PlayerOne);
     playerTwo.setPlayerValue(PlayerValue::PlayerTwo);
+  }
+  
+  void createGameState(GameState ** p_gameState)
+  {
+    *p_gameState = new TicTacToeGameState;
+  }
+  
+  void deleteGameState(GameState ** p_gameState)
+  {
+    delete * p_gameState;
+  }
+  
+  GameState * getCopyOfGameState(GameState * p_gameState)
+  {
+    TicTacToeGameState * gameState = (TicTacToeGameState *)p_gameState;
+    TicTacToeGameState * newGameState = new TicTacToeGameState;
+    newGameState->board = gameState->board;
+    
+    return newGameState;
   }
   
   bool isOver(GameState * p_gameState)
@@ -99,21 +118,11 @@ public:
     return false;
   }
   
-  // GameState * getCopyOfGameState(GameState * p_gameState)
-  // {
-    // TicTacToeGameState * gameState = static_cast<TicTacToeGameState *>(p_gameState);
-    
-    // TicTacToeBoard board = gameState->board;
-  // }
-  
   // Custom Methods
   
-  GameState * makeRandomMove(GameState * p_gameState, const PlayerValue & playerValue)
+  void makeRandomMove(GameState * p_gameState, const PlayerValue & playerValue)
   {
-    TicTacToeGameState * gameState = static_cast<TicTacToeGameState *>(p_gameState);
-    
-    TicTacToeGameState gameStateAfterMove;
-    gameStateAfterMove.board = gameState->board;
+    TicTacToeGameState * gameState = (TicTacToeGameState *)p_gameState;
     
     std::vector<std::pair<unsigned, unsigned> > availableMoves;
 
@@ -129,10 +138,8 @@ public:
     }
 
     unsigned randomMove = getRandomNumber(availableMoves.size() - 1);
-
-    gameStateAfterMove.board.set(availableMoves[randomMove].first, availableMoves[randomMove].second, playerValueToBoardValue(playerValue));
-
-    return & gameStateAfterMove;
+    
+    gameState->board.set(availableMoves[randomMove].first, availableMoves[randomMove].second, playerValueToBoardValue(playerValue));
   }
   
   bool isPlayersBoardValue(const PlayerValue & playerValue, const TicTacToeBoardValue & boardValue)
@@ -153,7 +160,7 @@ public:
     else exitWithErrorMessage("Invalid board value passed to BoardValueToPlayerOrder method.");
   }
   
-private:
+  private:
 
   unsigned numberOfDifferencesBetweenBoards(const TicTacToeBoard & boardOne, const TicTacToeBoard & boardTwo)
   {

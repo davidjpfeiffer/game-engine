@@ -6,7 +6,7 @@
 
 class TicTacToeGameState : public GameState
 {
-public:
+  public:
 
   TicTacToeBoard board;
   

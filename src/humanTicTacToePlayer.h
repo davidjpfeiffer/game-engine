@@ -8,11 +8,11 @@
 
 class HumanTicTacToePlayer : public TicTacToePlayer
 {
-public:
+  public:
 
-  GameState * getMove(GameState * p_gameState)
+  void getMove(GameState * p_gameState)
   {
-    TicTacToeGameState * gameState = static_cast<TicTacToeGameState *>(p_gameState);
+    TicTacToeGameState * gameState = (TicTacToeGameState *)p_gameState;
     
     TicTacToeGameState gameStateAfterMove;
     bool validMoveMade = false;
@@ -48,7 +48,7 @@ public:
       }
     }
 
-    return & gameStateAfterMove;
+    gameState->board = gameStateAfterMove.board;
   }
 };
 

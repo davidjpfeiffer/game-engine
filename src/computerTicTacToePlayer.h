@@ -7,14 +7,11 @@
 
 class ComputerTicTacToePlayer : public TicTacToePlayer
 {
-public:
+  public:
 
-  GameState * getMove(GameState * p_gameState)
+  void getMove(GameState * p_gameState)
   {
-    TicTacToeGameState * gameState = static_cast<TicTacToeGameState *>(p_gameState);
-    
-    TicTacToeGameState move;
-    move.board = gameState->board;
+    TicTacToeGameState * gameState = (TicTacToeGameState *)p_gameState;
     TicTacToeGameState theoreticalGameState;
 
     // If we can win, take win
@@ -29,8 +26,8 @@ public:
           theoreticalGameState.board.set(i, j, this->getBoardValue());
           if (thisPlayerHasWon(& theoreticalGameState))
           {
-            move.board.set(i, j, this->getBoardValue());
-            return & move;
+            gameState->board.set(i, j, this->getBoardValue());
+            return;
           }
         }
 
@@ -49,8 +46,8 @@ public:
           theoreticalGameState.board.set(i, j, this->getOpponentBoardValue());
           if (otherPlayerHasWon(& theoreticalGameState))
           {
-            move.board.set(i, j, this->getBoardValue());
-            return & move;
+            gameState->board.set(i, j, this->getBoardValue());
+            return;
           }
         }
       }
@@ -58,90 +55,90 @@ public:
 
     // If middle available, take middle
     
-    if (move.board.get(1, 1) == TicTacToeBoardValue::Empty)
+    if (gameState->board.get(1, 1) == TicTacToeBoardValue::Empty)
     {
-      move.board.set(1, 1, this->getBoardValue());
-      return & move;
+      gameState->board.set(1, 1, this->getBoardValue());
+      return;
     }
 
     // Offensive Strategy
     
-    if (move.board.get(1, 1) == this->getBoardValue() && gameState->board.numberOfAvailableMoves() == 7)
+    if (gameState->board.get(1, 1) == this->getBoardValue() && gameState->board.numberOfAvailableMoves() == 7)
     {
-      if (move.board.get(0, 1) == this->getOpponentBoardValue())
+      if (gameState->board.get(0, 1) == this->getOpponentBoardValue())
       {
-        move.board.set(2, 2, this->getBoardValue());
-        return & move;
+        gameState->board.set(2, 2, this->getBoardValue());
+        return;
       }
-      else if (move.board.get(1, 2) == this->getOpponentBoardValue())
+      else if (gameState->board.get(1, 2) == this->getOpponentBoardValue())
       {
-        move.board.set(2, 0, this->getBoardValue());
-        return & move;
+        gameState->board.set(2, 0, this->getBoardValue());
+        return;
       }
-      else if (move.board.get(2, 1) == this->getOpponentBoardValue())
+      else if (gameState->board.get(2, 1) == this->getOpponentBoardValue())
       {
-        move.board.set(0, 0, this->getBoardValue());
-        return & move;
+        gameState->board.set(0, 0, this->getBoardValue());
+        return;
       }
-      else if (move.board.get(1, 0) == this->getOpponentBoardValue())
+      else if (gameState->board.get(1, 0) == this->getOpponentBoardValue())
       {
-        move.board.set(2, 2, this->getBoardValue());
-        return & move;
+        gameState->board.set(2, 2, this->getBoardValue());
+        return;
       }
     }
 
     // Defensive Strategy
     
-    if (move.board.get(1, 0) == this->getOpponentBoardValue() && move.board.get(2, 1) == this->getOpponentBoardValue() && move.board.get(2, 0) == TicTacToeBoardValue::Empty)
+    if (gameState->board.get(1, 0) == this->getOpponentBoardValue() && gameState->board.get(2, 1) == this->getOpponentBoardValue() && gameState->board.get(2, 0) == TicTacToeBoardValue::Empty)
     {
-      move.board.set(2, 0, this->getBoardValue());
-      return & move;
+      gameState->board.set(2, 0, this->getBoardValue());
+      return;
     }
-    else if (move.board.get(1, 0) == this->getOpponentBoardValue() && move.board.get(0, 1) == this->getOpponentBoardValue() && move.board.get(0, 0) == TicTacToeBoardValue::Empty)
+    else if (gameState->board.get(1, 0) == this->getOpponentBoardValue() && gameState->board.get(0, 1) == this->getOpponentBoardValue() && gameState->board.get(0, 0) == TicTacToeBoardValue::Empty)
     {
-      move.board.set(0, 0, this->getBoardValue());
-      return & move;
+      gameState->board.set(0, 0, this->getBoardValue());
+      return;
     }
-    else if (move.board.get(0, 1) == this->getOpponentBoardValue() && move.board.get(1, 2) == this->getOpponentBoardValue() && move.board.get(0, 2) == TicTacToeBoardValue::Empty)
+    else if (gameState->board.get(0, 1) == this->getOpponentBoardValue() && gameState->board.get(1, 2) == this->getOpponentBoardValue() && gameState->board.get(0, 2) == TicTacToeBoardValue::Empty)
     {
-      move.board.set(0, 2, this->getBoardValue());
-      return & move;
+      gameState->board.set(0, 2, this->getBoardValue());
+      return;
     }
-    else if (move.board.get(2, 1) == this->getOpponentBoardValue() && move.board.get(1, 2) == this->getOpponentBoardValue() && move.board.get(2, 2) == TicTacToeBoardValue::Empty)
+    else if (gameState->board.get(2, 1) == this->getOpponentBoardValue() && gameState->board.get(1, 2) == this->getOpponentBoardValue() && gameState->board.get(2, 2) == TicTacToeBoardValue::Empty)
     {
-      move.board.set(2, 2, this->getBoardValue());
-      return & move;
+      gameState->board.set(2, 2, this->getBoardValue());
+      return;
     }
 
     // If corner available, take corner
     
-    if (move.board.get(0, 0) == TicTacToeBoardValue::Empty)
+    if (gameState->board.get(0, 0) == TicTacToeBoardValue::Empty)
     {
-      move.board.set(0, 0, this->getBoardValue());
-      return & move;
+      gameState->board.set(0, 0, this->getBoardValue());
+      return;
     }
-    else if (move.board.get(0, 2) == TicTacToeBoardValue::Empty)
+    else if (gameState->board.get(0, 2) == TicTacToeBoardValue::Empty)
     {
-      move.board.set(0, 2, this->getBoardValue());
-      return & move;
+      gameState->board.set(0, 2, this->getBoardValue());
+      return;
     }
-    else if (move.board.get(2, 0) == TicTacToeBoardValue::Empty)
+    else if (gameState->board.get(2, 0) == TicTacToeBoardValue::Empty)
     {
-      move.board.set(2, 0, this->getBoardValue());
-      return & move;
+      gameState->board.set(2, 0, this->getBoardValue());
+      return;
     }
-    else if (move.board.get(2, 2) == TicTacToeBoardValue::Empty)
+    else if (gameState->board.get(2, 2) == TicTacToeBoardValue::Empty)
     {
-      move.board.set(2, 2, this->getBoardValue());
-      return & move;
+      gameState->board.set(2, 2, this->getBoardValue());
+      return;
     }
 
     // Default to random move
     
-    return this->game->makeRandomMove(gameState, this->getPlayerValue());
+    this->game->makeRandomMove(gameState, this->getPlayerValue());
   }
   
-private:
+  private:
 
   bool thisPlayerHasWon(TicTacToeGameState * gameState)
   {

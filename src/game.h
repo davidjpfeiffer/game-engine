@@ -6,17 +6,21 @@
 
 class Game
 {
-public:
-
+  public:
+  
   virtual void setupPlayers(Player & playerOne, Player & playerTwo) = 0;
+  
+  virtual void createGameState(GameState **) = 0;
+  
+  virtual void deleteGameState(GameState **) = 0;
+  
+  virtual GameState * getCopyOfGameState(GameState *) = 0;
   
   virtual bool isOver(GameState * gameState) = 0;
   
   virtual bool isValidMove(GameState * gameStateBeforeMove, GameState * gameStateAfterMove, const PlayerValue & playerValue) = 0;
   
   virtual bool playerHasWon(GameState * gameState, const PlayerValue & playerValue) = 0;
-  
-  // virtual GameState * getCopyOfGameState(GameState * gameState);
 };
 
 #endif

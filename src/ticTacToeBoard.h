@@ -9,12 +9,14 @@ const unsigned BOARD_SIZE = 3;
 
 class TicTacToeBoard
 {
-public:
+  public:
 
   TicTacToeBoard()
   {
     for(unsigned row = 0; row < BOARD_SIZE; row++)
+    {
       this->board.push_back({ TicTacToeBoardValue::Empty, TicTacToeBoardValue::Empty, TicTacToeBoardValue::Empty });
+    }
   }
 
   TicTacToeBoardValue get(unsigned row, unsigned column) const
@@ -99,13 +101,16 @@ public:
     return isValidRow(row) && isValidColumn(column);
   }
   
-private:
+  private:
 
   std::vector<std::vector<TicTacToeBoardValue> > board;
   
   void handleInvalidRowOrColumn(unsigned row, unsigned column) const
   {
-    if (!isValidRowAndColumn(row, column)) exitWithErrorMessage("Invalid row or column");
+    if (!isValidRowAndColumn(row, column))
+    {
+      exitWithErrorMessage("Invalid row or column");
+    }
   }
 };
 
