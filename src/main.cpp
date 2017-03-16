@@ -14,10 +14,10 @@ using namespace std;
 int main()
 {
   srand(time(NULL));
-
+  
   TicTacToe game;
-  RandomTicTacToePlayer playerOne;
-  RandomTicTacToePlayer playerTwo;
+  ComputerTicTacToePlayer playerOne;
+  ComputerTicTacToePlayer playerTwo;
   
   GameEngine gameEngine(game, playerOne, playerTwo);
   gameEngine.play();

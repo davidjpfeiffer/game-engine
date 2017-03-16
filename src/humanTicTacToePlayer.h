@@ -13,8 +13,8 @@ class HumanTicTacToePlayer : public TicTacToePlayer
   void getMove(GameState * p_gameState)
   {
     TicTacToeGameState * gameState = (TicTacToeGameState *)p_gameState;
-    
     TicTacToeGameState gameStateAfterMove;
+    
     bool validMoveMade = false;
     unsigned row, column, indexOfRow, indexOfColumn;
 
@@ -32,10 +32,19 @@ class HumanTicTacToePlayer : public TicTacToePlayer
 
       gameStateAfterMove.board = gameState->board;
 
+      std::cout << "test 1\n";
+      
       if (TicTacToeBoard::isValidRowAndColumn(indexOfRow, indexOfColumn))
       {
         gameStateAfterMove.board.set(indexOfRow, indexOfColumn, this->getBoardValue());
-        validMoveMade = this->game->isValidMove(gameState, & gameStateAfterMove, this->getPlayerValue());
+        gameStateAfterMove.print();
+        gameState->print();
+        std::cout << "test 2\n";
+        std::cout << "Game is over: " << this->game.isOver(gameState) << '\n';
+        std::cout << "Player Value: " << this->getPlayerValue() << '\n';
+        std::cout << "Opponent Player Value: " << this->getOpponentPlayerValue() << '\n';
+        validMoveMade = this->game.isValidMove(gameState, & gameStateAfterMove, this->getPlayerValue());
+        std::cout << "test 3\n";
       }
       else
       {
@@ -48,6 +57,8 @@ class HumanTicTacToePlayer : public TicTacToePlayer
       }
     }
 
+    std::cout << "test 4\n";
+    
     gameState->board = gameStateAfterMove.board;
   }
 };

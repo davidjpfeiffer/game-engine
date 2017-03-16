@@ -18,12 +18,12 @@ class GameEngine
     this->currentPlayer = this->playerOne;
     
     this->game->setupPlayers(playerOne, playerTwo);
-    this->game->createGameState(& this->gameState);
+    this->game->initializeGameState(& this->gameState);
   }
   
   ~GameEngine()
   {
-    this->game->deleteGameState(& this->gameState);
+    delete this->gameState;
   }
 
   void play(unsigned numberOfGames = 1)
@@ -37,23 +37,44 @@ class GameEngine
       switch (getGameResult())
       {
       case GameResult::PlayerOneWin:
-        if (playingSingleGame()) std::cout << "Result Of game " << gameNumber << ": " << this->playerOne->getName() << " wins!\n";
-        else this->playerOneWins++;
+        if (playingSingleGame())
+        {
+          std::cout << "Result Of game " << gameNumber << ": " << this->playerOne->getName() << " wins!\n";
+        }
+        else
+        {
+          this->playerOneWins++;
+        }
         break;
 
       case GameResult::PlayerTwoWin:
-        if (playingSingleGame()) std::cout << "Result Of game " << gameNumber << ": " << this->playerTwo->getName() << " wins!\n";
-        else this->playerTwoWins++;
+        if (playingSingleGame())
+        {
+          std::cout << "Result Of game " << gameNumber << ": " << this->playerTwo->getName() << " wins!\n";
+        }
+        else
+        {
+          this->playerTwoWins++;
+        }
         break;
 
       case GameResult::Tie:
-        if (playingSingleGame()) std::cout << "Result Of game " << gameNumber << ": Tie!\n";
-        else this->gamesTied++;
+        if (playingSingleGame())
+        {
+          std::cout << "Result Of game " << gameNumber << ": Tie!\n";
+        }
+        else
+        {
+          this->gamesTied++;
+        }
         break;
       }
     }
 
-    if (playingMultipleGames()) displayResults();
+    if (playingMultipleGames())
+    {
+      printResults();
+    }
   }
   
   private:
@@ -68,9 +89,12 @@ class GameEngine
 
   GameResult getGameResult()
   {
-    if (playingSingleGame()) this->gameState->print();
+    if (playingSingleGame())
+    {
+      this->gameState->print();
+    }
 
-    while (!this->game->isOver(this->gameState))
+    while (this->game->isOver(this->gameState) == false)
     {
       GameState * gameStateAfterMove = this->game->getCopyOfGameState(this->gameState);
       this->currentPlayer->getMove(gameStateAfterMove);
@@ -79,21 +103,31 @@ class GameEngine
       {
         delete this->gameState;
         this->gameState = gameStateAfterMove;
-        
         toggleCurrentPlayer();
-        if (playingSingleGame()) this->gameState->print();
+        if (playingSingleGame())
+        {
+          this->gameState->print();
+        }
       }
       else
       {
         delete gameStateAfterMove;
-        
         exitWithErrorMessage(this->currentPlayer->getName() + " did not submit a valid move.");
       }
     }
     
-    if (this->game->playerHasWon(this->gameState, PlayerValue::PlayerOne)) return GameResult::PlayerOneWin;
-    else if (this->game->playerHasWon(this->gameState, PlayerValue::PlayerTwo)) return GameResult::PlayerTwoWin;
-    else return GameResult::Tie;
+    if (this->game->playerHasWon(this->gameState, PlayerValue::PlayerOne))
+    {
+      return GameResult::PlayerOneWin;
+    }
+    else if (this->game->playerHasWon(this->gameState, PlayerValue::PlayerTwo))
+    {
+      return GameResult::PlayerTwoWin;
+    }
+    else
+    {
+      return GameResult::Tie;
+    }
   }
 
   bool playingSingleGame()
@@ -106,10 +140,10 @@ class GameEngine
     return this->numberOfGames > 1;
   }
 
-  void displayResults()
+  void printResults()
   {
     std::cout << "------------------------------\n";
-    std::cout << "Game Statistics\n";
+    std::cout << "Results\n";
     std::cout << "Player One Wins: " << this->playerOneWins << '\n';
     std::cout << "Player Two Wins: " << this->playerTwoWins << '\n';
     std::cout << "Games Tied: " << this->gamesTied << '\n';
@@ -124,11 +158,11 @@ class GameEngine
 
   void setNumberOfGames(unsigned numberOfGames)
   {
-    if (isValidNumberOfGames(numberOfGames)) this->numberOfGames = numberOfGames;
-    else exitWithErrorMessage("Number of games must be less than 10,000.");
+    if (validNumberOfGames(numberOfGames)) this->numberOfGames = numberOfGames;
+    else exitWithErrorMessage("Number of games must be less than 10,000");
   }
 
-  bool isValidNumberOfGames(unsigned numberOfGames)
+  bool validNumberOfGames(unsigned numberOfGames)
   {
     return numberOfGames < 10000;
   }

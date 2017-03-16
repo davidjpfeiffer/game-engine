@@ -10,10 +10,9 @@ class Game
   
   virtual void setupPlayers(Player & playerOne, Player & playerTwo) = 0;
   
-  virtual void createGameState(GameState **) = 0;
+  virtual void initializeGameState(GameState **) = 0;
   
-  virtual void deleteGameState(GameState **) = 0;
-  
+  // dont need this method, just use above to alloc memory
   virtual GameState * getCopyOfGameState(GameState *) = 0;
   
   virtual bool isOver(GameState * gameState) = 0;

@@ -1,7 +1,6 @@
 #ifndef __TICTACTOEBOARD
 #define __TICTACTOEBOARD
 
-#include <vector>
 #include "ticTacToeBoardValue.h"
 #include "utilities.h"
 
@@ -13,10 +12,7 @@ class TicTacToeBoard
 
   TicTacToeBoard()
   {
-    for(unsigned row = 0; row < BOARD_SIZE; row++)
-    {
-      this->board.push_back({ TicTacToeBoardValue::Empty, TicTacToeBoardValue::Empty, TicTacToeBoardValue::Empty });
-    }
+    this->reset();
   }
 
   TicTacToeBoardValue get(unsigned row, unsigned column) const
@@ -36,8 +32,12 @@ class TicTacToeBoard
   void reset()
   {
     for(unsigned row = 0; row < BOARD_SIZE; row++)
+    {
       for(unsigned column = 0; column < BOARD_SIZE; column++)
+      {
         this->board[row][column] = TicTacToeBoardValue::Empty;
+      }
+    }
   }
   
   void print() const
@@ -103,7 +103,7 @@ class TicTacToeBoard
   
   private:
 
-  std::vector<std::vector<TicTacToeBoardValue> > board;
+  TicTacToeBoardValue board [BOARD_SIZE][BOARD_SIZE];
   
   void handleInvalidRowOrColumn(unsigned row, unsigned column) const
   {

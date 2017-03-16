@@ -31,7 +31,7 @@ class Player
   void setPlayerValue(const PlayerValue & playerValue)
   {
     if (this->playerValueSet == false)
-    {      
+    {
       this->playerValue = playerValue;
       this->opponentPlayerValue = playerValue == PlayerValue::PlayerOne ? PlayerValue::PlayerTwo : PlayerValue::PlayerOne;
       

@@ -7,7 +7,10 @@
 class TicTacToePlayer : public Player
 {
   private:
-
+  
+  TicTacToeBoardValue playerBoardValue;
+  TicTacToeBoardValue opponentBoardValue;
+  
   void onPlayerValueSet(const PlayerValue & playerValue)
   {
     this->playerBoardValue = playerValue == PlayerValue::PlayerOne ? TicTacToeBoardValue::O : TicTacToeBoardValue::X;
@@ -15,11 +18,8 @@ class TicTacToePlayer : public Player
   }
   
   protected:
-
-  TicTacToeBoardValue playerBoardValue;
-  TicTacToeBoardValue opponentBoardValue;
   
-  TicTacToe * game;
+  TicTacToe game;
   
   public:
 

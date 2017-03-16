@@ -10,6 +10,8 @@
 #include "gameResult.h"
 #include "utilities.h"
 
+/* WHOLE CLASS SHOULD BE STATIC */
+
 class TicTacToe : public Game
 {
   public:
@@ -22,14 +24,9 @@ class TicTacToe : public Game
     playerTwo.setPlayerValue(PlayerValue::PlayerTwo);
   }
   
-  void createGameState(GameState ** p_gameState)
+  void initializeGameState(GameState ** p_gameState)
   {
-    *p_gameState = new TicTacToeGameState;
-  }
-  
-  void deleteGameState(GameState ** p_gameState)
-  {
-    delete * p_gameState;
+    * p_gameState = new TicTacToeGameState;
   }
   
   GameState * getCopyOfGameState(GameState * p_gameState)
@@ -43,15 +40,15 @@ class TicTacToe : public Game
   
   bool isOver(GameState * p_gameState)
   {
-    TicTacToeGameState * gameState = static_cast<TicTacToeGameState *>(p_gameState);
+    TicTacToeGameState * gameState = (TicTacToeGameState *)p_gameState;
     
     return gameState->board.numberOfAvailableMoves() == 0 || playerHasWon(gameState, PlayerValue::PlayerOne) || playerHasWon(gameState, PlayerValue::PlayerTwo);
   }
   
   bool isValidMove(GameState * p_gameStateBeforeMove, GameState * p_gameStateAfterMove, const PlayerValue & playerValue)
   {
-    TicTacToeGameState * gameStateBeforeMove = static_cast<TicTacToeGameState *>(p_gameStateBeforeMove);
-    TicTacToeGameState * gameStateAfterMove = static_cast<TicTacToeGameState *>(p_gameStateAfterMove);
+    TicTacToeGameState * gameStateBeforeMove = (TicTacToeGameState *)p_gameStateBeforeMove;
+    TicTacToeGameState * gameStateAfterMove = (TicTacToeGameState *)p_gameStateAfterMove;
     
     if (numberOfDifferencesBetweenBoards(gameStateBeforeMove->board, gameStateAfterMove->board) == 1)
     {
@@ -79,7 +76,7 @@ class TicTacToe : public Game
   
   bool playerHasWon(GameState * p_gameState, const PlayerValue & playerValue)
   {
-    TicTacToeGameState * gameState = static_cast<TicTacToeGameState *>(p_gameState);
+    TicTacToeGameState * gameState = (TicTacToeGameState *)p_gameState;
     
     for (unsigned row = 0; row < BOARD_SIZE; row++)
     {

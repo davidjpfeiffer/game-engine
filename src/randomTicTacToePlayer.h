@@ -10,7 +10,7 @@ class RandomTicTacToePlayer : public TicTacToePlayer
 
   void getMove(GameState * gameState)
   {
-    this->game->makeRandomMove(gameState, this->getPlayerValue());
+    this->game.makeRandomMove(gameState, this->getPlayerValue());
   }
 };
 
