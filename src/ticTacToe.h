@@ -10,39 +10,25 @@
 #include "gameResult.h"
 #include "utilities.h"
 
-/* WHOLE CLASS SHOULD BE STATIC */
-
 class TicTacToe : public Game
 {
   public:
   
-  // Abstract Game Class Methods
-  
-  void setupPlayers(Player & playerOne, Player & playerTwo)
-  {
-    playerOne.setPlayerValue(PlayerValue::PlayerOne);
-    playerTwo.setPlayerValue(PlayerValue::PlayerTwo);
-  }
-  
-  void initializeGameState(GameState ** p_gameState)
+  void newGameState(GameState ** p_gameState)
   {
     * p_gameState = new TicTacToeGameState;
   }
   
-  GameState * getCopyOfGameState(GameState * p_gameState)
+  void copyGameState(GameState * p_gameStateOriginal, GameState * p_gameStateCopy)
   {
-    TicTacToeGameState * gameState = (TicTacToeGameState *)p_gameState;
-    TicTacToeGameState * newGameState = new TicTacToeGameState;
-    newGameState->board = gameState->board;
-    
-    return newGameState;
+    TicTacToeGameState * gameStateOriginal = (TicTacToeGameState *)p_gameStateOriginal;
+    TicTacToeGameState * gameStateCopy = (TicTacToeGameState *)p_gameStateCopy;
+    gameStateCopy->board = gameStateOriginal->board;
   }
   
-  bool isOver(GameState * p_gameState)
+  bool isNotOver(GameState * gameState)
   {
-    TicTacToeGameState * gameState = (TicTacToeGameState *)p_gameState;
-    
-    return gameState->board.numberOfAvailableMoves() == 0 || playerHasWon(gameState, PlayerValue::PlayerOne) || playerHasWon(gameState, PlayerValue::PlayerTwo);
+    return availableMoves(gameState) && playerOneHasNotWon(gameState) && playerTwoHasNotWon(gameState);
   }
   
   bool isValidMove(GameState * p_gameStateBeforeMove, GameState * p_gameStateAfterMove, const PlayerValue & playerValue)
@@ -50,7 +36,7 @@ class TicTacToe : public Game
     TicTacToeGameState * gameStateBeforeMove = (TicTacToeGameState *)p_gameStateBeforeMove;
     TicTacToeGameState * gameStateAfterMove = (TicTacToeGameState *)p_gameStateAfterMove;
     
-    if (numberOfDifferencesBetweenBoards(gameStateBeforeMove->board, gameStateAfterMove->board) == 1)
+    if (oneMoveWasMadeByPlayer(gameStateBeforeMove, gameStateAfterMove, playerValue))
     {
       for (unsigned i = 0; i < BOARD_SIZE; i++)
       {
@@ -115,8 +101,6 @@ class TicTacToe : public Game
     return false;
   }
   
-  // Custom Methods
-  
   void makeRandomMove(GameState * p_gameState, const PlayerValue & playerValue)
   {
     TicTacToeGameState * gameState = (TicTacToeGameState *)p_gameState;
@@ -146,19 +130,44 @@ class TicTacToe : public Game
   
   TicTacToeBoardValue playerValueToBoardValue(PlayerValue playerValue)
   {
-    if (playerValue == PlayerValue::PlayerOne) return TicTacToeBoardValue::O;
-    else return TicTacToeBoardValue::X;
+    return playerValue == PlayerValue::PlayerOne ? TicTacToeBoardValue::O : TicTacToeBoardValue::X;
   }
   
   PlayerValue boardValueToPlayerValue(TicTacToeBoardValue boardValue)
   {
-    if (boardValue == TicTacToeBoardValue::O) return PlayerValue::PlayerOne;
-    else if (boardValue == TicTacToeBoardValue::X) return PlayerValue::PlayerTwo;
-    else exitWithErrorMessage("Invalid board value passed to BoardValueToPlayerOrder method.");
+    return boardValue == TicTacToeBoardValue::O ? PlayerValue::PlayerOne : PlayerValue::PlayerTwo;
   }
   
   private:
-
+  
+  bool availableMoves(GameState * p_gameState)
+  {
+    TicTacToeGameState * gameState = (TicTacToeGameState *)p_gameState;
+    
+    return gameState->board.numberOfAvailableMoves() > 0;
+  }
+  
+  bool playerOneHasNotWon(GameState * gameState)
+  {
+    return !playerHasWon(gameState, PlayerValue::PlayerOne);
+  }
+  
+  bool playerTwoHasNotWon(GameState * gameState)
+  {
+    return !playerHasWon(gameState, PlayerValue::PlayerTwo);
+  }
+  
+  bool oneMoveWasMadeByPlayer(GameState * p_gameStateBeforeMove, GameState * p_gameStateAfterMove, const PlayerValue & playerValue)
+  {
+    TicTacToeGameState * gameStateBeforeMove = (TicTacToeGameState *)p_gameStateBeforeMove;
+    TicTacToeGameState * gameStateAfterMove = (TicTacToeGameState *)p_gameStateAfterMove;
+    
+    unsigned oneMoveMade = numberOfDifferencesBetweenBoards(gameStateBeforeMove->board, gameStateAfterMove->board) == 1;
+    bool byPlayer = moveWasMadeByPlayer(gameStateBeforeMove->board, gameStateAfterMove->board, playerValue);
+    
+    return oneMoveMade && byPlayer;
+  }
+  
   unsigned numberOfDifferencesBetweenBoards(const TicTacToeBoard & boardOne, const TicTacToeBoard & boardTwo)
   {
     unsigned numDifferences = 0;
@@ -175,6 +184,30 @@ class TicTacToe : public Game
     }
 
     return numDifferences;
+  }
+  
+  unsigned moveWasMadeByPlayer(const TicTacToeBoard & boardOne, const TicTacToeBoard & boardTwo, const PlayerValue & playerValue)
+  {
+    TicTacToeBoardValue boardValue = playerValueToBoardValue(playerValue);
+    unsigned beforeCount = 0, afterCount = 0;
+    
+    for (unsigned i = 0; i < BOARD_SIZE; i++)
+    {
+      for (unsigned j = 0; j < BOARD_SIZE; j++)
+      {
+        if (boardOne.get(i, j) == boardValue)
+        {
+          beforeCount++;
+        }
+        
+        if (boardTwo.get(i, j) == boardValue)
+        {
+          afterCount++;
+        }
+      }
+    }
+    
+    return beforeCount + 1 == afterCount;
   }
 };
 

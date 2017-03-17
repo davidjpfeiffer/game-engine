@@ -8,12 +8,12 @@ class TicTacToePlayer : public Player
 {
   private:
   
-  TicTacToeBoardValue playerBoardValue;
+  TicTacToeBoardValue boardValue;
   TicTacToeBoardValue opponentBoardValue;
   
   void onPlayerValueSet(const PlayerValue & playerValue)
   {
-    this->playerBoardValue = playerValue == PlayerValue::PlayerOne ? TicTacToeBoardValue::O : TicTacToeBoardValue::X;
+    this->boardValue = playerValue == PlayerValue::PlayerOne ? TicTacToeBoardValue::O : TicTacToeBoardValue::X;
     this->opponentBoardValue = playerValue == PlayerValue::PlayerOne ? TicTacToeBoardValue::X : TicTacToeBoardValue::O;
   }
   
@@ -22,10 +22,10 @@ class TicTacToePlayer : public Player
   TicTacToe game;
   
   public:
-
+  
   TicTacToeBoardValue getBoardValue() const
   {
-    return this->playerBoardValue;
+    return this->boardValue;
   }
   
   TicTacToeBoardValue getOpponentBoardValue() const

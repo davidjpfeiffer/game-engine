@@ -4,6 +4,7 @@
 #include "gameEngine.h"
 
 #include "ticTacToe.h"
+#include "ticTacToePlayerRegistry.h"
 
 #include "randomTicTacToePlayer.h"
 #include "humanTicTacToePlayer.h"
@@ -16,9 +17,8 @@ int main()
   srand(time(NULL));
   
   TicTacToe game;
-  ComputerTicTacToePlayer playerOne;
-  ComputerTicTacToePlayer playerTwo;
+  TicTacToePlayerRegistry playerRegistry;
   
-  GameEngine gameEngine(game, playerOne, playerTwo);
-  gameEngine.play();
+  GameEngine gameEngine(game, playerRegistry);
+  gameEngine.play(1000);
 }

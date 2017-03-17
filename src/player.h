@@ -22,12 +22,11 @@ class Player
   public:
 
   virtual void getMove(GameState *) = 0;
-
-  std::string getName() const
-  {
-    return this->playerValue == PlayerValue::PlayerOne ? "Player One" : "Player Two";
-  }
   
+  virtual Player * clone() const = 0;
+
+  virtual std::string getName() const = 0;
+    
   void setPlayerValue(const PlayerValue & playerValue)
   {
     if (this->playerValueSet == false)
@@ -49,6 +48,11 @@ class Player
   PlayerValue getOpponentPlayerValue() const
   {
     return this->opponentPlayerValue;
+  }
+  
+  std::string getPlayerValueAsString() const
+  {
+    return this->playerValue == PlayerValue::PlayerOne ? "Player One" : "Player Two";
   }
 };
 

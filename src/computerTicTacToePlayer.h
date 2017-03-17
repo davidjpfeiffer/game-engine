@@ -9,6 +9,16 @@ class ComputerTicTacToePlayer : public TicTacToePlayer
 {
   public:
 
+  std::string getName() const
+  {
+    return "Computer Player";
+  }
+  
+  Player * clone() const
+  {
+    return new ComputerTicTacToePlayer;
+  }
+  
   void getMove(GameState * p_gameState)
   {
     TicTacToeGameState * gameState = (TicTacToeGameState *)p_gameState;

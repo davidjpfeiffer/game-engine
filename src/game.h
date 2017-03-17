@@ -8,14 +8,11 @@ class Game
 {
   public:
   
-  virtual void setupPlayers(Player & playerOne, Player & playerTwo) = 0;
+  virtual void newGameState(GameState ** gameState) = 0;
   
-  virtual void initializeGameState(GameState **) = 0;
+  virtual void copyGameState(GameState * original, GameState * copy) = 0;
   
-  // dont need this method, just use above to alloc memory
-  virtual GameState * getCopyOfGameState(GameState *) = 0;
-  
-  virtual bool isOver(GameState * gameState) = 0;
+  virtual bool isNotOver(GameState * gameState) = 0;
   
   virtual bool isValidMove(GameState * gameStateBeforeMove, GameState * gameStateAfterMove, const PlayerValue & playerValue) = 0;
   
