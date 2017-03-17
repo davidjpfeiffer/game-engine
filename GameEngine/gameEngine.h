@@ -215,7 +215,7 @@ class GameEngine
 
   bool validNumberOfGames(unsigned p_numberOfGames)
   {
-    return p_numberOfGames > 0 && p_numberOfGames < 10000;
+    return p_numberOfGames > 0 && p_numberOfGames <= 10000;
   }
 };
 

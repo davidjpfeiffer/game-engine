@@ -9,6 +9,8 @@
 #include "../GameEngine/gameResult.h"
 #include "../GameEngine/gameDefinition.h"
 
+#include "../randomNumberGenerator.h"
+
 #include "ticTacToeGameState.h"
 #include "ticTacToeBoard.h"
 #include "ticTacToeBoardValue.h"
@@ -113,8 +115,8 @@ class TicTacToeGameDefinition : public GameDefinition
         }
       }
     }
-
-    unsigned randomMove = getRandomNumber(availableMoves.size() - 1);
+    
+    unsigned randomMove = RandomNumberGenerator::instance()->get(availableMoves.size() - 1);
     
     gameState->board.set(availableMoves[randomMove].first, availableMoves[randomMove].second, playerValueToBoardValue(playerValue));
   }
