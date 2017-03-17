@@ -14,24 +14,12 @@ class TicTacToe : public Game
 {
   public:
   
-  void newGameState(GameState ** p_gameState)
-  {
-    * p_gameState = new TicTacToeGameState;
-  }
-  
-  void copyGameState(GameState * p_gameStateOriginal, GameState * p_gameStateCopy)
-  {
-    TicTacToeGameState * gameStateOriginal = (TicTacToeGameState *)p_gameStateOriginal;
-    TicTacToeGameState * gameStateCopy = (TicTacToeGameState *)p_gameStateCopy;
-    gameStateCopy->board = gameStateOriginal->board;
-  }
-  
-  bool isNotOver(GameState * gameState)
+  bool isNotOver(GameState * gameState) const
   {
     return availableMoves(gameState) && playerOneHasNotWon(gameState) && playerTwoHasNotWon(gameState);
   }
   
-  bool isValidMove(GameState * p_gameStateBeforeMove, GameState * p_gameStateAfterMove, const PlayerValue & playerValue)
+  bool isValidMove(GameState * p_gameStateBeforeMove, GameState * p_gameStateAfterMove, const PlayerValue & playerValue) const
   {
     TicTacToeGameState * gameStateBeforeMove = (TicTacToeGameState *)p_gameStateBeforeMove;
     TicTacToeGameState * gameStateAfterMove = (TicTacToeGameState *)p_gameStateAfterMove;
@@ -60,7 +48,7 @@ class TicTacToe : public Game
     return false;
   }
   
-  bool playerHasWon(GameState * p_gameState, const PlayerValue & playerValue)
+  bool playerHasWon(GameState * p_gameState, const PlayerValue & playerValue) const
   {
     TicTacToeGameState * gameState = (TicTacToeGameState *)p_gameState;
     
@@ -101,7 +89,12 @@ class TicTacToe : public Game
     return false;
   }
   
-  void makeRandomMove(GameState * p_gameState, const PlayerValue & playerValue)
+  void setInitialGameState(GameState ** p_gameState) const
+  {
+    * p_gameState = new TicTacToeGameState;
+  }
+  
+  void makeRandomMove(GameState * p_gameState, const PlayerValue & playerValue) const
   {
     TicTacToeGameState * gameState = (TicTacToeGameState *)p_gameState;
     
@@ -123,41 +116,41 @@ class TicTacToe : public Game
     gameState->board.set(availableMoves[randomMove].first, availableMoves[randomMove].second, playerValueToBoardValue(playerValue));
   }
   
-  bool isPlayersBoardValue(const PlayerValue & playerValue, const TicTacToeBoardValue & boardValue)
+  bool isPlayersBoardValue(const PlayerValue & playerValue, const TicTacToeBoardValue & boardValue) const
   {
     return playerValue == PlayerValue::PlayerOne ? boardValue == TicTacToeBoardValue::O : boardValue == TicTacToeBoardValue::X;
   }
   
-  TicTacToeBoardValue playerValueToBoardValue(PlayerValue playerValue)
+  TicTacToeBoardValue playerValueToBoardValue(PlayerValue playerValue) const
   {
     return playerValue == PlayerValue::PlayerOne ? TicTacToeBoardValue::O : TicTacToeBoardValue::X;
   }
   
-  PlayerValue boardValueToPlayerValue(TicTacToeBoardValue boardValue)
+  PlayerValue boardValueToPlayerValue(TicTacToeBoardValue boardValue) const
   {
     return boardValue == TicTacToeBoardValue::O ? PlayerValue::PlayerOne : PlayerValue::PlayerTwo;
   }
   
   private:
   
-  bool availableMoves(GameState * p_gameState)
+  bool availableMoves(GameState * p_gameState) const
   {
     TicTacToeGameState * gameState = (TicTacToeGameState *)p_gameState;
     
     return gameState->board.numberOfAvailableMoves() > 0;
   }
   
-  bool playerOneHasNotWon(GameState * gameState)
+  bool playerOneHasNotWon(GameState * gameState) const
   {
     return !playerHasWon(gameState, PlayerValue::PlayerOne);
   }
   
-  bool playerTwoHasNotWon(GameState * gameState)
+  bool playerTwoHasNotWon(GameState * gameState) const
   {
     return !playerHasWon(gameState, PlayerValue::PlayerTwo);
   }
   
-  bool oneMoveWasMadeByPlayer(GameState * p_gameStateBeforeMove, GameState * p_gameStateAfterMove, const PlayerValue & playerValue)
+  bool oneMoveWasMadeByPlayer(GameState * p_gameStateBeforeMove, GameState * p_gameStateAfterMove, const PlayerValue & playerValue) const
   {
     TicTacToeGameState * gameStateBeforeMove = (TicTacToeGameState *)p_gameStateBeforeMove;
     TicTacToeGameState * gameStateAfterMove = (TicTacToeGameState *)p_gameStateAfterMove;
@@ -168,7 +161,7 @@ class TicTacToe : public Game
     return oneMoveMade && byPlayer;
   }
   
-  unsigned numberOfDifferencesBetweenBoards(const TicTacToeBoard & boardOne, const TicTacToeBoard & boardTwo)
+  unsigned numberOfDifferencesBetweenBoards(const TicTacToeBoard & boardOne, const TicTacToeBoard & boardTwo) const
   {
     unsigned numDifferences = 0;
 
@@ -186,7 +179,7 @@ class TicTacToe : public Game
     return numDifferences;
   }
   
-  unsigned moveWasMadeByPlayer(const TicTacToeBoard & boardOne, const TicTacToeBoard & boardTwo, const PlayerValue & playerValue)
+  unsigned moveWasMadeByPlayer(const TicTacToeBoard & boardOne, const TicTacToeBoard & boardTwo, const PlayerValue & playerValue) const
   {
     TicTacToeBoardValue boardValue = playerValueToBoardValue(playerValue);
     unsigned beforeCount = 0, afterCount = 0;

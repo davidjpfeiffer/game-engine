@@ -19,6 +19,14 @@ class TicTacToeGameState : public GameState
   {
     this->board.print();
   }
+  
+  GameState * clone() const
+  {
+    TicTacToeGameState * gameStateCopy = new TicTacToeGameState;
+    gameStateCopy->board = this->board;
+    
+    return gameStateCopy;
+  }
 };
 
 #endif

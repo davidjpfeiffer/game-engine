@@ -16,17 +16,17 @@ class Player
   bool playerValueSet = false;
   
   protected:
-
+  
   virtual void onPlayerValueSet(const PlayerValue & playerValue) = 0;
   
   public:
-
+  
   virtual void getMove(GameState *) = 0;
   
   virtual Player * clone() const = 0;
-
+  
   virtual std::string getName() const = 0;
-    
+  
   void setPlayerValue(const PlayerValue & playerValue)
   {
     if (this->playerValueSet == false)

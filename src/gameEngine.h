@@ -13,13 +13,13 @@ class GameEngine
 {
   public:
   
-  GameEngine(Game & game, PlayerRegistry & playerRegistry)
+  GameEngine(const Game & game, const PlayerRegistry & playerRegistry)
   {
     this->game = & game;
     this->playerOne = playerRegistry.getPlayerOne();
     this->playerTwo = playerRegistry.getPlayerTwo();
     this->currentPlayer = this->playerOne;
-    this->game->newGameState(& this->gameState);
+    this->game->setInitialGameState(& this->gameState);
   }
   
   ~GameEngine()
@@ -32,7 +32,7 @@ class GameEngine
   void play(unsigned numberOfGames = 1)
   {
     setNumberOfGames(numberOfGames);
-
+    
     for (unsigned gameNumber = 1; gameNumber <= this->numberOfGames; gameNumber++)
     {
       this->gameState->reset();
@@ -84,7 +84,7 @@ class GameEngine
   
   unsigned numberOfGames, playerOneWins = 0, playerTwoWins = 0, gamesTied = 0;
   
-  Game * game;
+  const Game * game;
   Player * playerOne;
   Player * playerTwo;
   Player * currentPlayer;
@@ -154,9 +154,7 @@ class GameEngine
   
   GameState * getNextMove()
   {
-    GameState * gameStateAfterMove;
-    this->game->newGameState(& gameStateAfterMove);
-    this->game->copyGameState(this->gameState, gameStateAfterMove);
+    GameState * gameStateAfterMove = this->gameState->clone();
     this->currentPlayer->getMove(gameStateAfterMove);
     return gameStateAfterMove;
   }
@@ -173,7 +171,6 @@ class GameEngine
 
   void printResults()
   {
-    std::cout << "-------------------------------\n";
     std::cout << "            Results            \n";
     std::cout << "-------------------------------\n";
     std::cout << "Player One Wins: " << this->playerOneWins << '\n';

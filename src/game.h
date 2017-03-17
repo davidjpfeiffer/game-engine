@@ -8,15 +8,13 @@ class Game
 {
   public:
   
-  virtual void newGameState(GameState ** gameState) = 0;
+  virtual bool isNotOver(GameState * gameState) const = 0;
   
-  virtual void copyGameState(GameState * original, GameState * copy) = 0;
+  virtual bool isValidMove(GameState * gameStateBeforeMove, GameState * gameStateAfterMove, const PlayerValue & playerValue) const = 0;
   
-  virtual bool isNotOver(GameState * gameState) = 0;
+  virtual bool playerHasWon(GameState * gameState, const PlayerValue & playerValue) const = 0;
   
-  virtual bool isValidMove(GameState * gameStateBeforeMove, GameState * gameStateAfterMove, const PlayerValue & playerValue) = 0;
-  
-  virtual bool playerHasWon(GameState * gameState, const PlayerValue & playerValue) = 0;
+  virtual void setInitialGameState(GameState ** gameState) const = 0;
 };
 
 #endif

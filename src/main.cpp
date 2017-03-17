@@ -20,5 +20,5 @@ int main()
   TicTacToePlayerRegistry playerRegistry;
   
   GameEngine gameEngine(game, playerRegistry);
-  gameEngine.play(1000);
+  gameEngine.play();
 }

@@ -10,21 +10,28 @@ class PlayerRegistry
 {
   public:
   
-  Player * getPlayerOne()
+  PlayerRegistry()
+  {
+    std::cout << "-------------------------------\n";
+  }
+  
+  Player * getPlayerOne() const
   {
     printHeader("Player One");
     Player * player = getPlayer();
     player->setPlayerValue(PlayerValue::PlayerOne);
     std::cout << "Player One is " << player->getName() << '\n';
+    std::cout << "-------------------------------\n";
     return player;
   }
   
-  Player * getPlayerTwo()
+  Player * getPlayerTwo() const
   {
     printHeader("Player Two");
     Player * player = getPlayer();
     player->setPlayerValue(PlayerValue::PlayerTwo);
     std::cout << "Player Two is " << player->getName() << '\n';
+    std::cout << "-------------------------------\n";
     return player;
   }
   
@@ -34,7 +41,7 @@ class PlayerRegistry
   
   private:
   
-  Player * getPlayer()
+  Player * getPlayer() const
   {
     Player * player;
     int numberOfPlayers = this->players.size();
@@ -65,9 +72,8 @@ class PlayerRegistry
     return player;
   }
   
-  void printHeader(std::string player)
+  void printHeader(std::string player) const
   {
-    std::cout << "-------------------------------\n";
     std::cout << "          " << player << "           \n";
     std::cout << "-------------------------------\n";
   }
