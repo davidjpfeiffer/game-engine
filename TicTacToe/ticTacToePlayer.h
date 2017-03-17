@@ -11,10 +11,10 @@ class TicTacToePlayer : public Player
   TicTacToeBoardValue boardValue;
   TicTacToeBoardValue opponentBoardValue;
   
-  void onPlayerValueSet(const PlayerValue & playerValue)
+  void onPlayerValueSet(const PlayerValue & p_playerValue)
   {
-    this->boardValue = playerValue == PlayerValue::PlayerOne ? TicTacToeBoardValue::O : TicTacToeBoardValue::X;
-    this->opponentBoardValue = playerValue == PlayerValue::PlayerOne ? TicTacToeBoardValue::X : TicTacToeBoardValue::O;
+    this->boardValue = p_playerValue == PlayerValue::PlayerOne ? TicTacToeBoardValue::O : TicTacToeBoardValue::X;
+    this->opponentBoardValue = p_playerValue == PlayerValue::PlayerOne ? TicTacToeBoardValue::X : TicTacToeBoardValue::O;
   }
   
   protected:

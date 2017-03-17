@@ -28,15 +28,13 @@ class Player
   
   virtual std::string getName() const = 0;
   
-  void setPlayerValue(const PlayerValue & playerValue)
+  void setPlayerValue(const PlayerValue & p_playerValue)
   {
     if (this->playerValueSet == false)
     {
-      this->playerValue = playerValue;
-      this->opponentPlayerValue = playerValue == PlayerValue::PlayerOne ? PlayerValue::PlayerTwo : PlayerValue::PlayerOne;
-      
+      this->playerValue = p_playerValue;
+      this->opponentPlayerValue = p_playerValue == PlayerValue::PlayerOne ? PlayerValue::PlayerTwo : PlayerValue::PlayerOne;
       this->playerValueSet = true;
-      
       onPlayerValueSet(playerValue);
     }
   }

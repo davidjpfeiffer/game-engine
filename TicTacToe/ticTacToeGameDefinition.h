@@ -182,7 +182,7 @@ class TicTacToeGameDefinition : public GameDefinition
     return numDifferences;
   }
   
-  unsigned moveWasMadeByPlayer(const TicTacToeBoard & boardOne, const TicTacToeBoard & boardTwo, const PlayerValue & playerValue) const
+  bool moveWasMadeByPlayer(const TicTacToeBoard & boardOne, const TicTacToeBoard & boardTwo, const PlayerValue & playerValue) const
   {
     TicTacToeBoardValue boardValue = playerValueToBoardValue(playerValue);
     unsigned beforeCount = 0, afterCount = 0;

@@ -196,25 +196,26 @@ class GameEngine
     std::cout << "        Number Of Games        \n";
     std::cout << "-------------------------------\n";
     
-    unsigned numberOfGames;
+    unsigned input = 0;
     
-    while(!validNumberOfGames(numberOfGames))
+    do
     {
       std::cout << "Number of games to play: ";
-      std::cin >> numberOfGames;
+      std::cin >> input;
       
-      if (!validNumberOfGames(numberOfGames))
+      if (!validNumberOfGames(input))
       {
         std::cout << "Invalid entry, number must be between 1 and 10,000 inclusive.";
       }
     }
+    while(!validNumberOfGames(input));
     
-    this->numberOfGames = numberOfGames;
+    this->numberOfGames = input;
   }
 
-  bool validNumberOfGames(unsigned numberOfGames)
+  bool validNumberOfGames(unsigned p_numberOfGames)
   {
-    return numberOfGames > 0 && numberOfGames < 10000;
+    return p_numberOfGames > 0 && p_numberOfGames < 10000;
   }
 };
 

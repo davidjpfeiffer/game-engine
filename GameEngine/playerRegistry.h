@@ -37,7 +37,7 @@ class PlayerRegistry
   
   Player * getPlayer() const
   {
-    Player * player;
+    Player * player = nullptr;
     int numberOfPlayers = this->players.size();
     int choice;
     bool validChoice = false;
