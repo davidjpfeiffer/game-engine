@@ -3,7 +3,8 @@
 
 #include <iostream>
 
-#include "utilities.h"
+#include "../utilities.h"
+
 #include "game.h"
 #include "gameResult.h"
 #include "player.h"
@@ -14,11 +15,17 @@ class GameEngine
   
   GameEngine(const Game & game)
   {
+    setNumberOfGames();
     this->gameDefinition = game.gameDefinition;
     this->playerOne = game.playerRegistry->getPlayerOne();
     this->playerTwo = game.playerRegistry->getPlayerTwo();
     this->currentPlayer = this->playerOne;
     this->gameDefinition->setInitialGameState(& this->gameState);
+    
+    if (playingSingleGame())
+    {
+      std::cout << "-------------------------------\n";
+    }
   }
   
   ~GameEngine()
@@ -28,10 +35,8 @@ class GameEngine
     delete this->gameState;
   }
 
-  void play(unsigned numberOfGames = 1)
+  void play()
   {
-    setNumberOfGames(numberOfGames);
-    
     for (unsigned gameNumber = 1; gameNumber <= this->numberOfGames; gameNumber++)
     {
       this->gameState->reset();
@@ -170,6 +175,7 @@ class GameEngine
 
   void printResults()
   {
+    std::cout << "-------------------------------\n";
     std::cout << "            Results            \n";
     std::cout << "-------------------------------\n";
     std::cout << "Player One Wins: " << this->playerOneWins << '\n';
@@ -184,21 +190,31 @@ class GameEngine
     this->currentPlayer = this->currentPlayer == this->playerOne ? this->playerTwo : this->playerOne;
   }
 
-  void setNumberOfGames(unsigned numberOfGames)
+  void setNumberOfGames()
   {
-    if (validNumberOfGames(numberOfGames))
+    std::cout << "-------------------------------\n";
+    std::cout << "        Number Of Games        \n";
+    std::cout << "-------------------------------\n";
+    
+    unsigned numberOfGames;
+    
+    while(!validNumberOfGames(numberOfGames))
     {
-      this->numberOfGames = numberOfGames;
+      std::cout << "Number of games to play: ";
+      std::cin >> numberOfGames;
+      
+      if (!validNumberOfGames(numberOfGames))
+      {
+        std::cout << "Invalid entry, number must be between 1 and 10,000 inclusive.";
+      }
     }
-    else
-    {
-      exitWithErrorMessage("Number of games must be less than 10,000");
-    }
+    
+    this->numberOfGames = numberOfGames;
   }
 
   bool validNumberOfGames(unsigned numberOfGames)
   {
-    return numberOfGames < 10000;
+    return numberOfGames > 0 && numberOfGames < 10000;
   }
 };
 

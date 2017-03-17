@@ -1,8 +1,8 @@
 #include <cstdlib>
 #include <time.h>
 
-#include "gameEngine.h"
-#include "ticTacToeGame.h"
+#include "./GameEngine/gameEngine.h"
+#include "./TicTacToe/ticTacToeGame.h"
 
 using namespace std;
 

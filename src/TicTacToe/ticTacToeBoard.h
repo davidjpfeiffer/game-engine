@@ -1,8 +1,9 @@
 #ifndef __TICTACTOEBOARD
 #define __TICTACTOEBOARD
 
+#include "../utilities.h"
+
 #include "ticTacToeBoardValue.h"
-#include "utilities.h"
 
 const unsigned BOARD_SIZE = 3;
 

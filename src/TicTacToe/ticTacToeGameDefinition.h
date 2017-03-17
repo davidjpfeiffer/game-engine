@@ -4,12 +4,14 @@
 #include <iostream>
 #include <vector>
 
-#include "gameDefinition.h"
+#include "../utilities.h"
+
+#include "../GameEngine/gameResult.h"
+#include "../GameEngine/gameDefinition.h"
+
 #include "ticTacToeGameState.h"
 #include "ticTacToeBoard.h"
 #include "ticTacToeBoardValue.h"
-#include "gameResult.h"
-#include "utilities.h"
 
 class TicTacToeGameDefinition : public GameDefinition
 {

@@ -1,10 +1,10 @@
-#ifndef __RANDOMTICTACTOEPLAYER
-#define __RANDOMTICTACTOEPLAYER
+#ifndef __TICTACTOERANDOMPLAYER
+#define __TICTACTOERANDOMPLAYER
 
 #include "ticTacToePlayer.h"
 #include "ticTacToeGameState.h"
 
-class RandomTicTacToePlayer : public TicTacToePlayer
+class TicTacToeRandomPlayer : public TicTacToePlayer
 {
   public:
 
@@ -15,7 +15,7 @@ class RandomTicTacToePlayer : public TicTacToePlayer
   
   Player * clone() const
   {
-    return new RandomTicTacToePlayer;
+    return new TicTacToeRandomPlayer;
   }
   
   void getMove(GameState * gameState)

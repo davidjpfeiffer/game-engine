@@ -4,16 +4,12 @@
 #include <iostream>
 #include <vector>
 #include <string>
+
 #include "player.h"
 
 class PlayerRegistry
 {
   public:
-  
-  PlayerRegistry()
-  {
-    std::cout << "-------------------------------\n";
-  }
   
   Player * getPlayerOne() const
   {
@@ -21,7 +17,6 @@ class PlayerRegistry
     Player * player = getPlayer();
     player->setPlayerValue(PlayerValue::PlayerOne);
     std::cout << "Player One is " << player->getName() << '\n';
-    std::cout << "-------------------------------\n";
     return player;
   }
   
@@ -31,7 +26,6 @@ class PlayerRegistry
     Player * player = getPlayer();
     player->setPlayerValue(PlayerValue::PlayerTwo);
     std::cout << "Player Two is " << player->getName() << '\n';
-    std::cout << "-------------------------------\n";
     return player;
   }
   
@@ -74,6 +68,7 @@ class PlayerRegistry
   
   void printHeader(std::string player) const
   {
+    std::cout << "-------------------------------\n";
     std::cout << "          " << player << "           \n";
     std::cout << "-------------------------------\n";
   }

@@ -1,7 +1,8 @@
 #ifndef __TICTACTOEGAMESTATE
 #define __TICTACTOEGAMESTATE
 
-#include "gameState.h"
+#include "../GameEngine/gameState.h"
+
 #include "ticTacToeBoard.h"
 
 class TicTacToeGameState : public GameState

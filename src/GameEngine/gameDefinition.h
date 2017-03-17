@@ -2,6 +2,7 @@
 #define __GAMEDEFINITION
 
 #include <vector>
+
 #include "player.h"
 
 class GameDefinition

@@ -1,12 +1,12 @@
-#ifndef __HUMANTICTACTOEPLAYER
-#define __HUMANTICTACTOEPLAYER
+#ifndef __TICTACTOEHUMANPLAYER
+#define __TICTACTOEHUMANPLAYER
 
 #include <iostream>
 #include "ticTacToePlayer.h"
 #include "ticTacToeGameState.h"
 #include "ticTacToeBoard.h"
 
-class HumanTicTacToePlayer : public TicTacToePlayer
+class TicTacToeHumanPlayer : public TicTacToePlayer
 {
   public:
   
@@ -17,7 +17,7 @@ class HumanTicTacToePlayer : public TicTacToePlayer
 
   Player * clone() const
   {
-    return new HumanTicTacToePlayer;
+    return new TicTacToeHumanPlayer;
   }
   
   void getMove(GameState * p_gameState)
