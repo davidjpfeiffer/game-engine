@@ -1,7 +1,7 @@
 #ifndef __TICTACTOEPLAYER
 #define __TICTACTOEPLAYER
 
-#include "ticTacToe.h"
+#include "ticTacToeGameDefinition.h"
 #include "ticTacToeBoardValue.h"
 
 class TicTacToePlayer : public Player
@@ -19,7 +19,7 @@ class TicTacToePlayer : public Player
   
   protected:
   
-  TicTacToe game;
+  TicTacToeGameDefinition gameDefinition;
   
   public:
   

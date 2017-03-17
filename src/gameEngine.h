@@ -7,19 +7,18 @@
 #include "game.h"
 #include "gameResult.h"
 #include "player.h"
-#include "playerRegistry.h"
 
 class GameEngine
 {
   public:
   
-  GameEngine(const Game & game, const PlayerRegistry & playerRegistry)
+  GameEngine(const Game & game)
   {
-    this->game = & game;
-    this->playerOne = playerRegistry.getPlayerOne();
-    this->playerTwo = playerRegistry.getPlayerTwo();
+    this->gameDefinition = game.gameDefinition;
+    this->playerOne = game.playerRegistry->getPlayerOne();
+    this->playerTwo = game.playerRegistry->getPlayerTwo();
     this->currentPlayer = this->playerOne;
-    this->game->setInitialGameState(& this->gameState);
+    this->gameDefinition->setInitialGameState(& this->gameState);
   }
   
   ~GameEngine()
@@ -84,7 +83,7 @@ class GameEngine
   
   unsigned numberOfGames, playerOneWins = 0, playerTwoWins = 0, gamesTied = 0;
   
-  const Game * game;
+  const GameDefinition * gameDefinition;
   Player * playerOne;
   Player * playerTwo;
   Player * currentPlayer;
@@ -133,12 +132,12 @@ class GameEngine
   
   bool gameIsNotOver()
   {
-    return this->game->isNotOver(this->gameState);
+    return this->gameDefinition->isNotOver(this->gameState);
   }
   
   bool validMove(GameState * gameStateAfterMove)
   {
-    return this->game->isValidMove(this->gameState, gameStateAfterMove, this->currentPlayer->getPlayerValue());
+    return this->gameDefinition->isValidMove(this->gameState, gameStateAfterMove, this->currentPlayer->getPlayerValue());
   }
   
   void updateGameState(GameState * newGameState)
@@ -149,7 +148,7 @@ class GameEngine
   
   bool playerHasWon(PlayerValue playerValue)
   {
-    return this->game->playerHasWon(this->gameState, playerValue);
+    return this->gameDefinition->playerHasWon(this->gameState, playerValue);
   }
   
   GameState * getNextMove()

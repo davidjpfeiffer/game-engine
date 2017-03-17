@@ -45,7 +45,7 @@ class HumanTicTacToePlayer : public TicTacToePlayer
       if (TicTacToeBoard::isValidRowAndColumn(indexOfRow, indexOfColumn))
       {
         gameStateAfterMove.board.set(indexOfRow, indexOfColumn, this->getBoardValue());
-        validMoveMade = this->game.isValidMove(gameState, & gameStateAfterMove, this->getPlayerValue());
+        validMoveMade = this->gameDefinition.isValidMove(gameState, & gameStateAfterMove, this->getPlayerValue());
       }
       else
       {

@@ -2,13 +2,7 @@
 #include <time.h>
 
 #include "gameEngine.h"
-
-#include "ticTacToe.h"
-#include "ticTacToePlayerRegistry.h"
-
-#include "randomTicTacToePlayer.h"
-#include "humanTicTacToePlayer.h"
-#include "computerTicTacToePlayer.h"
+#include "ticTacToeGame.h"
 
 using namespace std;
 
@@ -16,9 +10,7 @@ int main()
 {
   srand(time(NULL));
   
-  TicTacToe game;
-  TicTacToePlayerRegistry playerRegistry;
-  
-  GameEngine gameEngine(game, playerRegistry);
+  TicTacToeGame game;
+  GameEngine gameEngine(game);
   gameEngine.play();
 }

@@ -145,19 +145,19 @@ class ComputerTicTacToePlayer : public TicTacToePlayer
 
     // Default to random move
     
-    this->game.makeRandomMove(gameState, this->getPlayerValue());
+    this->gameDefinition.makeRandomMove(gameState, this->getPlayerValue());
   }
   
   private:
 
   bool thisPlayerHasWon(TicTacToeGameState * gameState)
   {
-    return this->game.playerHasWon(gameState, this->getPlayerValue());
+    return this->gameDefinition.playerHasWon(gameState, this->getPlayerValue());
   }
 
   bool otherPlayerHasWon(TicTacToeGameState * gameState)
   {
-    return this->game.playerHasWon(gameState, this->getOpponentPlayerValue());
+    return this->gameDefinition.playerHasWon(gameState, this->getOpponentPlayerValue());
   }
 };
 

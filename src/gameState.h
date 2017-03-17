@@ -4,7 +4,7 @@
 class GameState
 {
   public:
-
+  
   virtual void reset() = 0;
   
   virtual void print() const = 0;

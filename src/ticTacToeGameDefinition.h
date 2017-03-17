@@ -1,16 +1,17 @@
-#ifndef __TICTACTOE
-#define __TICTACTOE
+#ifndef __TICTACTOEGAMEDEFINITION
+#define __TICTACTOEGAMEDEFINITION
 
 #include <iostream>
 #include <vector>
-#include "game.h"
+
+#include "gameDefinition.h"
 #include "ticTacToeGameState.h"
 #include "ticTacToeBoard.h"
 #include "ticTacToeBoardValue.h"
 #include "gameResult.h"
 #include "utilities.h"
 
-class TicTacToe : public Game
+class TicTacToeGameDefinition : public GameDefinition
 {
   public:
   
