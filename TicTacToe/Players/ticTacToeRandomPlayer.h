@@ -18,7 +18,7 @@ class TicTacToeRandomPlayer : public TicTacToePlayer
     return new TicTacToeRandomPlayer;
   }
   
-  void getMove(GameState * gameState)
+  void getMove(GameState * gameState) const
   {
     this->gameDefinition.makeRandomMove(gameState, this->getPlayerValue());
   }

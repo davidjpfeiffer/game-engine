@@ -19,7 +19,7 @@ class TicTacToeComputerPlayer : public TicTacToePlayer
     return new TicTacToeComputerPlayer;
   }
   
-  void getMove(GameState * p_gameState)
+  void getMove(GameState * p_gameState) const
   {
     TicTacToeGameState * gameState = (TicTacToeGameState *)p_gameState;
     TicTacToeGameState theoreticalGameState;
@@ -150,12 +150,12 @@ class TicTacToeComputerPlayer : public TicTacToePlayer
   
   private:
 
-  bool thisPlayerHasWon(TicTacToeGameState * gameState)
+  bool thisPlayerHasWon(TicTacToeGameState * gameState) const
   {
     return this->gameDefinition.playerHasWon(gameState, this->getPlayerValue());
   }
 
-  bool otherPlayerHasWon(TicTacToeGameState * gameState)
+  bool otherPlayerHasWon(TicTacToeGameState * gameState) const
   {
     return this->gameDefinition.playerHasWon(gameState, this->getOpponentPlayerValue());
   }
