@@ -15,17 +15,13 @@ class GameEngine
   
   GameEngine(const Game & game)
   {
-    setNumberOfGames();
     this->gameDefinition = game.gameDefinition;
-    this->playerOne = game.playerRegistry->getPlayerOne();
-    this->playerTwo = game.playerRegistry->getPlayerTwo();
+    this->playerRegistry = game.playerRegistry;
+    setNumberOfGames();
+    setPlayerOne();
+    setPlayerTwo();
     this->currentPlayer = this->playerOne;
     this->gameDefinition->setInitialGameState(& this->gameState);
-    
-    if (playingSingleGame())
-    {
-      std::cout << "-------------------------------\n";
-    }
   }
   
   ~GameEngine()
@@ -89,6 +85,7 @@ class GameEngine
   unsigned numberOfGames, playerOneWins = 0, playerTwoWins = 0, gamesTied = 0;
   
   const GameDefinition * gameDefinition;
+  const PlayerRegistry * playerRegistry;
   Player * playerOne;
   Player * playerTwo;
   Player * currentPlayer;
@@ -182,7 +179,6 @@ class GameEngine
     std::cout << "Player Two Wins: " << this->playerTwoWins << '\n';
     std::cout << "Games Tied: " << this->gamesTied << '\n';
     std::cout << "Total Number Of Games: " << this->numberOfGames << '\n';
-    std::cout << "-------------------------------\n";
   }
 
   void toggleCurrentPlayer()
@@ -216,6 +212,59 @@ class GameEngine
   bool validNumberOfGames(unsigned p_numberOfGames)
   {
     return p_numberOfGames > 0 && p_numberOfGames <= 10000;
+  }
+  
+  void setPlayerOne()
+  {
+    std::cout << "-------------------------------\n";
+    std::cout << "          Player One           \n";
+    std::cout << "-------------------------------\n";
+    Player * player = getPlayer();
+    player->setPlayerValue(PlayerValue::PlayerOne);
+    this->playerOne = player;
+    std::cout << "Player One is " << player->getName() << '\n';
+  }
+  
+  void setPlayerTwo()
+  {
+    std::cout << "-------------------------------\n";
+    std::cout << "          Player Two           \n";
+    std::cout << "-------------------------------\n";
+    Player * player = getPlayer();
+    player->setPlayerValue(PlayerValue::PlayerTwo);
+    this->playerTwo = player;
+    std::cout << "Player Two is " << player->getName() << '\n';
+  }
+  
+  Player * getPlayer() const
+  {
+    Player * player;
+    int numberOfPlayers = this->playerRegistry->players.size();
+    int choice;
+    bool validChoice = false;
+    
+    while (validChoice == false)
+    {
+      for (int i = 0; i < numberOfPlayers; i++)
+      {
+        std::cout << "Choice " << i + 1 << ": " << this->playerRegistry->players[i]->getName() << '\n';
+      }
+      
+      std::cout << "Choose Player Number: ";
+      std::cin >> choice;
+      
+      if (choice > 0 && choice <= numberOfPlayers)
+      {
+        player = this->playerRegistry->players[choice - 1]->clone();
+        validChoice = true;
+      }
+      else
+      {
+        std::cout << "Invalid choice, please enter a number from 1 to " << numberOfPlayers << '\n';
+      }
+    }
+    
+    return player;
   }
 };
 
