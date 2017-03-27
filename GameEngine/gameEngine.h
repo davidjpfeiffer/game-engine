@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+#include "../Utilities/printer.h"
+
 #include "game.h"
 #include "gameResult.h"
 #include "player.h"
@@ -38,9 +40,7 @@ class GameEngine
     }
     catch(std::exception & e)
     {
-      std::cout << "-------------------------------\n";
-      std::cout << "           Exception           \n";
-      std::cout << "-------------------------------\n";
+      printer.printHeader("Exception");
       std::cout << e.what() << '\n';
     }
   }
@@ -186,9 +186,7 @@ class GameEngine
 
   void printResults()
   {
-    std::cout << "-------------------------------\n";
-    std::cout << "            Results            \n";
-    std::cout << "-------------------------------\n";
+    printer.printHeader("Results");
     std::cout << "Player One Wins: " << this->playerOneWins << '\n';
     std::cout << "Player Two Wins: " << this->playerTwoWins << '\n';
     std::cout << "Games Tied: " << this->gamesTied << '\n';
@@ -202,9 +200,7 @@ class GameEngine
 
   void setNumberOfGames()
   {
-    std::cout << "-------------------------------\n";
-    std::cout << "        Number Of Games        \n";
-    std::cout << "-------------------------------\n";
+    printer.printHeader("Number Of Games");
     
     unsigned input = 0;
     
@@ -230,9 +226,7 @@ class GameEngine
   
   void setPlayerOne()
   {
-    std::cout << "-------------------------------\n";
-    std::cout << "          Player One           \n";
-    std::cout << "-------------------------------\n";
+    printer.printHeader("Player One");
     Player * player = getPlayer();
     player->setPlayerValue(PlayerValue::PlayerOne);
     this->playerOne = player;
@@ -241,9 +235,7 @@ class GameEngine
   
   void setPlayerTwo()
   {
-    std::cout << "-------------------------------\n";
-    std::cout << "          Player Two           \n";
-    std::cout << "-------------------------------\n";
+    printer.printHeader("Player Two");
     Player * player = getPlayer();
     player->setPlayerValue(PlayerValue::PlayerTwo);
     this->playerTwo = player;

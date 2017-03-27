@@ -7,7 +7,7 @@
 #include "../GameEngine/gameResult.h"
 #include "../GameEngine/gameDefinition.h"
 
-#include "../randomNumberGenerator.h"
+#include "../Utilities/randomNumberGenerator.h"
 
 #include "ticTacToeGameState.h"
 #include "ticTacToeBoard.h"
