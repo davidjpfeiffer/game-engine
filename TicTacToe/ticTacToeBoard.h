@@ -1,7 +1,7 @@
 #ifndef __TICTACTOEBOARD
 #define __TICTACTOEBOARD
 
-#include "../utilities.h"
+#include <stdexcept>
 
 #include "ticTacToeBoardValue.h"
 
@@ -18,16 +18,20 @@ class TicTacToeBoard
 
   TicTacToeBoardValue get(unsigned row, unsigned column) const
   {
-    handleInvalidRowOrColumn(row, column);
+    if (!isValidRowAndColumn(row, column))
+    {
+      throw std::out_of_range("Index out of range at Tic Tac Toe Board get method");
+    }
     
     return this->board[row][column];
   }
   
   void set(unsigned row, unsigned column, TicTacToeBoardValue boardValue)
   {
-    handleInvalidRowOrColumn(row, column);
-    
-    this->board[row][column] = boardValue;
+    if (isValidRowAndColumn(row, column))
+    {
+      this->board[row][column] = boardValue;
+    }
   }
   
   void reset()
@@ -96,7 +100,7 @@ class TicTacToeBoard
   {
     return column < BOARD_SIZE;
   }
-
+  
   static bool isValidRowAndColumn(unsigned row, unsigned column)
   {
     return isValidRow(row) && isValidColumn(column);
@@ -105,14 +109,6 @@ class TicTacToeBoard
   private:
 
   TicTacToeBoardValue board [BOARD_SIZE][BOARD_SIZE];
-  
-  void handleInvalidRowOrColumn(unsigned row, unsigned column) const
-  {
-    if (!isValidRowAndColumn(row, column))
-    {
-      exitWithErrorMessage("Invalid row or column");
-    }
-  }
 };
 
 #endif

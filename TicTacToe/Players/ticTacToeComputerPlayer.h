@@ -23,7 +23,7 @@ class TicTacToeComputerPlayer : public TicTacToePlayer
   {
     TicTacToeGameState * gameState = (TicTacToeGameState *)p_gameState;
     TicTacToeGameState theoreticalGameState;
-
+    
     // If we can win, take win
     
     for (unsigned i = 0; i < BOARD_SIZE; i++)

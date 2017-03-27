@@ -3,11 +3,10 @@
 
 #include <iostream>
 
-#include "../utilities.h"
-
 #include "game.h"
 #include "gameResult.h"
 #include "player.h"
+#include "invalidMoveException.h"
 
 class GameEngine
 {
@@ -32,6 +31,32 @@ class GameEngine
   }
 
   void play()
+  {
+    try
+    {
+      play_inner();
+    }
+    catch(std::exception & e)
+    {
+      std::cout << "-------------------------------\n";
+      std::cout << "           Exception           \n";
+      std::cout << "-------------------------------\n";
+      std::cout << e.what() << '\n';
+    }
+  }
+  
+  private:
+  
+  unsigned numberOfGames, playerOneWins = 0, playerTwoWins = 0, gamesTied = 0;
+  
+  const GameDefinition * gameDefinition;
+  const PlayerRegistry * playerRegistry;
+  Player * playerOne;
+  Player * playerTwo;
+  Player * currentPlayer;
+  GameState * gameState;
+
+  void play_inner()
   {
     for (unsigned gameNumber = 1; gameNumber <= this->numberOfGames; gameNumber++)
     {
@@ -80,17 +105,6 @@ class GameEngine
     }
   }
   
-  private:
-  
-  unsigned numberOfGames, playerOneWins = 0, playerTwoWins = 0, gamesTied = 0;
-  
-  const GameDefinition * gameDefinition;
-  const PlayerRegistry * playerRegistry;
-  Player * playerOne;
-  Player * playerTwo;
-  Player * currentPlayer;
-  GameState * gameState;
-
   GameResult getGameResult()
   {
     if (playingSingleGame())
@@ -114,7 +128,7 @@ class GameEngine
       else
       {
         delete gameStateAfterMove;
-        exitWithErrorMessage(this->currentPlayer->getPlayerValueAsString() + " did not submit a valid move.");
+        throw InvalidMoveException(this->currentPlayer);
       }
     }
     
@@ -201,7 +215,7 @@ class GameEngine
       
       if (!validNumberOfGames(input))
       {
-        std::cout << "Invalid entry, number must be between 1 and 10,000 inclusive.";
+        std::cout << "Invalid entry, number must be between 1 and 10,000 inclusive.\n";
       }
     }
     while(!validNumberOfGames(input));
@@ -238,7 +252,7 @@ class GameEngine
   
   Player * getPlayer() const
   {
-    Player * player;
+    Player * player = nullptr;
     int numberOfPlayers = this->playerRegistry->players.size();
     int choice;
     bool validChoice = false;

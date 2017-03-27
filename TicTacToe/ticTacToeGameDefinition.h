@@ -4,8 +4,6 @@
 #include <iostream>
 #include <vector>
 
-#include "../utilities.h"
-
 #include "../GameEngine/gameResult.h"
 #include "../GameEngine/gameDefinition.h"
 
