@@ -34,7 +34,7 @@ class TicTacToeGameDefinition : public GameDefinition
         {
           if (gameStateBeforeMove->board.get(i, j) != gameStateAfterMove->board.get(i, j))
           {
-            if (gameStateBeforeMove->board.get(i, j) != TicTacToeBoardValue::Empty)
+            if (gameStateBeforeMove->board.get(i, j) != TicTacToeBoardValueEmpty)
             {
               return false;
             }
@@ -106,7 +106,7 @@ class TicTacToeGameDefinition : public GameDefinition
     {
       for (unsigned j = 0; j < BOARD_SIZE; j++)
       {
-        if (gameState->board.get(i, j) == TicTacToeBoardValue::Empty)
+        if (gameState->board.get(i, j) == TicTacToeBoardValueEmpty)
         {
           availableMoves.push_back(std::make_pair(i, j));
         }
@@ -120,17 +120,17 @@ class TicTacToeGameDefinition : public GameDefinition
   
   bool isPlayersBoardValue(const PlayerValue & playerValue, const TicTacToeBoardValue & boardValue) const
   {
-    return playerValue == PlayerValue::PlayerOne ? boardValue == TicTacToeBoardValue::O : boardValue == TicTacToeBoardValue::X;
+    return playerValue == PlayerValue::PlayerOne ? boardValue == TicTacToeBoardValuePlayerOne : boardValue == TicTacToeBoardValuePlayerTwo;
   }
   
   TicTacToeBoardValue playerValueToBoardValue(PlayerValue playerValue) const
   {
-    return playerValue == PlayerValue::PlayerOne ? TicTacToeBoardValue::O : TicTacToeBoardValue::X;
+    return playerValue == PlayerValue::PlayerOne ? TicTacToeBoardValuePlayerOne : TicTacToeBoardValuePlayerTwo;
   }
   
   PlayerValue boardValueToPlayerValue(TicTacToeBoardValue boardValue) const
   {
-    return boardValue == TicTacToeBoardValue::O ? PlayerValue::PlayerOne : PlayerValue::PlayerTwo;
+    return boardValue == TicTacToeBoardValuePlayerOne ? PlayerValue::PlayerOne : PlayerValue::PlayerTwo;
   }
   
   private:

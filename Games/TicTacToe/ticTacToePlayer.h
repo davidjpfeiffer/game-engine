@@ -15,8 +15,8 @@ class TicTacToePlayer : public Player
   
   void onPlayerValueSet(const PlayerValue & p_playerValue)
   {
-    this->boardValue = p_playerValue == PlayerValue::PlayerOne ? TicTacToeBoardValue::O : TicTacToeBoardValue::X;
-    this->opponentBoardValue = p_playerValue == PlayerValue::PlayerOne ? TicTacToeBoardValue::X : TicTacToeBoardValue::O;
+    this->boardValue = p_playerValue == PlayerValue::PlayerOne ? TicTacToeBoardValuePlayerOne : TicTacToeBoardValuePlayerTwo;
+    this->opponentBoardValue = p_playerValue == PlayerValue::PlayerOne ? TicTacToeBoardValuePlayerTwo : TicTacToeBoardValuePlayerOne;
   }
   
   protected:

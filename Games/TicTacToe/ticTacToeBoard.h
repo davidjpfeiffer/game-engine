@@ -40,7 +40,7 @@ class TicTacToeBoard
     {
       for(unsigned column = 0; column < BOARD_SIZE; column++)
       {
-        this->board[row][column] = TicTacToeBoardValue::Empty;
+        this->board[row][column] = TicTacToeBoardValueEmpty;
       }
     }
   }
@@ -57,13 +57,13 @@ class TicTacToeBoard
       {
         switch (this->board[i][j])
         {
-          case TicTacToeBoardValue::Empty:
+          case TicTacToeBoardValueEmpty:
             std::cout << "     ###";
             break;
-          case TicTacToeBoardValue::O:
+          case TicTacToeBoardValuePlayerOne:
             std::cout << "  O  ###";
             break;
-          case TicTacToeBoardValue::X:
+          case TicTacToeBoardValuePlayerTwo:
             std::cout << "  X  ###";
             break;
         }
@@ -81,7 +81,7 @@ class TicTacToeBoard
     {
       for (unsigned j = 0; j < BOARD_SIZE; j++)
       {
-        if (this->board[i][j] == TicTacToeBoardValue::Empty)
+        if (this->board[i][j] == TicTacToeBoardValueEmpty)
         {
           availableMoves++;
         }

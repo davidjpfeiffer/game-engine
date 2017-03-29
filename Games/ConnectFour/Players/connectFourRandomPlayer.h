@@ -1,5 +1,5 @@
-#ifndef __TICTACTOERANDOMPLAYER
-#define __TICTACTOERANDOMPLAYER
+#ifndef __CONNECTFOURRANDOMPLAYER
+#define __CONNECTFOURRANDOMPLAYER
 
 #include "connectFourPlayer.h"
 #include "connectFourGameState.h"
