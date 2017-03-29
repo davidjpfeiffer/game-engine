@@ -112,7 +112,7 @@ class GameEngine
       this->gameState->print();
     }
 
-    while (gameIsNotOver())
+    while (!gameIsOver())
     {
       GameState * gameStateAfterMove = getNextMove();
       
@@ -146,9 +146,9 @@ class GameEngine
     }
   }
   
-  bool gameIsNotOver()
+  bool gameIsOver()
   {
-    return this->gameDefinition->isNotOver(this->gameState);
+    return this->gameDefinition->isOver(this->gameState);
   }
   
   bool validMove(GameState * gameStateAfterMove)

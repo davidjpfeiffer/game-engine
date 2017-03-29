@@ -9,7 +9,7 @@ class GameDefinition
 {
   public:
   
-  virtual bool isNotOver(GameState * gameState) const = 0;
+  virtual bool isOver(GameState * gameState) const = 0;
   
   virtual bool isValidMove(GameState * gameStateBeforeMove, GameState * gameStateAfterMove, const PlayerValue & playerValue) const = 0;
   

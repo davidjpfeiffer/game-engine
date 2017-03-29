@@ -48,14 +48,14 @@ class TicTacToeBoard
   void print() const
   {
     std::cout << '\n';
-    for (unsigned i = 0; i < BOARD_SIZE; i++)
+    for (unsigned row = 0; row < BOARD_SIZE; row++)
     {
       std::cout << "###########################\n";
       std::cout << "###     ###     ###     ###\n";
       std::cout << "###";
-      for (unsigned j = 0; j < BOARD_SIZE; j++)
+      for (unsigned column = 0; column < BOARD_SIZE; column++)
       {
-        switch (this->board[i][j])
+        switch (this->board[row][column])
         {
           case TicTacToeBoardValueEmpty:
             std::cout << "     ###";
@@ -77,11 +77,11 @@ class TicTacToeBoard
   {
     unsigned availableMoves = 0;
 
-    for (unsigned i = 0; i < BOARD_SIZE; i++)
+    for (unsigned row = 0; row < BOARD_SIZE; row++)
     {
-      for (unsigned j = 0; j < BOARD_SIZE; j++)
+      for (unsigned column = 0; column < BOARD_SIZE; column++)
       {
-        if (this->board[i][j] == TicTacToeBoardValueEmpty)
+        if (this->board[row][column] == TicTacToeBoardValueEmpty)
         {
           availableMoves++;
         }

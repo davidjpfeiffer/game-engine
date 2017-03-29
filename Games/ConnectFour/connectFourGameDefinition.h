@@ -14,9 +14,9 @@ class ConnectFourGameDefinition : public GameDefinition
 {
   public:
   
-  bool isNotOver(GameState * gameState) const
+  bool isOver(GameState * gameState) const
   {
-    return availableMoves(gameState) && playerOneHasNotWon(gameState) && playerTwoHasNotWon(gameState);
+    return noAvailableMoves(gameState) && playerOneHasWon(gameState) && playerTwoHasWon(gameState);
   }
   
   bool isValidMove(GameState * p_gameStateBeforeMove, GameState * p_gameStateAfterMove, const PlayerValue & playerValue) const
@@ -228,21 +228,21 @@ class ConnectFourGameDefinition : public GameDefinition
   
   private:
   
-  bool availableMoves(GameState * p_gameState) const
+  bool noAvailableMoves(GameState * p_gameState) const
   {
     ConnectFourGameState * gameState = (ConnectFourGameState *)p_gameState;
     
-    return gameState->board.numberOfAvailableMoves() > 0;
+    return gameState->board.numberOfAvailableMoves() == 0;
   }
   
-  bool playerOneHasNotWon(GameState * gameState) const
+  bool playerOneHasWon(GameState * gameState) const
   {
-    return !playerHasWon(gameState, PlayerValue::PlayerOne);
+    return playerHasWon(gameState, PlayerValue::PlayerOne);
   }
   
-  bool playerTwoHasNotWon(GameState * gameState) const
+  bool playerTwoHasWon(GameState * gameState) const
   {
-    return !playerHasWon(gameState, PlayerValue::PlayerTwo);
+    return playerHasWon(gameState, PlayerValue::PlayerTwo);
   }
   
   ConnectFourBoardValue playerValueToBoardValue(PlayerValue playerValue) const
