@@ -18,7 +18,7 @@ class Player
   
   protected:
   
-  virtual void onPlayerValueSet(const PlayerValue & playerValue) = 0;
+  virtual void onPlayerValueSet(PlayerValue playerValue) = 0;
   
   public:
   
@@ -28,7 +28,7 @@ class Player
   
   virtual std::string getName() const = 0;
   
-  void setPlayerValue(const PlayerValue & p_playerValue)
+  void setPlayerValue(PlayerValue p_playerValue)
   {
     if (this->playerValueSet == false)
     {

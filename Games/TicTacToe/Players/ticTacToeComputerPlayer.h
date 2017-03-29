@@ -150,12 +150,12 @@ class TicTacToeComputerPlayer : public TicTacToePlayer
   
   private:
 
-  bool thisPlayerHasWon(TicTacToeGameState * gameState) const
+  bool thisPlayerHasWon(TicTacToeGameState * gameState)
   {
     return this->gameDefinition.playerHasWon(gameState, this->getPlayerValue());
   }
 
-  bool otherPlayerHasWon(TicTacToeGameState * gameState) const
+  bool otherPlayerHasWon(TicTacToeGameState * gameState)
   {
     return this->gameDefinition.playerHasWon(gameState, this->getOpponentPlayerValue());
   }

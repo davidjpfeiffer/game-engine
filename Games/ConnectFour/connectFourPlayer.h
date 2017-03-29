@@ -13,7 +13,7 @@ class ConnectFourPlayer : public Player
   ConnectFourBoardValue boardValue;
   ConnectFourBoardValue opponentBoardValue;
   
-  void onPlayerValueSet(const PlayerValue & p_playerValue)
+  void onPlayerValueSet(PlayerValue p_playerValue)
   {
     this->boardValue = p_playerValue == PlayerValue::PlayerOne ? ConnectFourBoardValuePlayerOne : ConnectFourBoardValuePlayerTwo;
     this->opponentBoardValue = p_playerValue == PlayerValue::PlayerOne ? ConnectFourBoardValuePlayerTwo : ConnectFourBoardValuePlayerOne;

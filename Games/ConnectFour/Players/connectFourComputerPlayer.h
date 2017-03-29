@@ -59,7 +59,7 @@ class ConnectFourComputerPlayer : public ConnectFourPlayer
     this->gameDefinition.makeRandomMove(p_gameState, this->getPlayerValue());
   }
   
-  std::vector<unsigned> getAvailableMoves(ConnectFourGameState * gameState) const
+  std::vector<unsigned> getAvailableMoves(ConnectFourGameState * gameState)
   {
     std::vector<unsigned> theoreticalMoves;
     
