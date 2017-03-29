@@ -20,7 +20,7 @@ class ConnectFourHumanPlayer : public ConnectFourPlayer
     return new ConnectFourHumanPlayer;
   }
   
-  void getMove(GameState * p_gameState) const
+  void getMove(GameState * p_gameState)
   {
     ConnectFourGameState * gameState = (ConnectFourGameState *)p_gameState;
     ConnectFourGameState gameStateAfterMove;

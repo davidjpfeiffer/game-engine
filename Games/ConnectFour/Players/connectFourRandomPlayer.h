@@ -18,7 +18,7 @@ class ConnectFourRandomPlayer : public ConnectFourPlayer
     return new ConnectFourRandomPlayer;
   }
   
-  void getMove(GameState * p_gameState) const
+  void getMove(GameState * p_gameState)
   {
     this->gameDefinition.makeRandomMove(p_gameState, this->getPlayerValue());
   }

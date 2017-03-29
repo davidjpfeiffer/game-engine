@@ -20,7 +20,7 @@ class TicTacToeHumanPlayer : public TicTacToePlayer
     return new TicTacToeHumanPlayer;
   }
   
-  void getMove(GameState * p_gameState) const
+  void getMove(GameState * p_gameState)
   {
     TicTacToeGameState * gameState = (TicTacToeGameState *)p_gameState;
     TicTacToeGameState gameStateAfterMove;

@@ -20,7 +20,7 @@ class ConnectFourComputerPlayer : public ConnectFourPlayer
     return new ConnectFourComputerPlayer;
   }
   
-  void getMove(GameState * p_gameState) const
+  void getMove(GameState * p_gameState)
   {
     ConnectFourGameState * gameState = (ConnectFourGameState *)p_gameState;
     std::vector<unsigned> availableMoves = getAvailableMoves(gameState);

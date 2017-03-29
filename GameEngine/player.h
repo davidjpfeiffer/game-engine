@@ -22,7 +22,7 @@ class Player
   
   public:
   
-  virtual void getMove(GameState *) const = 0;
+  virtual void getMove(GameState *) = 0;
   
   virtual Player * clone() const = 0;
   

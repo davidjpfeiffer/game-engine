@@ -19,7 +19,7 @@ class TicTacToeComputerPlayer : public TicTacToePlayer
     return new TicTacToeComputerPlayer;
   }
   
-  void getMove(GameState * p_gameState) const
+  void getMove(GameState * p_gameState)
   {
     TicTacToeGameState * gameState = (TicTacToeGameState *)p_gameState;
     TicTacToeGameState theoreticalGameState;
