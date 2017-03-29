@@ -1,6 +1,8 @@
 #ifndef __CONNECTFOURGAME
 #define __CONNECTFOURGAME
 
+#include <string>
+
 #include "../../GameEngine/game.h"
 
 #include "connectFourGameDefinition.h"
@@ -20,6 +22,16 @@ class ConnectFourGame : public Game
   {
     delete this->gameDefinition;
     delete this->playerRegistry;
+  }
+  
+  std::string getName() const
+  {
+    return "Connect Four";
+  }
+  
+  Game * clone() const
+  {
+    return new ConnectFourGame;
   }
 };
 

@@ -7,6 +7,7 @@
 #include "./Utilities/printer.h"
 
 #include "game.h"
+#include "gameRegistry.h"
 #include "gameResult.h"
 #include "player.h"
 
@@ -14,24 +15,22 @@ class GameEngine
 {
   public:
   
-  GameEngine(const Game & game)
+  GameEngine()
   {
-    this->gameDefinition = game.gameDefinition;
-    this->playerRegistry = game.playerRegistry;
-    setNumberOfGames();
-    setPlayerOne();
-    setPlayerTwo();
-    this->currentPlayer = this->playerOne;
-    this->gameDefinition->setInitialGameState(& this->gameState);
+    selectGame();
+    selectNumberOfGames();
+    selectPlayerOne();
+    selectPlayerTwo();
   }
   
   ~GameEngine()
   {
+    delete this->currentGame;
+    delete this->gameState;
     delete this->playerOne;
     delete this->playerTwo;
-    delete this->gameState;
   }
-
+  
   void play()
   {
     try
@@ -47,19 +46,21 @@ class GameEngine
   
   private:
   
-  unsigned numberOfGames, playerOneWins = 0, playerTwoWins = 0, gamesTied = 0;
+  unsigned numberOfGamesToPlay, playerOneWins = 0, playerTwoWins = 0, gamesTied = 0;
   
-  const GameDefinition * gameDefinition;
-  const PlayerRegistry * playerRegistry;
+  GameRegistry gameRegistry;
+  Game * currentGame;
+  GameState * gameState;
+  
   Player * playerOne;
   Player * playerTwo;
   Player * currentPlayer;
-  GameState * gameState;
-
+  
   void play_inner()
   {
-    for (unsigned gameNumber = 1; gameNumber <= this->numberOfGames; gameNumber++)
+    for (unsigned gameNumber = 1; gameNumber <= this->numberOfGamesToPlay; gameNumber++)
     {
+      this->currentPlayer = this->playerOne;
       this->gameState->reset();
       
       switch (getGameResult())
@@ -148,12 +149,12 @@ class GameEngine
   
   bool gameIsOver()
   {
-    return this->gameDefinition->isOver(this->gameState);
+    return this->currentGame->gameDefinition->isOver(this->gameState);
   }
   
   bool validMove(GameState * gameStateAfterMove)
   {
-    return this->gameDefinition->isValidMove(this->gameState, gameStateAfterMove, this->currentPlayer->getPlayerValue());
+    return this->currentGame->gameDefinition->isValidMove(this->gameState, gameStateAfterMove, this->currentPlayer->getPlayerValue());
   }
   
   void updateGameState(GameState * newGameState)
@@ -164,7 +165,7 @@ class GameEngine
   
   bool playerHasWon(PlayerValue playerValue)
   {
-    return this->gameDefinition->playerHasWon(this->gameState, playerValue);
+    return this->currentGame->gameDefinition->playerHasWon(this->gameState, playerValue);
   }
   
   GameState * getNextMove()
@@ -176,12 +177,12 @@ class GameEngine
   
   bool playingSingleGame()
   {
-    return this->numberOfGames == 1;
+    return this->numberOfGamesToPlay == 1;
   }
 
   bool playingMultipleGames()
   {
-    return this->numberOfGames > 1;
+    return this->numberOfGamesToPlay > 1;
   }
 
   void printResults()
@@ -190,7 +191,7 @@ class GameEngine
     std::cout << "Player One Wins: " << this->playerOneWins << '\n';
     std::cout << "Player Two Wins: " << this->playerTwoWins << '\n';
     std::cout << "Games Tied: " << this->gamesTied << '\n';
-    std::cout << "Total Number Of Games: " << this->numberOfGames << '\n';
+    std::cout << "Total Number Of Games: " << this->numberOfGamesToPlay << '\n';
   }
 
   void toggleCurrentPlayer()
@@ -198,9 +199,9 @@ class GameEngine
     this->currentPlayer = this->currentPlayer == this->playerOne ? this->playerTwo : this->playerOne;
   }
 
-  void setNumberOfGames()
+  void selectNumberOfGames()
   {
-    printer.printHeader("Number Of Games");
+    printer.printHeader("Select Number Of Games");
     
     unsigned input = 0;
     
@@ -216,7 +217,7 @@ class GameEngine
     }
     while(!validNumberOfGames(input));
     
-    this->numberOfGames = input;
+    this->numberOfGamesToPlay = input;
   }
 
   bool validNumberOfGames(unsigned p_numberOfGames)
@@ -224,36 +225,72 @@ class GameEngine
     return p_numberOfGames > 0 && p_numberOfGames <= 10000;
   }
   
-  void setPlayerOne()
+  void selectGame()
   {
-    printer.printHeader("Player One");
-    Player * player = getPlayer();
-    player->setPlayerValue(PlayerValue::PlayerOne);
-    this->playerOne = player;
-    std::cout << "Player One is " << player->getName() << '\n';
+    printer.printHeader("Select Game");
+    this->currentGame = getGame();
+    this->currentGame->gameDefinition->setInitialGameState(& this->gameState);
+    std::cout << "Game is " << this->currentGame->getName() << '\n';
   }
   
-  void setPlayerTwo()
+  Game * getGame()
   {
-    printer.printHeader("Player Two");
-    Player * player = getPlayer();
-    player->setPlayerValue(PlayerValue::PlayerTwo);
-    this->playerTwo = player;
-    std::cout << "Player Two is " << player->getName() << '\n';
+    Game * game = nullptr;
+    unsigned choice;
+    unsigned numberOfGames = this->gameRegistry.games.size();
+    bool validChoice = false;
+    while (validChoice == false)
+    {
+      for(unsigned i = 0; i < numberOfGames; i++)
+      {
+        std::cout << "Choice " << i + 1 << ": " << this->gameRegistry.games[i]->getName() << '\n';
+      }
+      
+      std::cout << "Chose Game Number: ";
+      std::cin >> choice;
+      
+      if (choice > 0 && choice <= numberOfGames)
+      {
+        game = this->gameRegistry.games[choice - 1]->clone();
+        validChoice = true;
+      }
+      else
+      {
+        std::cout << "Invalid choice, please enter a number from 1 to " << numberOfGames << '\n';
+      }
+    }
+    
+    return game;
+  }
+  
+  void selectPlayerOne()
+  {
+    printer.printHeader("Select Player One");
+    this->playerOne = getPlayer();
+    playerOne->setPlayerValue(PlayerValue::PlayerOne);
+    std::cout << "Player One is " << playerOne->getName() << '\n';
+  }
+  
+  void selectPlayerTwo()
+  {
+    printer.printHeader("Select Player Two");
+    this->playerTwo = getPlayer();
+    playerTwo->setPlayerValue(PlayerValue::PlayerTwo);
+    std::cout << "Player Two is " << playerTwo->getName() << '\n';
   }
   
   Player * getPlayer() const
   {
     Player * player = nullptr;
-    int numberOfPlayers = this->playerRegistry->players.size();
-    int choice;
+    unsigned numberOfPlayers = this->currentGame->playerRegistry->players.size();
+    unsigned choice;
     bool validChoice = false;
     
     while (validChoice == false)
     {
-      for (int i = 0; i < numberOfPlayers; i++)
+      for (unsigned i = 0; i < numberOfPlayers; i++)
       {
-        std::cout << "Choice " << i + 1 << ": " << this->playerRegistry->players[i]->getName() << '\n';
+        std::cout << "Choice " << i + 1 << ": " << this->currentGame->playerRegistry->players[i]->getName() << '\n';
       }
       
       std::cout << "Choose Player Number: ";
@@ -261,7 +298,7 @@ class GameEngine
       
       if (choice > 0 && choice <= numberOfPlayers)
       {
-        player = this->playerRegistry->players[choice - 1]->clone();
+        player = this->currentGame->playerRegistry->players[choice - 1]->clone();
         validChoice = true;
       }
       else

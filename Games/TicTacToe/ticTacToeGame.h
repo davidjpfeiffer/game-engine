@@ -1,8 +1,7 @@
 #ifndef __TICTACTOEGAME
 #define __TICTACTOEGAME
 
-#include <iostream>
-#include <vector>
+#include <string>
 
 #include "../../GameEngine/game.h"
 
@@ -23,6 +22,16 @@ class TicTacToeGame : public Game
   {
     delete this->gameDefinition;
     delete this->playerRegistry;
+  }
+  
+  std::string getName() const
+  {
+    return "Tic Tac Toe";
+  }
+  
+  Game * clone() const
+  {
+    return new TicTacToeGame;
   }
 };
 
