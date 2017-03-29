@@ -5,8 +5,7 @@
 #include <vector>
 
 #include "../../GameEngine/gameDefinition.h"
-
-#include "../../Utilities/randomNumberGenerator.h"
+#include "../../GameEngine/Utilities/randomNumberGenerator.h"
 
 #include "ticTacToeGameState.h"
 #include "ticTacToeBoard.h"

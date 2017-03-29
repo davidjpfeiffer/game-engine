@@ -3,9 +3,8 @@
 
 #include <vector>
 
-#include "../../Utilities/randomNumberGenerator.h"
-
 #include "../../GameEngine/gameDefinition.h"
+#include "../../GameEngine/Utilities/randomNumberGenerator.h"
 
 #include "connectFourGameState.h"
 #include "connectFourBoard.h"

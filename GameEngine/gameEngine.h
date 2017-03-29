@@ -3,12 +3,12 @@
 
 #include <iostream>
 
-#include "../Utilities/printer.h"
+#include "./Exceptions/invalidMoveException.h"
+#include "./Utilities/printer.h"
 
 #include "game.h"
 #include "gameResult.h"
 #include "player.h"
-#include "invalidMoveException.h"
 
 class GameEngine
 {
