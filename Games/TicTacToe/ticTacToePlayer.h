@@ -1,6 +1,8 @@
 #ifndef __TICTACTOEPLAYER
 #define __TICTACTOEPLAYER
 
+#include "../../GameEngine/Player.h"
+
 #include "ticTacToeGameDefinition.h"
 #include "ticTacToeBoardValue.h"
 

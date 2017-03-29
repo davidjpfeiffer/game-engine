@@ -1,7 +1,7 @@
 #ifndef __TICTACTOEGAMESTATE
 #define __TICTACTOEGAMESTATE
 
-#include "../GameEngine/gameState.h"
+#include "../../GameEngine/gameState.h"
 
 #include "ticTacToeBoard.h"
 

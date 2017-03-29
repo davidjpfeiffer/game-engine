@@ -1,7 +1,7 @@
 #ifndef __TICTACTOEPLAYERREGISTRY
 #define __TICTACTOEPLAYERREGISTRY
 
-#include "../GameEngine/playerRegistry.h"
+#include "../../GameEngine/playerRegistry.h"
 
 #include "./Players/ticTacToeComputerPlayer.h"
 #include "./Players/ticTacToeHumanPlayer.h"

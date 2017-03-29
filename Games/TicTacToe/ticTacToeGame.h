@@ -4,7 +4,7 @@
 #include <iostream>
 #include <vector>
 
-#include "../GameEngine/game.h"
+#include "../../GameEngine/game.h"
 
 #include "ticTacToeGameDefinition.h"
 #include "ticTacToePlayerRegistry.h"

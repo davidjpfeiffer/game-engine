@@ -4,10 +4,9 @@
 #include <iostream>
 #include <vector>
 
-#include "../GameEngine/gameResult.h"
-#include "../GameEngine/gameDefinition.h"
+#include "../../GameEngine/gameDefinition.h"
 
-#include "../Utilities/randomNumberGenerator.h"
+#include "../../Utilities/randomNumberGenerator.h"
 
 #include "ticTacToeGameState.h"
 #include "ticTacToeBoard.h"
