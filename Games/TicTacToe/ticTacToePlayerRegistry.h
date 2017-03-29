@@ -13,9 +13,9 @@ class TicTacToePlayerRegistry : public PlayerRegistry
   
   TicTacToePlayerRegistry()
   {
-    players.push_back(& computerPlayer);
-    players.push_back(& humanPlayer);
-    players.push_back(& randomPlayer);
+    // players.push_back(& computerPlayer);
+    // players.push_back(& humanPlayer);
+    // players.push_back(& randomPlayer);
   }
   
   private:

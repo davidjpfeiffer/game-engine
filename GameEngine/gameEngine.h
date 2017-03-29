@@ -4,6 +4,8 @@
 #include <iostream>
 
 #include "./Exceptions/invalidMoveException.h"
+#include "./Exceptions/emptyGameRegistryException.h"
+#include "./Exceptions/emptyPlayerRegistryException.h"
 #include "./Utilities/printer.h"
 
 #include "game.h"
@@ -15,26 +17,20 @@ class GameEngine
 {
   public:
   
-  GameEngine()
-  {
-    selectGame();
-    selectNumberOfGames();
-    selectPlayerOne();
-    selectPlayerTwo();
-  }
-  
   ~GameEngine()
   {
-    delete this->currentGame;
-    delete this->gameState;
-    delete this->playerOne;
-    delete this->playerTwo;
+    deleteAllocatedMemory();
   }
   
   void play()
   {
     try
     {
+      selectGame();
+      selectNumberOfGames();
+      selectPlayerOne();
+      selectPlayerTwo();
+      
       play_inner();
     }
     catch(std::exception & e)
@@ -49,11 +45,10 @@ class GameEngine
   unsigned numberOfGamesToPlay, playerOneWins = 0, playerTwoWins = 0, gamesTied = 0;
   
   GameRegistry gameRegistry;
-  Game * currentGame;
-  GameState * gameState;
-  
-  Player * playerOne;
-  Player * playerTwo;
+  Game * currentGame = nullptr;
+  GameState * gameState = nullptr;
+  Player * playerOne = nullptr;
+  Player * playerTwo = nullptr;
   Player * currentPlayer;
   
   void play_inner()
@@ -227,6 +222,11 @@ class GameEngine
   
   void selectGame()
   {
+    if (this->gameRegistry.games.size() == 0)
+    {
+      throw EmptyGameRegistryException();
+    }
+    
     printer.printHeader("Select Game");
     this->currentGame = getGame();
     this->currentGame->gameDefinition->setInitialGameState(& this->gameState);
@@ -246,7 +246,7 @@ class GameEngine
         std::cout << "Choice " << i + 1 << ": " << this->gameRegistry.games[i]->getName() << '\n';
       }
       
-      std::cout << "Chose Game Number: ";
+      std::cout << "Choose Game Number: ";
       std::cin >> choice;
       
       if (choice > 0 && choice <= numberOfGames)
@@ -258,6 +258,11 @@ class GameEngine
       {
         std::cout << "Invalid choice, please enter a number from 1 to " << numberOfGames << '\n';
       }
+    }
+    
+    if (game->playerRegistry->players.size() == 0)
+    {
+      throw EmptyPlayerRegistryException(game);
     }
     
     return game;
@@ -308,6 +313,33 @@ class GameEngine
     }
     
     return player;
+  }
+  
+  void deleteAllocatedMemory()
+  {
+    if (this->currentGame != nullptr)
+    {
+      delete this->currentGame;
+      this->currentGame = nullptr;
+    }
+    
+    if (this->gameState != nullptr)
+    {
+      delete this->gameState;
+      this->gameState = nullptr;
+    }
+    
+    if (this->playerOne != nullptr)
+    {
+      delete this->playerOne;
+      this->playerOne = nullptr;
+    }
+    
+    if (this->playerTwo != nullptr)
+    {
+      delete this->playerTwo;
+      this->playerTwo = nullptr;
+    }
   }
 };
 

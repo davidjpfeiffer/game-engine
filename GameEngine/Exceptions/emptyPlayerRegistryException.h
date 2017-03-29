@@ -1,24 +1,24 @@
-#ifndef __INVALIDMOVEEXCEPTION
-#define __INVALIDMOVEEXCEPTION
+#ifndef __EMPTYPLAYERREGISTRYEXCEPTION
+#define __EMPTYPLAYERREGISTRYEXCEPTION
 
 #include <exception>
 #include <string>
 #include <cstring>
 
-#include "player.h"
+#include "game.h"
 
-class InvalidMoveException : public std::exception
+class EmptyPlayerRegistryException : public std::exception
 {
   public:
   
-  InvalidMoveException(Player * p_player)
+  EmptyPlayerRegistryException(Game * p_game)
   {
-    std::string message = p_player->getPlayerValueAsString() + " did not submit a valid move.";
+    std::string message = "No players have been registered with the " + p_game->getName() + " game.";
     cstr_message = new char [message.length() + 1];
     std::strcpy(cstr_message, message.c_str());
   }
   
-  ~InvalidMoveException()
+  ~EmptyPlayerRegistryException()
   {
     delete [] cstr_message;
   }
