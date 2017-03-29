@@ -5,12 +5,12 @@
 
 #include "ticTacToeBoardValue.h"
 
-const unsigned BOARD_SIZE = 3;
-
 class TicTacToeBoard
 {
   public:
 
+  static const unsigned BOARD_SIZE = 3;
+  
   TicTacToeBoard()
   {
     this->reset();

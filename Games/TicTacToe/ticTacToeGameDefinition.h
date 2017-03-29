@@ -28,9 +28,9 @@ class TicTacToeGameDefinition : public GameDefinition
     
     if (oneMoveWasMadeByPlayer(gameStateBeforeMove, gameStateAfterMove, playerValue))
     {
-      for (unsigned i = 0; i < BOARD_SIZE; i++)
+      for (unsigned i = 0; i < TicTacToeBoard::BOARD_SIZE; i++)
       {
-        for (unsigned j = 0; j < BOARD_SIZE; j++)
+        for (unsigned j = 0; j < TicTacToeBoard::BOARD_SIZE; j++)
         {
           if (gameStateBeforeMove->board.get(i, j) != gameStateAfterMove->board.get(i, j))
           {
@@ -54,7 +54,7 @@ class TicTacToeGameDefinition : public GameDefinition
   {
     TicTacToeGameState * gameState = (TicTacToeGameState *)p_gameState;
     
-    for (unsigned row = 0; row < BOARD_SIZE; row++)
+    for (unsigned row = 0; row < TicTacToeBoard::BOARD_SIZE; row++)
     {
       if ( isPlayersBoardValue(playerValue, gameState->board.get(row, 0))
         && isPlayersBoardValue(playerValue, gameState->board.get(row, 1))
@@ -64,7 +64,7 @@ class TicTacToeGameDefinition : public GameDefinition
       }
     }
 
-    for (unsigned column = 0; column < BOARD_SIZE; column++)
+    for (unsigned column = 0; column < TicTacToeBoard::BOARD_SIZE; column++)
     {
       if ( isPlayersBoardValue(playerValue, gameState->board.get(0, column))
         && isPlayersBoardValue(playerValue, gameState->board.get(1, column))
@@ -102,9 +102,9 @@ class TicTacToeGameDefinition : public GameDefinition
     
     std::vector<std::pair<unsigned, unsigned> > availableMoves;
 
-    for (unsigned i = 0; i < BOARD_SIZE; i++)
+    for (unsigned i = 0; i < TicTacToeBoard::BOARD_SIZE; i++)
     {
-      for (unsigned j = 0; j < BOARD_SIZE; j++)
+      for (unsigned j = 0; j < TicTacToeBoard::BOARD_SIZE; j++)
       {
         if (gameState->board.get(i, j) == TicTacToeBoardValueEmpty)
         {
@@ -167,9 +167,9 @@ class TicTacToeGameDefinition : public GameDefinition
   {
     unsigned numDifferences = 0;
 
-    for (unsigned i = 0; i < BOARD_SIZE; i++)
+    for (unsigned i = 0; i < TicTacToeBoard::BOARD_SIZE; i++)
     {
-      for (unsigned j = 0; j < BOARD_SIZE; j++)
+      for (unsigned j = 0; j < TicTacToeBoard::BOARD_SIZE; j++)
       {
         if (boardOne.get(i, j) != boardTwo.get(i, j))
         {
@@ -186,9 +186,9 @@ class TicTacToeGameDefinition : public GameDefinition
     TicTacToeBoardValue boardValue = playerValueToBoardValue(playerValue);
     unsigned beforeCount = 0, afterCount = 0;
     
-    for (unsigned i = 0; i < BOARD_SIZE; i++)
+    for (unsigned i = 0; i < TicTacToeBoard::BOARD_SIZE; i++)
     {
-      for (unsigned j = 0; j < BOARD_SIZE; j++)
+      for (unsigned j = 0; j < TicTacToeBoard::BOARD_SIZE; j++)
       {
         if (boardOne.get(i, j) == boardValue)
         {

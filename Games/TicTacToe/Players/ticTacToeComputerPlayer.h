@@ -26,9 +26,9 @@ class TicTacToeComputerPlayer : public TicTacToePlayer
     
     // If we can win, take win
     
-    for (unsigned i = 0; i < BOARD_SIZE; i++)
+    for (unsigned i = 0; i < TicTacToeBoard::BOARD_SIZE; i++)
     {
-      for (unsigned j = 0; j < BOARD_SIZE; j++)
+      for (unsigned j = 0; j < TicTacToeBoard::BOARD_SIZE; j++)
       {
         theoreticalGameState.board = gameState->board;
         if (theoreticalGameState.board.get(i, j) == TicTacToeBoardValueEmpty)
@@ -46,9 +46,9 @@ class TicTacToeComputerPlayer : public TicTacToePlayer
 
     // If they can win, prevent win
     
-    for (unsigned i = 0; i < BOARD_SIZE; i++)
+    for (unsigned i = 0; i < TicTacToeBoard::BOARD_SIZE; i++)
     {
-      for (unsigned j = 0; j < BOARD_SIZE; j++)
+      for (unsigned j = 0; j < TicTacToeBoard::BOARD_SIZE; j++)
       {
         theoreticalGameState.board = gameState->board;
         if (theoreticalGameState.board.get(i, j) == TicTacToeBoardValueEmpty)
