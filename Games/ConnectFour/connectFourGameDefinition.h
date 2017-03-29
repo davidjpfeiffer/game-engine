@@ -16,7 +16,7 @@ class ConnectFourGameDefinition : public GameDefinition
   
   bool isOver(GameState * gameState) const
   {
-    return noAvailableMoves(gameState) && playerOneHasWon(gameState) && playerTwoHasWon(gameState);
+    return noAvailableMoves(gameState) || playerOneHasWon(gameState) || playerTwoHasWon(gameState);
   }
   
   bool isValidMove(GameState * p_gameStateBeforeMove, GameState * p_gameStateAfterMove, const PlayerValue & playerValue) const
