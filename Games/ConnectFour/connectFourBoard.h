@@ -2,6 +2,7 @@
 #define __CONNECTFOURBOARD
 
 #include <iostream>
+#include <vector>
 #include <stdexcept>
 
 #include "connectFourBoardValue.h"
@@ -78,18 +79,15 @@ class ConnectFourBoard
     std::cout << '\n';
   }
   
-  unsigned numberOfAvailableMoves() const
+  std::vector<unsigned> getAvailableMoves() const
   {
-    unsigned availableMoves = 0;
+    std::vector<unsigned> availableMoves;
 
-    for (unsigned row = 0; row < BOARD_HEIGHT; row++)
+    for (unsigned column = 0; column < BOARD_WIDTH; column++)
     {
-      for (unsigned column = 0; column < BOARD_WIDTH; column++)
+      if (this->board[0][column] == ConnectFourBoardValueEmpty)
       {
-        if (this->board[row][column] == ConnectFourBoardValueEmpty)
-        {
-          availableMoves++;
-        }
+        availableMoves.push_back(column);
       }
     }
 

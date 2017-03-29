@@ -23,7 +23,7 @@ class ConnectFourComputerPlayer : public ConnectFourPlayer
   void getMove(GameState * p_gameState)
   {
     ConnectFourGameState * gameState = (ConnectFourGameState *)p_gameState;
-    std::vector<unsigned> availableMoves = getAvailableMoves(gameState);
+    std::vector<unsigned> availableMoves = gameState->board.getAvailableMoves();
     ConnectFourGameState theoreticalGameState;
     
     // If we can win, take win
@@ -57,21 +57,6 @@ class ConnectFourComputerPlayer : public ConnectFourPlayer
     // Default to random move
     
     this->gameDefinition.makeRandomMove(p_gameState, this->getPlayerValue());
-  }
-  
-  std::vector<unsigned> getAvailableMoves(ConnectFourGameState * gameState)
-  {
-    std::vector<unsigned> theoreticalMoves;
-    
-    for (unsigned column = 0; column < ConnectFourBoard::BOARD_WIDTH; column++)
-    {
-      if (gameState->board.get(0, column) == ConnectFourBoardValueEmpty)
-      {
-        theoreticalMoves.push_back(column);
-      }
-    }
-    
-    return theoreticalMoves;
   }
 };
 

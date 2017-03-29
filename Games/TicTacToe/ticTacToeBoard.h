@@ -1,6 +1,8 @@
 #ifndef __TICTACTOEBOARD
 #define __TICTACTOEBOARD
 
+#include <vector>
+#include <utility>
 #include <stdexcept>
 
 #include "ticTacToeBoardValue.h"
@@ -73,9 +75,9 @@ class TicTacToeBoard
     std::cout << "###########################\n\n";
   }
   
-  unsigned numberOfAvailableMoves() const
+  std::vector<std::pair<unsigned, unsigned> > getAvailableMoves() const
   {
-    unsigned availableMoves = 0;
+    std::vector<std::pair<unsigned, unsigned> > availableMoves;
 
     for (unsigned row = 0; row < BOARD_SIZE; row++)
     {
@@ -83,7 +85,7 @@ class TicTacToeBoard
       {
         if (this->board[row][column] == TicTacToeBoardValueEmpty)
         {
-          availableMoves++;
+          availableMoves.push_back(std::make_pair(row, column));
         }
       }
     }

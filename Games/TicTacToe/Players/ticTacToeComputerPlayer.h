@@ -73,7 +73,7 @@ class TicTacToeComputerPlayer : public TicTacToePlayer
 
     // Offensive Strategy
     
-    if (gameState->board.get(1, 1) == this->getBoardValue() && gameState->board.numberOfAvailableMoves() == 7)
+    if (gameState->board.get(1, 1) == this->getBoardValue() && gameState->board.getAvailableMoves().size() == 7)
     {
       if (gameState->board.get(0, 1) == this->getOpponentBoardValue())
       {

@@ -11,6 +11,6 @@ int main()
 {
   TicTacToeGame ticTacToe;
   ConnectFourGame connectFour;
-  GameEngine gameEngine(connectFour);
+  GameEngine gameEngine(ticTacToe);
   gameEngine.play();
 }

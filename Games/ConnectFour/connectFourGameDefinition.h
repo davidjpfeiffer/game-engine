@@ -231,7 +231,7 @@ class ConnectFourGameDefinition : public GameDefinition
   {
     ConnectFourGameState * gameState = (ConnectFourGameState *)p_gameState;
     
-    return gameState->board.numberOfAvailableMoves() == 0;
+    return gameState->board.getAvailableMoves().size() == 0;
   }
   
   bool playerOneHasWon(GameState * gameState) const
