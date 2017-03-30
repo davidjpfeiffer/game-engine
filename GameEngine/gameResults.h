@@ -4,7 +4,6 @@
 #include <iostream>
 
 #include "./Utilities/printer.h"
-#include "./Exceptions/totalNumberOfGamesNotSetException.h"
 
 #include "gameResult.h"
 
