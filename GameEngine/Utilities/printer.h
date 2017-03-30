@@ -8,7 +8,7 @@ class Printer
 {
   public:
   
-  Printer(unsigned lineLength_p = 31)
+  Printer(unsigned lineLength_p = 36)
   {
     this->lineLength = lineLength_p;
   }

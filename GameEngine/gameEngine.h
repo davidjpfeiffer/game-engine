@@ -22,7 +22,7 @@ class GameEngine
     deleteAllocatedMemory();
   }
   
-  void play()
+  void start()
   {
     try
     {
@@ -31,7 +31,7 @@ class GameEngine
       selectPlayerOne();
       selectPlayerTwo();
       
-      play_inner();
+      play();
     }
     catch(std::exception & e)
     {
@@ -51,7 +51,7 @@ class GameEngine
   Player * playerTwo = nullptr;
   Player * currentPlayer;
   
-  void play_inner()
+  void play()
   {
     for (unsigned gameNumber = 1; gameNumber <= this->numberOfGamesToPlay; gameNumber++)
     {
@@ -183,10 +183,13 @@ class GameEngine
   void printResults()
   {
     printer.printHeader("Results");
+    std::cout << "Game Played: " << this->currentGame->getName() << '\n';
+    std::cout << "Player One: " << this->playerOne->getName() << '\n';
+    std::cout << "Player Two: " << this->playerTwo->getName() << '\n';
     std::cout << "Player One Wins: " << this->playerOneWins << '\n';
     std::cout << "Player Two Wins: " << this->playerTwoWins << '\n';
-    std::cout << "Games Tied: " << this->gamesTied << '\n';
-    std::cout << "Total Number Of Games: " << this->numberOfGamesToPlay << '\n';
+    std::cout << "Number of Games Tied: " << this->gamesTied << '\n';
+    std::cout << "Number Of Games Played: " << this->numberOfGamesToPlay << '\n';
   }
 
   void toggleCurrentPlayer()

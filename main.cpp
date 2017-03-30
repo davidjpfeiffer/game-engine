@@ -8,5 +8,5 @@ using namespace std;
 int main()
 {
   GameEngine gameEngine;
-  gameEngine.play();
+  gameEngine.start();
 }
