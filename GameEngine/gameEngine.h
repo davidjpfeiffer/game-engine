@@ -11,8 +11,8 @@
 #include "game.h"
 #include "gameRegistry.h"
 #include "gameResult.h"
+#include "gameResults.h"
 #include "player.h"
-#include "results.h"
 
 class GameEngine
 {
@@ -43,15 +43,16 @@ class GameEngine
   
   private:
   
-  Results results;
   unsigned totalNumberOfGames;
   
   GameRegistry gameRegistry;
+  GameResults gameResults;
+  
   Game * game = nullptr;
   GameState * gameState = nullptr;
   Player * playerOne = nullptr;
   Player * playerTwo = nullptr;
-  Player * currentPlayer;
+  Player * currentPlayer = nullptr;
   
   void play()
   {
@@ -69,7 +70,7 @@ class GameEngine
           }
           else
           {
-            this->results.logPlayerOneWin();
+            this->gameResults.logPlayerOneWin();
           }
           break;
 
@@ -80,7 +81,7 @@ class GameEngine
           }
           else
           {
-            this->results.logPlayerTwoWin();
+            this->gameResults.logPlayerTwoWin();
           }
           break;
 
@@ -91,7 +92,7 @@ class GameEngine
           }
           else
           {
-            this->results.logTieGame();
+            this->gameResults.logTieGame();
           }
           break;
       }
@@ -99,7 +100,7 @@ class GameEngine
 
     if (playingMultipleGames())
     {
-      this->results.print();
+      this->gameResults.print(this->totalNumberOfGames);
     }
   }
   
@@ -206,7 +207,6 @@ class GameEngine
     while(!validNumberOfGamesToPlay(numberOfGames));
     
     this->totalNumberOfGames = numberOfGames;
-    this->results.setTotalNumberOfGames(numberOfGames);
   }
 
   bool validNumberOfGamesToPlay(unsigned p_numberOfGames)
