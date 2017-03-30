@@ -27,7 +27,7 @@ class GameEngine
     try
     {
       selectGame();
-      selectNumberOfGames();
+      selectNumberOfGamesToPlay();
       selectPlayerOne();
       selectPlayerTwo();
       
@@ -45,7 +45,7 @@ class GameEngine
   unsigned numberOfGamesToPlay, playerOneWins = 0, playerTwoWins = 0, gamesTied = 0;
   
   GameRegistry gameRegistry;
-  Game * currentGame = nullptr;
+  Game * game = nullptr;
   GameState * gameState = nullptr;
   Player * playerOne = nullptr;
   Player * playerTwo = nullptr;
@@ -144,12 +144,12 @@ class GameEngine
   
   bool gameIsOver()
   {
-    return this->currentGame->gameDefinition->isOver(this->gameState);
+    return this->game->gameDefinition->isOver(this->gameState);
   }
   
   bool validMove(GameState * gameStateAfterMove)
   {
-    return this->currentGame->gameDefinition->isValidMove(this->gameState, gameStateAfterMove, this->currentPlayer->getPlayerValue());
+    return this->game->gameDefinition->isValidMove(this->gameState, gameStateAfterMove, this->currentPlayer->getPlayerValue());
   }
   
   void updateGameState(GameState * newGameState)
@@ -160,7 +160,7 @@ class GameEngine
   
   bool playerHasWon(PlayerValue playerValue)
   {
-    return this->currentGame->gameDefinition->playerHasWon(this->gameState, playerValue);
+    return this->game->gameDefinition->playerHasWon(this->gameState, playerValue);
   }
   
   GameState * getNextMove()
@@ -183,9 +183,6 @@ class GameEngine
   void printResults()
   {
     printer.printHeader("Results");
-    std::cout << "Game Played: " << this->currentGame->getName() << '\n';
-    std::cout << "Player One: " << this->playerOne->getName() << '\n';
-    std::cout << "Player Two: " << this->playerTwo->getName() << '\n';
     std::cout << "Player One Wins: " << this->playerOneWins << '\n';
     std::cout << "Player Two Wins: " << this->playerTwoWins << '\n';
     std::cout << "Number of Games Tied: " << this->gamesTied << '\n';
@@ -197,28 +194,28 @@ class GameEngine
     this->currentPlayer = this->currentPlayer == this->playerOne ? this->playerTwo : this->playerOne;
   }
 
-  void selectNumberOfGames()
+  void selectNumberOfGamesToPlay()
   {
     printer.printHeader("Select Number Of Games");
     
-    unsigned input = 0;
+    unsigned numberOfGames = 0;
     
     do
     {
       std::cout << "Number of games to play: ";
-      std::cin >> input;
+      std::cin >> numberOfGames;
       
-      if (!validNumberOfGames(input))
+      if (!validNumberOfGamesToPlay(numberOfGames))
       {
         std::cout << "Invalid entry, number must be between 1 and 10,000 inclusive.\n";
       }
     }
-    while(!validNumberOfGames(input));
+    while(!validNumberOfGamesToPlay(numberOfGames));
     
-    this->numberOfGamesToPlay = input;
+    this->numberOfGamesToPlay = numberOfGames;
   }
 
-  bool validNumberOfGames(unsigned p_numberOfGames)
+  bool validNumberOfGamesToPlay(unsigned p_numberOfGames)
   {
     return p_numberOfGames > 0 && p_numberOfGames <= 10000;
   }
@@ -231,17 +228,20 @@ class GameEngine
     }
     
     printer.printHeader("Select Game");
-    this->currentGame = getGame();
-    this->currentGame->gameDefinition->setInitialGameState(& this->gameState);
-    std::cout << "Game is " << this->currentGame->getName() << '\n';
+    this->game = getGame();
+    std::cout << "test";
+    std::cout << "Game is " << this->game->getName() << '\n';
+    this->game->gameDefinition->setInitialGameState(& this->gameState);
+    
   }
   
   Game * getGame()
   {
-    Game * game = nullptr;
-    unsigned choice;
+    Game * chosenGame = nullptr;
+    unsigned chosenGameIndex;
     unsigned numberOfGames = this->gameRegistry.games.size();
     bool validChoice = false;
+    
     while (validChoice == false)
     {
       for(unsigned i = 0; i < numberOfGames; i++)
@@ -250,11 +250,11 @@ class GameEngine
       }
       
       std::cout << "Choose Game Number: ";
-      std::cin >> choice;
+      std::cin >> chosenGameIndex;
       
-      if (choice > 0 && choice <= numberOfGames)
+      if (chosenGameIndex > 0 && chosenGameIndex <= numberOfGames)
       {
-        game = this->gameRegistry.games[choice - 1]->clone();
+        chosenGame = this->gameRegistry.games[chosenGameIndex - 1]->clone();
         validChoice = true;
       }
       else
@@ -262,13 +262,12 @@ class GameEngine
         std::cout << "Invalid choice, please enter a number from 1 to " << numberOfGames << '\n';
       }
     }
-    
-    if (game->playerRegistry->players.size() == 0)
+    if (chosenGame->playerRegistry->players.size() == 0)
     {
-      throw EmptyPlayerRegistryException(game);
+      throw EmptyPlayerRegistryException(chosenGame);
     }
     
-    return game;
+    return chosenGame;
   }
   
   void selectPlayerOne()
@@ -289,24 +288,24 @@ class GameEngine
   
   Player * getPlayer() const
   {
-    Player * player = nullptr;
-    unsigned numberOfPlayers = this->currentGame->playerRegistry->players.size();
-    unsigned choice;
+    Player * chosenPlayer = nullptr;
+    unsigned chosenPlayerIndex;
+    unsigned numberOfPlayers = this->game->playerRegistry->players.size();
     bool validChoice = false;
     
     while (validChoice == false)
     {
       for (unsigned i = 0; i < numberOfPlayers; i++)
       {
-        std::cout << "Choice " << i + 1 << ": " << this->currentGame->playerRegistry->players[i]->getName() << '\n';
+        std::cout << "Choice " << i + 1 << ": " << this->game->playerRegistry->players[i]->getName() << '\n';
       }
       
       std::cout << "Choose Player Number: ";
-      std::cin >> choice;
+      std::cin >> chosenPlayerIndex;
       
-      if (choice > 0 && choice <= numberOfPlayers)
+      if (chosenPlayerIndex > 0 && chosenPlayerIndex <= numberOfPlayers)
       {
-        player = this->currentGame->playerRegistry->players[choice - 1]->clone();
+        chosenPlayer = this->game->playerRegistry->players[chosenPlayerIndex - 1]->clone();
         validChoice = true;
       }
       else
@@ -315,15 +314,15 @@ class GameEngine
       }
     }
     
-    return player;
+    return chosenPlayer;
   }
   
   void deleteAllocatedMemory()
   {
-    if (this->currentGame != nullptr)
+    if (this->game != nullptr)
     {
-      delete this->currentGame;
-      this->currentGame = nullptr;
+      delete this->game;
+      this->game = nullptr;
     }
     
     if (this->gameState != nullptr)
