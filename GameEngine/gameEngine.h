@@ -12,6 +12,7 @@
 #include "gameRegistry.h"
 #include "gameResult.h"
 #include "player.h"
+#include "results.h"
 
 class GameEngine
 {
@@ -42,7 +43,8 @@ class GameEngine
   
   private:
   
-  unsigned numberOfGamesToPlay, playerOneWins = 0, playerTwoWins = 0, gamesTied = 0;
+  Results results;
+  unsigned totalNumberOfGames;
   
   GameRegistry gameRegistry;
   Game * game = nullptr;
@@ -53,7 +55,7 @@ class GameEngine
   
   void play()
   {
-    for (unsigned gameNumber = 1; gameNumber <= this->numberOfGamesToPlay; gameNumber++)
+    for (unsigned gameNumber = 1; gameNumber <= this->totalNumberOfGames; gameNumber++)
     {
       this->currentPlayer = this->playerOne;
       this->gameState->reset();
@@ -67,7 +69,7 @@ class GameEngine
           }
           else
           {
-            this->playerOneWins++;
+            this->results.logPlayerOneWin();
           }
           break;
 
@@ -78,7 +80,7 @@ class GameEngine
           }
           else
           {
-            this->playerTwoWins++;
+            this->results.logPlayerTwoWin();
           }
           break;
 
@@ -89,7 +91,7 @@ class GameEngine
           }
           else
           {
-            this->gamesTied++;
+            this->results.logTieGame();
           }
           break;
       }
@@ -97,7 +99,7 @@ class GameEngine
 
     if (playingMultipleGames())
     {
-      printResults();
+      this->results.print();
     }
   }
   
@@ -172,21 +174,12 @@ class GameEngine
   
   bool playingSingleGame()
   {
-    return this->numberOfGamesToPlay == 1;
+    return this->totalNumberOfGames == 1;
   }
 
   bool playingMultipleGames()
   {
-    return this->numberOfGamesToPlay > 1;
-  }
-
-  void printResults()
-  {
-    printer.printHeader("Results");
-    std::cout << "Player One Wins: " << this->playerOneWins << '\n';
-    std::cout << "Player Two Wins: " << this->playerTwoWins << '\n';
-    std::cout << "Number of Games Tied: " << this->gamesTied << '\n';
-    std::cout << "Number Of Games Played: " << this->numberOfGamesToPlay << '\n';
+    return this->totalNumberOfGames > 1;
   }
 
   void toggleCurrentPlayer()
@@ -212,7 +205,8 @@ class GameEngine
     }
     while(!validNumberOfGamesToPlay(numberOfGames));
     
-    this->numberOfGamesToPlay = numberOfGames;
+    this->totalNumberOfGames = numberOfGames;
+    this->results.setTotalNumberOfGames(numberOfGames);
   }
 
   bool validNumberOfGamesToPlay(unsigned p_numberOfGames)
