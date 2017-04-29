@@ -1,8 +1,8 @@
 #ifndef __TICTACTOERANDOMPLAYER
 #define __TICTACTOERANDOMPLAYER
 
-#include "ticTacToePlayer.h"
-#include "ticTacToeGameState.h"
+#include "../ticTacToePlayer.h"
+#include "../ticTacToeGameState.h"
 
 class TicTacToeRandomPlayer : public TicTacToePlayer
 {

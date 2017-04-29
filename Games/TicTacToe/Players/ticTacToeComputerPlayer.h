@@ -1,9 +1,9 @@
 #ifndef __TICTACTOECOMPUTERPLAYER
 #define __TICTACTOECOMPUTERPLAYER
 
-#include "ticTacToePlayer.h"
-#include "ticTacToeGameState.h"
-#include "ticTacToeBoardValue.h"
+#include "../ticTacToePlayer.h"
+#include "../ticTacToeGameState.h"
+#include "../ticTacToeBoardValue.h"
 
 class TicTacToeComputerPlayer : public TicTacToePlayer
 {

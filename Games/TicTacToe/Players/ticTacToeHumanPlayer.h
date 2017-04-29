@@ -2,9 +2,10 @@
 #define __TICTACTOEHUMANPLAYER
 
 #include <iostream>
-#include "ticTacToePlayer.h"
-#include "ticTacToeGameState.h"
-#include "ticTacToeBoard.h"
+
+#include "../ticTacToePlayer.h"
+#include "../ticTacToeGameState.h"
+#include "../ticTacToeBoard.h"
 
 class TicTacToeHumanPlayer : public TicTacToePlayer
 {

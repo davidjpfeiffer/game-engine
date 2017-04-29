@@ -3,8 +3,8 @@
 
 #include <vector>
 
-#include "connectFourPlayer.h"
-#include "connectFourGameState.h"
+#include "../connectFourPlayer.h"
+#include "../connectFourGameState.h"
 
 class ConnectFourComputerPlayer : public ConnectFourPlayer
 {

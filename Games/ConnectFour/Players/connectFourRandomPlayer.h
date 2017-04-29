@@ -1,8 +1,8 @@
 #ifndef __CONNECTFOURRANDOMPLAYER
 #define __CONNECTFOURRANDOMPLAYER
 
-#include "connectFourPlayer.h"
-#include "connectFourGameState.h"
+#include "../connectFourPlayer.h"
+#include "../connectFourGameState.h"
 
 class ConnectFourRandomPlayer : public ConnectFourPlayer
 {

@@ -3,8 +3,8 @@
 
 #include <iostream>
 
-#include "connectFourPlayer.h"
-#include "connectFourGameState.h"
+#include "../connectFourPlayer.h"
+#include "../connectFourGameState.h"
 
 class ConnectFourHumanPlayer : public ConnectFourPlayer
 {

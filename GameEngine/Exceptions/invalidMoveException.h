@@ -5,7 +5,7 @@
 #include <string>
 #include <cstring>
 
-#include "player.h"
+#include "../player.h"
 
 class InvalidMoveException : public std::exception
 {
