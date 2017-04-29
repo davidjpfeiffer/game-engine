@@ -23,19 +23,19 @@ class GameResults
   void logPlayerOneWin()
   {
     this->playerOneWins++;
-	this->totalNumberOfGames++;
+    this->totalNumberOfGames++;
   }
   
   void logPlayerTwoWin()
   {
     this->playerTwoWins++;
-	this->totalNumberOfGames++;
+    this->totalNumberOfGames++;
   }
   
   void logTieGame()
   {
     this->gamesTied++;
-	this->totalNumberOfGames++;
+    this->totalNumberOfGames++;
   }
   
   void reset()
@@ -43,7 +43,7 @@ class GameResults
     this->playerOneWins = 0;
     this->playerTwoWins = 0;
     this->gamesTied = 0;
-	this->totalNumberOfGames = 0;
+    this->totalNumberOfGames = 0;
   }
   
   private:
