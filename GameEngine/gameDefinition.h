@@ -15,7 +15,7 @@ class GameDefinition
   
   virtual bool playerHasWon(GameState * gameState, const PlayerValue & playerValue) const = 0;
   
-  virtual void setInitialGameState(GameState ** gameState) const = 0;
+  virtual GameState * getInitialGameState() const = 0;
 };
 
 #endif

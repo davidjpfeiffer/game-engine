@@ -197,9 +197,9 @@ class ConnectFourGameDefinition : public GameDefinition
     return false;
   }
   
-  void setInitialGameState(GameState ** gameState) const
+  GameState * getInitialGameState() const
   {
-    * gameState = new ConnectFourGameState;
+    return new ConnectFourGameState;
   }
   
   void makeRandomMove(GameState * p_gameState, const PlayerValue & playerValue) const

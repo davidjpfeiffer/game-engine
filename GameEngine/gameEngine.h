@@ -130,9 +130,8 @@ class GameEngine
   
   GameResult getGameResult()
   {
-    GameState * gameState;
+    GameState * gameState = this->game->gameDefinition->getInitialGameState();
     Player * currentPlayer = this->playerOne;
-    this->game->gameDefinition->setInitialGameState(& gameState);
     
     if (playingSingleGame())
     {

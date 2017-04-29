@@ -90,9 +90,9 @@ class TicTacToeGameDefinition : public GameDefinition
     return false;
   }
   
-  void setInitialGameState(GameState ** p_gameState) const
+  GameState * getInitialGameState() const
   {
-    * p_gameState = new TicTacToeGameState;
+    return new TicTacToeGameState;
   }
   
   void makeRandomMove(GameState * p_gameState, const PlayerValue & playerValue) const
