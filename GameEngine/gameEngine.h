@@ -100,7 +100,7 @@ class GameEngine
 
     if (playingMultipleGames())
     {
-      this->gameResults.print(this->totalNumberOfGames);
+      this->gameResults.print();
     }
   }
   
