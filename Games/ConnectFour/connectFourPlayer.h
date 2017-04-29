@@ -1,7 +1,7 @@
 #ifndef __CONNECTFOURPLAYER
 #define __CONNECTFOURPLAYER
 
-#include "../../GameEngine/Player.h"
+#include "../../GameEngine/player.h"
 
 #include "connectFourBoardValue.h"
 #include "connectFourGameDefinition.h"

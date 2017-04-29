@@ -27,10 +27,10 @@ class GameEngine
   {
     try
     {
-      selectGame();
-      selectNumberOfGamesToPlay();
-      selectPlayerOne();
-      selectPlayerTwo();
+      if (!gameSelected()) selectGame();
+      if (!numberOfGamesSelected()) selectNumberOfGames();
+      if (!playerOneSelected()) selectPlayerOne();
+      if (!playerTwoSelected()) selectPlayerTwo();
       
       play();
     }
@@ -39,179 +39,6 @@ class GameEngine
       printer.printHeader("Exception");
       std::cout << e.what() << '\n';
     }
-  }
-  
-  private:
-  
-  unsigned totalNumberOfGames;
-  
-  GameRegistry gameRegistry;
-  GameResults gameResults;
-  
-  Game * game = nullptr;
-  GameState * gameState = nullptr;
-  Player * playerOne = nullptr;
-  Player * playerTwo = nullptr;
-  Player * currentPlayer = nullptr;
-  
-  void play()
-  {
-    for (unsigned gameNumber = 1; gameNumber <= this->totalNumberOfGames; gameNumber++)
-    {
-      this->currentPlayer = this->playerOne;
-      this->gameState->reset();
-      
-      switch (getGameResult())
-      {
-        case GameResult::PlayerOneWin:
-          if (playingSingleGame())
-          {
-            std::cout << "Result: " << this->playerOne->getPlayerValueAsString() << " wins!\n";
-          }
-          else
-          {
-            this->gameResults.logPlayerOneWin();
-          }
-          break;
-
-        case GameResult::PlayerTwoWin:
-          if (playingSingleGame())
-          {
-            std::cout << "Result: " << this->playerTwo->getPlayerValueAsString() << " wins!\n";
-          }
-          else
-          {
-            this->gameResults.logPlayerTwoWin();
-          }
-          break;
-
-        case GameResult::Tie:
-          if (playingSingleGame())
-          {
-            std::cout << "Result: Tie!\n";
-          }
-          else
-          {
-            this->gameResults.logTieGame();
-          }
-          break;
-      }
-    }
-
-    if (playingMultipleGames())
-    {
-      this->gameResults.print();
-    }
-  }
-  
-  GameResult getGameResult()
-  {
-    if (playingSingleGame())
-    {
-      this->gameState->print();
-    }
-
-    while (!gameIsOver())
-    {
-      GameState * gameStateAfterMove = getNextMove();
-      
-      if (validMove(gameStateAfterMove))
-      {
-        updateGameState(gameStateAfterMove);
-        toggleCurrentPlayer();
-        if (playingSingleGame())
-        {
-          this->gameState->print();
-        }
-      }
-      else
-      {
-        delete gameStateAfterMove;
-        throw InvalidMoveException(this->currentPlayer);
-      }
-    }
-    
-    if (playerHasWon(PlayerValue::PlayerOne))
-    {
-      return GameResult::PlayerOneWin;
-    }
-    else if (playerHasWon(PlayerValue::PlayerTwo))
-    {
-      return GameResult::PlayerTwoWin;
-    }
-    else
-    {
-      return GameResult::Tie;
-    }
-  }
-  
-  bool gameIsOver()
-  {
-    return this->game->gameDefinition->isOver(this->gameState);
-  }
-  
-  bool validMove(GameState * gameStateAfterMove)
-  {
-    return this->game->gameDefinition->isValidMove(this->gameState, gameStateAfterMove, this->currentPlayer->getPlayerValue());
-  }
-  
-  void updateGameState(GameState * newGameState)
-  {
-    delete this->gameState;
-    this->gameState = newGameState;
-  }
-  
-  bool playerHasWon(PlayerValue playerValue)
-  {
-    return this->game->gameDefinition->playerHasWon(this->gameState, playerValue);
-  }
-  
-  GameState * getNextMove()
-  {
-    GameState * gameStateAfterMove = this->gameState->clone();
-    this->currentPlayer->getMove(gameStateAfterMove);
-    return gameStateAfterMove;
-  }
-  
-  bool playingSingleGame()
-  {
-    return this->totalNumberOfGames == 1;
-  }
-
-  bool playingMultipleGames()
-  {
-    return this->totalNumberOfGames > 1;
-  }
-
-  void toggleCurrentPlayer()
-  {
-    this->currentPlayer = this->currentPlayer == this->playerOne ? this->playerTwo : this->playerOne;
-  }
-
-  void selectNumberOfGamesToPlay()
-  {
-    printer.printHeader("Select Number Of Games");
-    
-    unsigned numberOfGames = 0;
-    
-    do
-    {
-      std::cout << "Number of games to play: ";
-      std::cin >> numberOfGames;
-      
-      if (!validNumberOfGamesToPlay(numberOfGames))
-      {
-        std::cout << "Invalid entry, number must be between 1 and 10,000 inclusive.\n";
-      }
-    }
-    while(!validNumberOfGamesToPlay(numberOfGames));
-    
-    this->totalNumberOfGames = numberOfGames;
-  }
-
-  bool validNumberOfGamesToPlay(unsigned p_numberOfGames)
-  {
-    return p_numberOfGames > 0 && p_numberOfGames <= 10000;
   }
   
   void selectGame()
@@ -225,8 +52,181 @@ class GameEngine
     this->game = getGame();
     std::cout << "test";
     std::cout << "Game is " << this->game->getName() << '\n';
-    this->game->gameDefinition->setInitialGameState(& this->gameState);
+  }
+  
+  void selectNumberOfGames()
+  {
+    printer.printHeader("Select Number Of Games");
     
+    unsigned numberOfGames = 0;
+    
+    do
+    {
+      std::cout << "Number of games to play: ";
+      std::cin >> numberOfGames;
+      
+      if (!validNumberOfGamesToPlay(numberOfGames))
+      {
+        std::cout << "Invalid entry, number must be between 1 and 100,000 inclusive.\n";
+      }
+    }
+    while(!validNumberOfGamesToPlay(numberOfGames));
+    
+    this->totalNumberOfGames = numberOfGames;
+  }
+  
+  void selectPlayerOne()
+  {
+    printer.printHeader("Select Player One");
+    this->playerOne = getPlayer();
+    playerOne->setPlayerValue(PlayerValue::PlayerOne);
+    std::cout << "Player One is " << playerOne->getName() << '\n';
+  }
+  
+  void selectPlayerTwo()
+  {
+    printer.printHeader("Select Player Two");
+    this->playerTwo = getPlayer();
+    playerTwo->setPlayerValue(PlayerValue::PlayerTwo);
+    std::cout << "Player Two is " << playerTwo->getName() << '\n';
+  }
+  
+  private:
+  
+  unsigned totalNumberOfGames = 0;
+  
+  GameRegistry gameRegistry;
+  GameResults gameResults;
+  
+  Game * game = nullptr;
+  Player * playerOne = nullptr;
+  Player * playerTwo = nullptr;
+  
+  void play()
+  {
+    for (unsigned gameNumber = 1; gameNumber <= this->totalNumberOfGames; gameNumber++)
+    {
+      switch (getGameResult())
+      {
+        case GameResult::PlayerOneWin:
+          this->gameResults.logPlayerOneWin();
+          break;
+
+        case GameResult::PlayerTwoWin:
+          this->gameResults.logPlayerTwoWin();
+          break;
+
+        case GameResult::Tie:
+          this->gameResults.logTieGame();
+          break;
+      }
+    }
+
+    if (playingMultipleGames())
+    {
+      this->gameResults.print();
+    }
+  }
+  
+  GameResult getGameResult()
+  {
+    GameState * gameState;
+    Player * currentPlayer = this->playerOne;
+    this->game->gameDefinition->setInitialGameState(& gameState);
+    
+    if (playingSingleGame())
+    {
+      gameState->print();
+    }
+    
+    while (!gameIsOver(gameState))
+    {
+      GameState * gameStateAfterMove = getNextMove(gameState, currentPlayer);
+      if (isValidMove(gameState, gameStateAfterMove, currentPlayer))
+      {
+        delete gameState;
+        gameState = gameStateAfterMove;
+        toggleCurrentPlayer(&currentPlayer);
+        
+        if (playingSingleGame())
+        {
+          gameState->print();
+        }
+      }
+      else
+      {
+        delete gameState;
+        delete gameStateAfterMove;
+        throw InvalidMoveException(currentPlayer);
+      }
+    }
+
+    delete gameState;
+    
+    if (playerHasWon(gameState, PlayerValue::PlayerOne))
+    {
+      if (playingSingleGame())
+      {
+        std::cout << "Result: " << this->playerOne->getPlayerValueAsString() << " wins!\n";
+      }
+      
+      return GameResult::PlayerOneWin;
+    }
+    else if (playerHasWon(gameState, PlayerValue::PlayerTwo))
+    {
+      if (playingSingleGame())
+      {
+        std::cout << "Result: " << this->playerTwo->getPlayerValueAsString() << " wins!\n";
+      }
+      
+      return GameResult::PlayerTwoWin;
+    }
+    else
+    {
+      if (playingSingleGame())
+      {
+        std::cout << "Result: Tie!\n";
+      }
+      
+      return GameResult::Tie;
+    }
+  }
+  
+  bool gameIsOver(GameState * gameState)
+  {
+    return this->game->gameDefinition->isOver(gameState);
+  }
+  
+  bool isValidMove(GameState * gameStateBeforeMove, GameState * gameStateAfterMove, Player * currentPlayer)
+  {
+    return this->game->gameDefinition->isValidMove(gameStateBeforeMove, gameStateAfterMove, currentPlayer->getPlayerValue());
+  }
+  
+  bool playerHasWon(GameState * gameState, PlayerValue playerValue)
+  {
+    return this->game->gameDefinition->playerHasWon(gameState, playerValue);
+  }
+  
+  GameState * getNextMove(GameState * gameState, Player * currentPlayer)
+  {
+    GameState * gameStateAfterMove = gameState->clone();
+    currentPlayer->getMove(gameStateAfterMove);
+    return gameStateAfterMove;
+  }
+  
+  bool playingSingleGame()
+  {
+    return this->totalNumberOfGames == 1;
+  }
+
+  bool playingMultipleGames()
+  {
+    return this->totalNumberOfGames > 1;
+  }
+
+  bool validNumberOfGamesToPlay(unsigned numberOfGames)
+  {
+    return numberOfGames > 0 && numberOfGames <= 100000;
   }
   
   Game * getGame()
@@ -264,22 +264,6 @@ class GameEngine
     return chosenGame;
   }
   
-  void selectPlayerOne()
-  {
-    printer.printHeader("Select Player One");
-    this->playerOne = getPlayer();
-    playerOne->setPlayerValue(PlayerValue::PlayerOne);
-    std::cout << "Player One is " << playerOne->getName() << '\n';
-  }
-  
-  void selectPlayerTwo()
-  {
-    printer.printHeader("Select Player Two");
-    this->playerTwo = getPlayer();
-    playerTwo->setPlayerValue(PlayerValue::PlayerTwo);
-    std::cout << "Player Two is " << playerTwo->getName() << '\n';
-  }
-  
   Player * getPlayer() const
   {
     Player * chosenPlayer = nullptr;
@@ -311,18 +295,37 @@ class GameEngine
     return chosenPlayer;
   }
   
+  bool gameSelected()
+  {
+    return this->game != nullptr;
+  }
+  
+  bool numberOfGamesSelected()
+  {
+    return this->totalNumberOfGames != 0;
+  }
+  
+  bool playerOneSelected()
+  {
+    return this->playerOne != nullptr;
+  }
+  
+  bool playerTwoSelected()
+  {
+    return this->playerTwo != nullptr;
+  }
+  
+  void toggleCurrentPlayer(Player ** currentPlayer)
+  {
+    *currentPlayer = *currentPlayer == this->playerOne ? this->playerTwo : this->playerOne;
+  }
+  
   void deleteAllocatedMemory()
   {
     if (this->game != nullptr)
     {
       delete this->game;
       this->game = nullptr;
-    }
-    
-    if (this->gameState != nullptr)
-    {
-      delete this->gameState;
-      this->gameState = nullptr;
     }
     
     if (this->playerOne != nullptr)
