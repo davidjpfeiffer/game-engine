@@ -2,6 +2,7 @@
 #define __GAMEENGINE
 
 #include <iostream>
+#include <omp.h>
 
 #include "./Exceptions/invalidMoveException.h"
 #include "./Exceptions/emptyGameRegistryException.h"
@@ -104,19 +105,23 @@ class GameEngine
   
   void play()
   {
+    #pragma omp parallel for
     for (unsigned gameNumber = 1; gameNumber <= this->totalNumberOfGames; gameNumber++)
     {
       switch (getGameResult())
       {
         case GameResult::PlayerOneWin:
+          #pragma omp critical
           this->gameResults.logPlayerOneWin();
           break;
 
         case GameResult::PlayerTwoWin:
+          #pragma omp critical
           this->gameResults.logPlayerTwoWin();
           break;
 
         case GameResult::Tie:
+          #pragma omp critical
           this->gameResults.logTieGame();
           break;
       }
