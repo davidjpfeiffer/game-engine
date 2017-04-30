@@ -17,10 +17,10 @@ To use the game engine, you need only include the `gameEngine.h` class and call 
 
 ### Features
 
-- Display single move at a time for single game
-- Display summary statistics for multiple games
-- Elegant error handling
 - Parallel processing support for multiple games
+- Custom exceptions and elegant exception handling
+- Display visual game state one move at a time
+- Display summary statistics for multiple games
 
 ### License
 
