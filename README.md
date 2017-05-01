@@ -8,7 +8,7 @@ This project was originally written for the 2016 Southeast Missouri State Hackat
 
 There are two components of the game engine: the base components that provide the structure and interfaces necessary for the game engine to play games, and the implementation of these interfaces which includes the games and players themselves. The game engine is responsible for fascilitating the playing of games and using the game class to verify players moves. The players themselves implement a single method that returns a move given a game state.
 
-To use the game engine, you need only include the `gameEngine.h` class and call the `start()` method as illustrated in the `main.cpp` file. This prompts the user to enter their desired game, the number of games to be played, and the first and second player. The available games are retrieved from the `Game Registry` class, which is just a class that contains a list of all available games. Similarly, each of the games has a `Player Registry` which is used by the game engine to retrieve the available players for any given game. If you add a new game or player, you should update the registry accordingly.
+To use the game engine, you need only include the gameEngine.h file and call the `start()` method as illustrated in the main.cpp file. This prompts the user to enter their desired game, the number of games to be played, and the first and second player. The available games are retrieved from the `Game Registry` class, which is just a class that contains a list of all available games. Similarly, each of the games has a `Player Registry` which is used by the game engine to retrieve the available players for any given game. If you add a new game or player, you should update the registry accordingly.
 
 ### Games
 
