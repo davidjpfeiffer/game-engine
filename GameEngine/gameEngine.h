@@ -51,7 +51,6 @@ class GameEngine
     
     printer.printHeader("Select Game");
     this->game = getGame();
-    std::cout << "test";
     std::cout << "Game is " << this->game->getName() << '\n';
   }
   
