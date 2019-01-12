@@ -1,8 +1,8 @@
 ## Game Engine
 
-This command line interface program allows two players to play against each other in any given two-player turn-based strategy game. The games are defined by implementing the abstract base class `Game`, which defines the rules for the game. The players implement the abstract base class `Player`, which requires them to implement a get move method that is used by the game engine to get the players move given a game state. The game engine takes care of the details necessary to play the game, while the game and players define the logic for the game itself and how it is played.
-
 This project was originally written for the 2016 Southeast Missouri State Hackathon. It has since been refactored and improved. The program was written to better understand how game engines work and to gain experience designing interfaces for relational objects within a complex system.
+
+The command line interface program allows two players to play against each other in any given two-player, turn-based strategy game. The games are defined by implementing the abstract base class `Game`, which defines the rules for the game. The players implement the abstract base class `Player`, which requires them to implement a get move method that is used by the game engine to get the players move given a game state. The game engine takes care of the details necessary to play the game, while the game and players define the logic for the game itself and how it is played.
 
 ### How It Works
 
